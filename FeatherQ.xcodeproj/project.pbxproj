@@ -1,0 +1,502 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		721B344BB94C57A4DA03CB81 /* Pods_FeatherQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F13FE3C8986B209803E649 /* Pods_FeatherQ.framework */; };
+		801004C41DD31B850070C326 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004C31DD31B850070C326 /* AppDelegate.swift */; };
+		801004C61DD31B850070C326 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004C51DD31B850070C326 /* ViewController.swift */; };
+		801004C91DD31B850070C326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 801004C71DD31B850070C326 /* Main.storyboard */; };
+		801004CB1DD31B850070C326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801004CA1DD31B850070C326 /* Assets.xcassets */; };
+		801004CE1DD31B850070C326 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 801004CC1DD31B850070C326 /* LaunchScreen.storyboard */; };
+		801004D71DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004D61DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift */; };
+		801004D91DD39C990070C326 /* FQCategoriesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004D81DD39C990070C326 /* FQCategoriesCollectionViewController.swift */; };
+		801004DB1DD3FD2A0070C326 /* FQDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004DA1DD3FD2A0070C326 /* FQDashboardViewController.swift */; };
+		801004DD1DD3FE320070C326 /* FQLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004DC1DD3FE320070C326 /* FQLoginViewController.swift */; };
+		801004DF1DD3FE5B0070C326 /* FQRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004DE1DD3FE5B0070C326 /* FQRegistrationViewController.swift */; };
+		801004E11DD400220070C326 /* FQBusinessDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004E01DD400220070C326 /* FQBusinessDetailsViewController.swift */; };
+		801004E31DD400410070C326 /* FQOperationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004E21DD400410070C326 /* FQOperationsViewController.swift */; };
+		801004E71DD465FF0070C326 /* FQIssueNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004E61DD465FF0070C326 /* FQIssueNumberViewController.swift */; };
+		801A10591DE5517300373A22 /* FQSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A10581DE5517300373A22 /* FQSearchTableViewController.swift */; };
+		801A105B1DE5532500373A22 /* FQSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A105A1DE5532500373A22 /* FQSearchTableViewCell.swift */; };
+		801A105D1DE56FA800373A22 /* FQBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A105C1DE56FA800373A22 /* FQBusiness.swift */; };
+		801A105F1DE578F300373A22 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A105E1DE578F300373A22 /* Utility.swift */; };
+		801A10611DE5ACB600373A22 /* FQBusinessValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */; };
+		801D4C061DDD90DD00BE555F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D4C051DDD90DD00BE555F /* API.swift */; };
+		80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */; };
+		80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */; };
+		80CE42731DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		39362146022E01C45E09D15E /* Pods-FeatherQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.debug.xcconfig"; sourceTree = "<group>"; };
+		801004C01DD31B850070C326 /* FeatherQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeatherQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		801004C31DD31B850070C326 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		801004C51DD31B850070C326 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		801004C81DD31B850070C326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		801004CA1DD31B850070C326 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		801004CD1DD31B850070C326 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		801004CF1DD31B850070C326 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		801004D51DD31BB40070C326 /* FeatherQ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FeatherQ.entitlements; sourceTree = "<group>"; };
+		801004D61DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQCategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		801004D81DD39C990070C326 /* FQCategoriesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQCategoriesCollectionViewController.swift; sourceTree = "<group>"; };
+		801004DA1DD3FD2A0070C326 /* FQDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQDashboardViewController.swift; sourceTree = "<group>"; };
+		801004DC1DD3FE320070C326 /* FQLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQLoginViewController.swift; sourceTree = "<group>"; };
+		801004DE1DD3FE5B0070C326 /* FQRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQRegistrationViewController.swift; sourceTree = "<group>"; };
+		801004E01DD400220070C326 /* FQBusinessDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBusinessDetailsViewController.swift; sourceTree = "<group>"; };
+		801004E21DD400410070C326 /* FQOperationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOperationsViewController.swift; sourceTree = "<group>"; };
+		801004E61DD465FF0070C326 /* FQIssueNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQIssueNumberViewController.swift; sourceTree = "<group>"; };
+		801A10581DE5517300373A22 /* FQSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSearchTableViewController.swift; sourceTree = "<group>"; };
+		801A105A1DE5532500373A22 /* FQSearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSearchTableViewCell.swift; sourceTree = "<group>"; };
+		801A105C1DE56FA800373A22 /* FQBusiness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBusiness.swift; sourceTree = "<group>"; };
+		801A105E1DE578F300373A22 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBusinessValidationViewController.swift; sourceTree = "<group>"; };
+		801D4C051DDD90DD00BE555F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGetStartedViewController.swift; sourceTree = "<group>"; };
+		80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQProcessQueueTableViewCell.swift; sourceTree = "<group>"; };
+		80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQProcessQueueTableViewController.swift; sourceTree = "<group>"; };
+		A38C98595B22153AE48EEE35 /* Pods-FeatherQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.release.xcconfig"; sourceTree = "<group>"; };
+		E6F13FE3C8986B209803E649 /* Pods_FeatherQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatherQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		801004BD1DD31B850070C326 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				721B344BB94C57A4DA03CB81 /* Pods_FeatherQ.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E62E8E12A64CE7B4F8B3CDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E6F13FE3C8986B209803E649 /* Pods_FeatherQ.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		801004B71DD31B850070C326 = {
+			isa = PBXGroup;
+			children = (
+				801004C21DD31B850070C326 /* FeatherQ */,
+				801004C11DD31B850070C326 /* Products */,
+				88F44E0E53667F5BFE71A536 /* Pods */,
+				4E62E8E12A64CE7B4F8B3CDC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		801004C11DD31B850070C326 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				801004C01DD31B850070C326 /* FeatherQ.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		801004C21DD31B850070C326 /* FeatherQ */ = {
+			isa = PBXGroup;
+			children = (
+				80C2C1221DDD78C800D067C1 /* Lib */,
+				80C2C1211DDD78C100D067C1 /* Controller */,
+				80C2C1201DDD78BB00D067C1 /* View */,
+				80C2C11F1DDD78A800D067C1 /* Model */,
+				801004D51DD31BB40070C326 /* FeatherQ.entitlements */,
+				801004C31DD31B850070C326 /* AppDelegate.swift */,
+				801004C51DD31B850070C326 /* ViewController.swift */,
+				801004C71DD31B850070C326 /* Main.storyboard */,
+				801004CA1DD31B850070C326 /* Assets.xcassets */,
+				801004CC1DD31B850070C326 /* LaunchScreen.storyboard */,
+				801004CF1DD31B850070C326 /* Info.plist */,
+			);
+			path = FeatherQ;
+			sourceTree = "<group>";
+		};
+		80C2C11F1DDD78A800D067C1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				801A105C1DE56FA800373A22 /* FQBusiness.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		80C2C1201DDD78BB00D067C1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				801004D61DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift */,
+				80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */,
+				801A105A1DE5532500373A22 /* FQSearchTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		80C2C1211DDD78C100D067C1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				801004D81DD39C990070C326 /* FQCategoriesCollectionViewController.swift */,
+				801004DA1DD3FD2A0070C326 /* FQDashboardViewController.swift */,
+				801004DC1DD3FE320070C326 /* FQLoginViewController.swift */,
+				801004DE1DD3FE5B0070C326 /* FQRegistrationViewController.swift */,
+				801004E01DD400220070C326 /* FQBusinessDetailsViewController.swift */,
+				801004E21DD400410070C326 /* FQOperationsViewController.swift */,
+				801004E61DD465FF0070C326 /* FQIssueNumberViewController.swift */,
+				80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */,
+				80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */,
+				801A10581DE5517300373A22 /* FQSearchTableViewController.swift */,
+				801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		80C2C1221DDD78C800D067C1 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				801D4C051DDD90DD00BE555F /* API.swift */,
+				801A105E1DE578F300373A22 /* Utility.swift */,
+			);
+			name = Lib;
+			sourceTree = "<group>";
+		};
+		88F44E0E53667F5BFE71A536 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				39362146022E01C45E09D15E /* Pods-FeatherQ.debug.xcconfig */,
+				A38C98595B22153AE48EEE35 /* Pods-FeatherQ.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		801004BF1DD31B850070C326 /* FeatherQ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 801004D21DD31B850070C326 /* Build configuration list for PBXNativeTarget "FeatherQ" */;
+			buildPhases = (
+				E36BBB75AE1768272731F611 /* [CP] Check Pods Manifest.lock */,
+				801004BC1DD31B850070C326 /* Sources */,
+				801004BD1DD31B850070C326 /* Frameworks */,
+				801004BE1DD31B850070C326 /* Resources */,
+				25FD307EB11F41AA719857CF /* [CP] Embed Pods Frameworks */,
+				FC6D443EAB4E5FD2136F8623 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FeatherQ;
+			productName = "FeatherQ Mockup";
+			productReference = 801004C01DD31B850070C326 /* FeatherQ.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		801004B81DD31B850070C326 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Reminisense;
+				TargetAttributes = {
+					801004BF1DD31B850070C326 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 6P9D6A83ZJ;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 801004BB1DD31B850070C326 /* Build configuration list for PBXProject "FeatherQ" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 801004B71DD31B850070C326;
+			productRefGroup = 801004C11DD31B850070C326 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				801004BF1DD31B850070C326 /* FeatherQ */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		801004BE1DD31B850070C326 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				801004CE1DD31B850070C326 /* LaunchScreen.storyboard in Resources */,
+				801004CB1DD31B850070C326 /* Assets.xcassets in Resources */,
+				801004C91DD31B850070C326 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		25FD307EB11F41AA719857CF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E36BBB75AE1768272731F611 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FC6D443EAB4E5FD2136F8623 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		801004BC1DD31B850070C326 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				801A105D1DE56FA800373A22 /* FQBusiness.swift in Sources */,
+				801004E71DD465FF0070C326 /* FQIssueNumberViewController.swift in Sources */,
+				801A105F1DE578F300373A22 /* Utility.swift in Sources */,
+				801004E11DD400220070C326 /* FQBusinessDetailsViewController.swift in Sources */,
+				801004C61DD31B850070C326 /* ViewController.swift in Sources */,
+				801A10591DE5517300373A22 /* FQSearchTableViewController.swift in Sources */,
+				80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */,
+				801004D91DD39C990070C326 /* FQCategoriesCollectionViewController.swift in Sources */,
+				801A105B1DE5532500373A22 /* FQSearchTableViewCell.swift in Sources */,
+				80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */,
+				801D4C061DDD90DD00BE555F /* API.swift in Sources */,
+				801A10611DE5ACB600373A22 /* FQBusinessValidationViewController.swift in Sources */,
+				801004DB1DD3FD2A0070C326 /* FQDashboardViewController.swift in Sources */,
+				801004DF1DD3FE5B0070C326 /* FQRegistrationViewController.swift in Sources */,
+				801004DD1DD3FE320070C326 /* FQLoginViewController.swift in Sources */,
+				801004E31DD400410070C326 /* FQOperationsViewController.swift in Sources */,
+				801004C41DD31B850070C326 /* AppDelegate.swift in Sources */,
+				80CE42731DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift in Sources */,
+				801004D71DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		801004C71DD31B850070C326 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				801004C81DD31B850070C326 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		801004CC1DD31B850070C326 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				801004CD1DD31B850070C326 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		801004D01DD31B850070C326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		801004D11DD31B850070C326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		801004D31DD31B850070C326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39362146022E01C45E09D15E /* Pods-FeatherQ.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FeatherQ/FeatherQ.entitlements;
+				DEVELOPMENT_TEAM = 6P9D6A83ZJ;
+				INFOPLIST_FILE = FeatherQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.polljii143.FeatherQ;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		801004D41DD31B850070C326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A38C98595B22153AE48EEE35 /* Pods-FeatherQ.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FeatherQ/FeatherQ.entitlements;
+				DEVELOPMENT_TEAM = 6P9D6A83ZJ;
+				INFOPLIST_FILE = FeatherQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.polljii143.FeatherQ;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		801004BB1DD31B850070C326 /* Build configuration list for PBXProject "FeatherQ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				801004D01DD31B850070C326 /* Debug */,
+				801004D11DD31B850070C326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		801004D21DD31B850070C326 /* Build configuration list for PBXNativeTarget "FeatherQ" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				801004D31DD31B850070C326 /* Debug */,
+				801004D41DD31B850070C326 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 801004B81DD31B850070C326 /* Project object */;
+}

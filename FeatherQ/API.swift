@@ -1,0 +1,141 @@
+//
+//  API.swift
+//  FeatherQ
+//
+//  Created by Paul Andrew Gutib on 11/17/16.
+//  Copyright © 2016 Reminisense. All rights reserved.
+//
+
+import Foundation
+import Alamofire
+import SwiftyJSON
+import Locksmith
+
+enum Router: URLRequestConvertible {
+//    static let baseURL = "http://four.featherq.com"
+    static let baseURL = "http://new-featherq.local"
+    //static let clientId = "fqiosapp" //use in OAuth
+    //static let clientSecret = "fqiosapp" //use in OAuth
+    
+    case postSearchBusiness(latitude: String, longitude: String, key: String, category: String)
+    case postDisplayBusinesses()
+    case getCategories
+    
+    var method: HTTPMethod {
+        switch self {
+        case .postSearchBusiness:
+            return .post
+        case .postDisplayBusinesses:
+            return .post
+        default:
+            return .get
+        }
+    }
+    
+    var path: String {
+        switch self {
+        case .postSearchBusiness:
+            return "/api/search-business"
+        case .postDisplayBusinesses:
+            return "/api/search-business"
+        case .getCategories:
+            return "/api/categories"
+        default:
+            return "/"
+        }
+    }
+    
+    func asURLRequest() throws -> URLRequest {
+        let url = try Router.baseURL.asURL()
+        
+        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        urlRequest.httpMethod = method.rawValue
+        
+        switch self {
+        case .postSearchBusiness(let latitude, let longitude, let key, let category):
+            let parameters = [
+                "latitude": latitude,
+                "longitude": longitude,
+                "key": key,
+                "category": category
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        default:
+            break
+        }
+        
+        return urlRequest
+    }
+    
+//    var URLRequest: NSMutableURLRequest {
+//        let URL = NSURL(string: Router.baseURL)!
+//        let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path)!)
+//        mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+//        mutableURLRequest.HTTPMethod = method.rawValue
+//        
+//        debugPrint(mutableURLRequest.URLString)
+//        
+//        switch self{
+//        case .postRegisterUser:
+//            break
+//        case .postFacebookLogin:
+//            break
+//        default:
+//            let dictionary = Locksmith.loadDataForUserAccount("fqiosapp")
+//            if dictionary != nil {
+//                let token = dictionary!["access_token"] as! String
+//                debugPrint(token)
+//                mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "Authorization")
+//            }
+//            break
+//        }
+//        
+//        switch self {
+//        case .postSendtoBusiness(let facebookId, let businessId, let message, let phone):
+//            let params = [
+//                "facebook_id": facebookId,
+//                "business_id": businessId,
+//                "message": message,
+//                "phone": phone
+//            ]
+//            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
+//        case .postRegisterUser(let fb_id, let first_name, let last_name, let email, let gender, let deviceToken):
+//            let params = [
+//                "fb_id": fb_id,
+//                "first_name": first_name,
+//                "last_name": last_name,
+//                "email": email,
+//                "gender": gender,
+//                "phone": "",
+//                "country": "",
+//                "device_token": deviceToken,
+//                "device_type": "iOS"
+//            ]
+//            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
+//        case .postFacebookLogin(let fb_id, let fb_token):
+//            let params = [
+//                "facebook_id": fb_id,
+//                "fb_token": fb_token
+//            ]
+//            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
+//        case .postSendMessage(let user_id, let business_id, let message):
+//            let params = [
+//                "user_id": user_id,
+//                "business_id": business_id,
+//                "message": message
+//            ]
+//            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
+//        case .postSubmitForm(let userId, let transactionNumber, let formSubmissions, let serviceId, let serviceName):
+//            let params = [
+//                "user_id": userId,
+//                "transaction_number": transactionNumber,
+//                "form_submissions": formSubmissions,
+//                "service_id": serviceId,
+//                "service_name": serviceName
+//            ]
+//            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params as? [String : AnyObject]).0
+//        default:
+//            return mutableURLRequest
+//        }
+//    }
+}
