@@ -37,7 +37,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     
     func postDisplayBusinesses() {
         SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.postDisplayBusinesses()).responseJSON { response in
+        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String

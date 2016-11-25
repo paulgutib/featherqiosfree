@@ -9,6 +9,8 @@
 import UIKit
 
 class FQProcessQueueTableViewController: UITableViewController {
+    
+    var priorityNumbers = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,10 @@ class FQProcessQueueTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        for i in 1 ... 100 {
+            self.priorityNumbers.append(i)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +40,7 @@ class FQProcessQueueTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 100
+        return self.priorityNumbers.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -45,9 +51,10 @@ class FQProcessQueueTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQProcessQueueTableViewCell", for: indexPath) as! FQProcessQueueTableViewCell
 
         // Configure the cell...
-        cell.priorityNum.text = "\(indexPath.row + 1)"
+        cell.priorityNum.text = "\(self.priorityNumbers[indexPath.row])"
         cell.runningTime.text = "08:21"
         cell.notesValue.text = "Chickenjoy, Burger Steak"
+        cell.callNum.tag = indexPath.row
 
         return cell
     }
@@ -96,5 +103,42 @@ class FQProcessQueueTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    @IBAction func callNumNow(_ sender: UIButton) {
+        let serveNum = UIButton(frame: CGRect(x: sender.frame.origin.x, y: sender.frame.origin.y, width: (sender.frame.width / 2.0) - 5.0, height: sender.frame.height))
+        serveNum.layer.cornerRadius = 5.0
+        serveNum.clipsToBounds = true
+        serveNum.setTitle("Serve", for: .normal)
+        serveNum.setTitleColor(UIColor.white, for: .normal)
+        serveNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
+        serveNum.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+        serveNum.addTarget(self, action: #selector(self.serveNumNow(sender:)), for: .touchUpInside)
+        serveNum.tag = sender.tag
+        
+        let dropNum = UIButton(frame: CGRect(x: sender.frame.origin.x + (sender.frame.width / 2.0) + 5.0, y: sender.frame.origin.y, width: (sender.frame.width / 2.0) - 5.0, height: sender.frame.height))
+        dropNum.layer.cornerRadius = 5.0
+        dropNum.clipsToBounds = true
+        dropNum.setTitle("Drop", for: .normal)
+        dropNum.setTitleColor(UIColor.white, for: .normal)
+        dropNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
+        dropNum.backgroundColor = UIColor(red: 0.9725, green: 0.298, blue: 0.0157, alpha: 1.0) /* #f84c04 */
+        dropNum.addTarget(self, action: #selector(self.dropNumNow(sender:)), for: .touchUpInside)
+        dropNum.tag = sender.tag
+        
+        sender.isHidden = true
+        sender.superview!.addSubview(serveNum)
+        sender.superview!.addSubview(dropNum)
+    }
+    
+    func serveNumNow(sender: UIButton) {
+        debugPrint("served tagged \(sender.tag)")
+        self.priorityNumbers.remove(at: sender.tag)
+        self.tableView.reloadData()
+    }
+    
+    func dropNumNow(sender: UIButton) {
+        debugPrint("dropped tagged \(sender.tag)")
+        self.priorityNumbers.remove(at: sender.tag)
+        self.tableView.reloadData()
+    }
 }

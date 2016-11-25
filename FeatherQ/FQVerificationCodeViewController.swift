@@ -1,23 +1,27 @@
 //
-//  FQLoginViewController.swift
-//  FeatherQ Mockup
+//  FQVerificationCodeViewController.swift
+//  FeatherQ
 //
-//  Created by Paul Andrew Gutib on 11/10/16.
+//  Created by Paul Andrew Gutib on 11/25/16.
 //  Copyright © 2016 Reminisense. All rights reserved.
 //
 
 import UIKit
 
-class FQLoginViewController: UIViewController {
+class FQVerificationCodeViewController: UIViewController {
 
-    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var verificationCode: UITextField!
+    @IBOutlet weak var verifyBtn: UIButton!
+    @IBOutlet weak var modalContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.loginBtn.layer.cornerRadius = 5.0
-        self.loginBtn.clipsToBounds = true
+        self.verifyBtn.layer.cornerRadius = 5.0
+        self.verifyBtn.clipsToBounds = true
+        self.modalContainer.layer.cornerRadius = 5.0
+        self.modalContainer.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,9 +39,9 @@ class FQLoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-    @IBAction func signUpReset(_ sender: UIButton) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
     
+    @IBAction func submitVerifyCode(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+
 }

@@ -12,20 +12,23 @@ import SwiftyJSON
 import Locksmith
 
 enum Router: URLRequestConvertible {
-//    static let baseURL = "http://four.featherq.com"
-    static let baseURL = "http://new-featherq.local"
+    static let baseURL = "http://four.featherq.com"
+//    static let baseURL = "http://new-featherq.local"
     //static let clientId = "fqiosapp" //use in OAuth
     //static let clientSecret = "fqiosapp" //use in OAuth
     
     case postSearchBusiness(latitude: String, longitude: String, key: String, category: String)
-    case postDisplayBusinesses()
+    case postDisplayBusinesses
     case getCategories
+    case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
     
     var method: HTTPMethod {
         switch self {
         case .postSearchBusiness:
             return .post
         case .postDisplayBusinesses:
+            return .post
+        case .postRegister:
             return .post
         default:
             return .get
@@ -34,14 +37,12 @@ enum Router: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .postSearchBusiness:
-            return "/api/search-business"
-        case .postDisplayBusinesses:
-            return "/api/search-business"
         case .getCategories:
             return "/api/categories"
+        case .postRegister:
+            return "/api/register"
         default:
-            return "/"
+            return "/api/search-business"
         }
     }
     
@@ -58,6 +59,20 @@ enum Router: URLRequestConvertible {
                 "longitude": longitude,
                 "key": key,
                 "category": category
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postRegister(let email, let password, let name, let address, let logo, let category, let time_close, let number_start, let number_limit):
+            let parameters = [
+                "email": email,
+                "password": password,
+                "password_confirm": password,
+                "name": name,
+                "address": address,
+                "logo": logo,
+                "category": category,
+                "time_close": time_close,
+                "number_start": number_start,
+                "number_limit": number_limit
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
