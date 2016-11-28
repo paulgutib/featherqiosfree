@@ -109,6 +109,10 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         }
     }
     
+    @IBAction func businessNameTxt(_ sender: UITextField) {
+        self.resignFirstResponder()
+    }
+    
     @IBAction func chooseLogo(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary

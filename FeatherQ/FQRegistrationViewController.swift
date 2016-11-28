@@ -54,6 +54,18 @@ class FQRegistrationViewController: UIViewController {
         }
     }
 
+    @IBAction func emailTxt(_ sender: UITextField) {
+        self.password.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordTxt(_ sender: UITextField) {
+        self.confirmPassword.becomeFirstResponder()
+    }
+    
+    @IBAction func confirmPasswordTxt(_ sender: UITextField) {
+        self.resignFirstResponder()
+    }
+    
     @IBAction func verifyAccount(_ sender: UIButton) {
         
     }

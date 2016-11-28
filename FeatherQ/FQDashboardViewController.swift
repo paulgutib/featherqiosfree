@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftSpinner
+import SwiftyJSON
+import Locksmith
 
 class FQDashboardViewController: UIViewController {
 
@@ -34,6 +38,7 @@ class FQDashboardViewController: UIViewController {
         self.issueNumberBtn.clipsToBounds = true
         self.broadcastBtn.layer.cornerRadius = 5.0
         self.broadcastBtn.clipsToBounds = true
+        self.autoLoginForRegisteredUser()
         self.goToDefaultView()
     }
 
@@ -105,6 +110,28 @@ class FQDashboardViewController: UIViewController {
         }
         else {
             UserDefaults.standard.removeObject(forKey: "defaultView")
+        }
+    }
+    
+    func autoLoginForRegisteredUser() {
+        SwiftSpinner.show("Loggin in..")
+        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
+        if dictionary != nil {
+            let emailVal = dictionary!["email"] as! String
+            let passwordVal = dictionary!["password"] as! String
+            Alamofire.request(Router.postLogin(email: emailVal, password: passwordVal)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                SwiftSpinner.hide()
+            }
         }
     }
     

@@ -90,6 +90,30 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         }
     }
     
+    @IBAction func buildingOfficeTxt(_ sender: UITextField) {
+        self.streetBlock.becomeFirstResponder()
+    }
+    
+    @IBAction func streetBlockTxt(_ sender: UITextField) {
+        self.townCity.becomeFirstResponder()
+    }
+    
+    @IBAction func townCity(_ sender: UITextField) {
+        self.stateProvince.becomeFirstResponder()
+    }
+    
+    @IBAction func stateProvince(_ sender: UITextField) {
+        self.zipPostalCode.becomeFirstResponder()
+    }
+    
+    @IBAction func zipPostalCodeTxt(_ sender: UITextField) {
+        self.phone.becomeFirstResponder()
+    }
+    
+    @IBAction func phoneTxt(_ sender: UITextField) {
+        self.resignFirstResponder()
+    }
+    
     func validateAddresses() -> Bool {
         if self.streetBlock.text!.isEmpty {
             let alertBox = UIAlertController(title: "Invalid Street Address", message: "Please provide the correct street on where your business is located.", preferredStyle: .alert)

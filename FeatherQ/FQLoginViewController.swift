@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import Locksmith
 
 class FQLoginViewController: UIViewController {
 
@@ -69,11 +70,29 @@ class FQLoginViewController: UIViewController {
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
-            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-            var rootViewControllers = self.tabBarController?.viewControllers
-            rootViewControllers?[2] = vc
-            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-            self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+            let access_token = responseData["access_token"].stringValue
+            if responseData != nil && !access_token.isEmpty {
+                //store tokens
+                do {
+                    try Locksmith.updateData(data: [
+                        "access_token": access_token,
+                        "email": self.email.text!,
+                        "password": self.password.text!
+                    ], forUserAccount: "fqiosappfree")
+                    let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+                    var rootViewControllers = self.tabBarController?.viewControllers
+                    rootViewControllers?[2] = vc
+                    vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+                    self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                }catch {
+                    debugPrint(error)
+                }
+            }
+            else {
+                let alertBox = UIAlertController(title: "Account Doesn't Exist", message: "The credentials you entered doesn't match any accounts. Please try again.", preferredStyle: .alert)
+                alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertBox, animated: true, completion: nil)
+            }
             SwiftSpinner.hide()
         }
     }
