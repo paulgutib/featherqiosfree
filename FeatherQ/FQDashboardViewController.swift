@@ -34,6 +34,7 @@ class FQDashboardViewController: UIViewController {
         self.issueNumberBtn.clipsToBounds = true
         self.broadcastBtn.layer.cornerRadius = 5.0
         self.broadcastBtn.clipsToBounds = true
+        self.goToDefaultView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +65,7 @@ class FQDashboardViewController: UIViewController {
         }
         processBool = false
         broadcastBool = false
+        self.setDefaultBusinessView(boolVal: issueBool, viewType: "autoIssue")
     }
     
     @IBAction func processSetDefault(_ sender: UIButton) {
@@ -78,6 +80,7 @@ class FQDashboardViewController: UIViewController {
         }
         issueBool = false
         broadcastBool = false
+        self.setDefaultBusinessView(boolVal: processBool, viewType: "autoProcess")
     }
     
     @IBAction func broadcastSetDefault(_ sender: UIButton) {
@@ -92,6 +95,44 @@ class FQDashboardViewController: UIViewController {
         }
         processBool = false
         issueBool = false
+        self.setDefaultBusinessView(boolVal: broadcastBool, viewType: "autoBroadcast")
+    }
+    
+    
+    func setDefaultBusinessView(boolVal: Bool, viewType: String) {
+        if boolVal {
+            UserDefaults.standard.set(viewType, forKey: "defaultView")
+        }
+        else {
+            UserDefaults.standard.removeObject(forKey: "defaultView")
+        }
+    }
+    
+    func goToDefaultView() {
+        let defaultView = UserDefaults.standard.value(forKey: "defaultView")
+        if defaultView != nil {
+            let dv = defaultView as! String
+            self.markDefaultBusinessView(dv: dv)
+            self.performSegue(withIdentifier: dv, sender: self)
+        }
+    }
+    
+    func markDefaultBusinessView(dv: String) {
+        if dv == "autoIssue" {
+            self.issueDefault.setImage(self.checkboxChecked, for: .normal)
+            self.processDefault.setImage(self.checkBoxEmpty, for: .normal)
+            self.broadcastDefault.setImage(self.checkBoxEmpty, for: .normal)
+        }
+        else if dv == "autoProcess" {
+            self.issueDefault.setImage(self.checkBoxEmpty, for: .normal)
+            self.processDefault.setImage(self.checkboxChecked, for: .normal)
+            self.broadcastDefault.setImage(self.checkBoxEmpty, for: .normal)
+        }
+        else if dv == "autoBroadcast" {
+            self.issueDefault.setImage(self.checkBoxEmpty, for: .normal)
+            self.processDefault.setImage(self.checkBoxEmpty, for: .normal)
+            self.broadcastDefault.setImage(self.checkboxChecked, for: .normal)
+        }
     }
     
 }

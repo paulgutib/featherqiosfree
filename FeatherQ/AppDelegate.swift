@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
         UINavigationBar.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */ // set a universal tint color for all views depending on app motiff
         UISegmentedControl.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0)
-        
         IQKeyboardManager.sharedManager().enable = true
+        self.selectMyBusinessAsDefault()
         
         return true
     }
@@ -51,6 +51,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func selectMyBusinessAsDefault() {
+        if UserDefaults.standard.value(forKey: "defaultView") != nil {
+            let tabBarController = self.window?.rootViewController as! UITabBarController
+            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+            var rootViewControllers = tabBarController.viewControllers
+            rootViewControllers?[2] = vc
+            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+            tabBarController.setViewControllers(rootViewControllers, animated: false)
+            tabBarController.selectedIndex = 2
+        }
+    }
 }
 

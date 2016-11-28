@@ -31,35 +31,15 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.businessSearch.searchBar.sizeToFit()
         self.tableView.tableHeaderView = self.businessSearch.searchBar
         self.tableView.reloadData()
-        
-        self.postDisplayBusinesses()
-    }
-    
-    func postDisplayBusinesses() {
-        SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            for business in responseData {
-                let dataObj = business.1.dictionaryObject!
-                self.businessList.append(FQBusiness(modelAttr: dataObj))
-            }
-            self.tableView.reloadData()
-            SwiftSpinner.hide()
-        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.postDisplayBusinesses()
     }
 
     // MARK: - Table view data source
@@ -125,6 +105,11 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         return true
     }
     */
+    
+    @available(iOS 8.0, *)
+    public func updateSearchResults(for searchController: UISearchController) {
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -136,9 +121,27 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     */
     
-    @available(iOS 8.0, *)
-    public func updateSearchResults(for searchController: UISearchController) {
-        
+    func postDisplayBusinesses() {
+        SwiftSpinner.show("Fetching..")
+        self.businessList.removeAll()
+        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            for business in responseData {
+                let dataObj = business.1.dictionaryObject!
+                self.businessList.append(FQBusiness(modelAttr: dataObj))
+            }
+            self.tableView.reloadData()
+            SwiftSpinner.hide()
+        }
     }
     
 }

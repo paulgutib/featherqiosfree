@@ -38,6 +38,10 @@ class FQOperationsViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.submitBtn.layer.cornerRadius = 5.0
         self.submitBtn.clipsToBounds = true
+        self.timeOpen.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.timeClose.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.firstNumber.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.lastNumber.inputAccessoryView = UIView.init()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,16 +66,19 @@ class FQOperationsViewController: UIViewController {
         Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoVal!, category: self.selectedCategory!, time_close: self.timeClose.text!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
-            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQDashboardViewController")
-            self.present(vc, animated: true, completion: nil)
+            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+            var rootViewControllers = self.tabBarController?.viewControllers
+            rootViewControllers?[2] = vc
+            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+            self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
             SwiftSpinner.hide()
         }
     }

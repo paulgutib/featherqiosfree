@@ -53,6 +53,7 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         self.removeLogoBtn.layer.cornerRadius = 5.0
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
+        self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
     }
 
     override func didReceiveMemoryWarning() {

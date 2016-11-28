@@ -21,6 +21,7 @@ enum Router: URLRequestConvertible {
     case postDisplayBusinesses
     case getCategories
     case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
+    case postLogin(email: String, password: String)
     
     var method: HTTPMethod {
         switch self {
@@ -29,6 +30,8 @@ enum Router: URLRequestConvertible {
         case .postDisplayBusinesses:
             return .post
         case .postRegister:
+            return .post
+        case .postLogin:
             return .post
         default:
             return .get
@@ -41,6 +44,8 @@ enum Router: URLRequestConvertible {
             return "/api/categories"
         case .postRegister:
             return "/api/register"
+        case .postLogin:
+            return "/api/login"
         default:
             return "/api/search-business"
         }
@@ -75,9 +80,16 @@ enum Router: URLRequestConvertible {
                 "number_limit": number_limit
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postLogin(let email, let password):
+            let parameters = [
+                "email": email,
+                "password": password
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
             break
         }
+        debugPrint(urlRequest.debugDescription)
         
         return urlRequest
     }

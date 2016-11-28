@@ -22,6 +22,9 @@ class FQRegistrationViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.next1Btn.layer.cornerRadius = 5.0
         self.next1Btn.clipsToBounds = true
+        self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.confirmPassword.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
     }
 
     override func didReceiveMemoryWarning() {
