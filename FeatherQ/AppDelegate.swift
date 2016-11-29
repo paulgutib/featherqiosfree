@@ -8,6 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Locksmith
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -52,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func selectMyBusinessAsDefault() {
-        if UserDefaults.standard.value(forKey: "defaultView") != nil {
+        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
+        if dictionary != nil {
             let tabBarController = self.window?.rootViewController as! UITabBarController
             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
             var rootViewControllers = tabBarController.viewControllers
