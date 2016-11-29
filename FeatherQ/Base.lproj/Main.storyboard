@@ -1222,7 +1222,7 @@
                                 <connections>
                                     <outlet property="categoryBackground" destination="9Bq-QK-XHh" id="ESg-L5-Ne2"/>
                                     <outlet property="categoryTitle" destination="Qh7-5m-NTP" id="5x6-FF-YCx"/>
-                                    <segue destination="yne-Ag-zof" kind="show" id="gUf-6q-lnd"/>
+                                    <segue destination="yne-Ag-zof" kind="show" identifier="filterByCategory" id="Exl-Xz-Ukl"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -2285,7 +2285,7 @@
         <image name="WhiteLogo" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gUf-6q-lnd"/>
+        <segue reference="Exl-Xz-Ukl"/>
         <segue reference="RPE-Qq-vJ0"/>
     </inferredMetricsTieBreakers>
 </document>
