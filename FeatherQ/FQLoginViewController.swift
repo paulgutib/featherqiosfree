@@ -59,7 +59,7 @@ class FQLoginViewController: UIViewController {
     
     @IBAction func loginAccount(_ sender: UIButton) {
         SwiftSpinner.show("Logging in..")
-        Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!)).responseJSON { response in
+        Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!, deviceToken: Session.instance.deviceToken!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -77,7 +77,8 @@ class FQLoginViewController: UIViewController {
                     try Locksmith.updateData(data: [
                         "access_token": access_token,
                         "email": self.email.text!,
-                        "password": self.password.text!
+                        "password": self.password.text!,
+                        "device_token": Session.instance.deviceToken!
                     ], forUserAccount: "fqiosappfree")
                     let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                     var rootViewControllers = self.tabBarController?.viewControllers

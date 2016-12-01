@@ -34,6 +34,7 @@ class FQOperationsViewController: UIViewController {
     var phone: String?
     var timeOpenVal: String?
     var timeCloseVal: String?
+    var deviceToken: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +79,7 @@ class FQOperationsViewController: UIViewController {
     @IBAction func registerAccount(_ sender: UIButton) {
         SwiftSpinner.show("Please wait..")
         let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.townCity! + ", " + self.stateProvince! + ", " + self.selectedCountry! + ", " + self.zipPostalCode!
-        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoVal!, category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
+        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: "", category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -96,8 +97,10 @@ class FQOperationsViewController: UIViewController {
                     try Locksmith.updateData(data: [
                         "access_token": access_token,
                         "email": self.email!,
-                        "password": self.password!
+                        "password": self.password!,
+                        "device_token": Session.instance.deviceToken!
                     ], forUserAccount: "fqiosappfree")
+                    Session.instance.isLoggedIn = true
                     let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                     var rootViewControllers = self.tabBarController?.viewControllers
                     rootViewControllers?[2] = vc

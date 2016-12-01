@@ -20,8 +20,9 @@ enum Router: URLRequestConvertible {
     case postSearchBusiness(latitude: String, longitude: String, key: String, category: String)
     case postDisplayBusinesses
     case getCategories
-    case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
-    case postLogin(email: String, password: String)
+    case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String, deviceToken: String)
+    case postLogin(email: String, password: String, deviceToken: String)
+    case postEmailVerification(email: String)
     
     var method: HTTPMethod {
         switch self {
@@ -32,6 +33,8 @@ enum Router: URLRequestConvertible {
         case .postRegister:
             return .post
         case .postLogin:
+            return .post
+        case .postEmailVerification:
             return .post
         default:
             return .get
@@ -46,6 +49,8 @@ enum Router: URLRequestConvertible {
             return "/api/register"
         case .postLogin:
             return "/api/login"
+        case .postEmailVerification:
+            return "/api/email-verification"
         default:
             return "/api/search-business"
         }
@@ -66,7 +71,7 @@ enum Router: URLRequestConvertible {
                 "category": category
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .postRegister(let email, let password, let name, let address, let logo, let category, let time_close, let number_start, let number_limit):
+        case .postRegister(let email, let password, let name, let address, let logo, let category, let time_close, let number_start, let number_limit, let deviceToken):
             let parameters = [
                 "email": email,
                 "password": password,
@@ -77,13 +82,22 @@ enum Router: URLRequestConvertible {
                 "category": category,
                 "time_close": time_close,
                 "number_start": number_start,
-                "number_limit": number_limit
+                "number_limit": number_limit,
+                "device_token": deviceToken,
+                "platform": "iOS"
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .postLogin(let email, let password):
+        case .postLogin(let email, let password, let deviceToken):
             let parameters = [
                 "email": email,
-                "password": password
+                "password": password,
+                "device_token": deviceToken,
+                "platform": "iOS"
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postEmailVerification(let email):
+            let parameters = [
+                "email": email
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

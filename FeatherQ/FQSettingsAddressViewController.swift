@@ -1,23 +1,23 @@
 //
-//  FQBusinessValidationViewController.swift
+//  FQSettingsAddressViewController.swift
 //  FeatherQ
 //
-//  Created by Paul Andrew Gutib on 11/23/16.
+//  Created by Paul Andrew Gutib on 12/2/16.
 //  Copyright © 2016 Reminisense. All rights reserved.
 //
 
 import UIKit
 
-class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     @IBOutlet weak var countryList: UIPickerView!
-    @IBOutlet weak var next3Btn: UIButton!
     @IBOutlet weak var buildingOffice: UITextField!
     @IBOutlet weak var streetBlock: UITextField!
     @IBOutlet weak var townCity: UITextField!
     @IBOutlet weak var stateProvince: UITextField!
     @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
+    @IBOutlet weak var updateBtn: UIButton!
     
     var countryEntry = ["- Select a Country -", "Philippines", "China", "Russia", "USA", "Austrailia", "Singapore", "Japan"]
     var email: String?
@@ -26,13 +26,13 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     var businessName: String?
     var selectedCategory: String?
     var selectedCountry = "- Select a Country -"
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.next3Btn.layer.cornerRadius = 5.0
-        self.next3Btn.clipsToBounds = true
+        self.updateBtn.layer.cornerRadius = 5.0
+        self.updateBtn.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.townCity.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -65,32 +65,16 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         self.selectedCountry = self.countryEntry[row]
     }
 
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "toBusinessOperations" {
-            if self.validateAddresses() {
-                let destView = segue.destination as! FQOperationsViewController
-                destView.email = self.email!
-                destView.password = self.password!
-                destView.logoVal = self.logoVal!
-                destView.businessName = self.businessName!
-                destView.selectedCategory = self.selectedCategory!
-                destView.selectedCountry = self.selectedCountry
-                destView.buildingOffice = self.buildingOffice.text!
-                destView.streetBlock = self.streetBlock.text!
-                destView.townCity = self.townCity.text!
-                destView.stateProvince = self.stateProvince.text!
-                destView.zipPostalCode = self.zipPostalCode.text!
-                destView.phone = self.phone.text!
-            }
-        }
     }
-    
-    @IBAction func buildingOfficeTxt(_ sender: UITextField) {
+    */
+    @IBAction func businessNameTxt(_ sender: UITextField) {
         self.streetBlock.becomeFirstResponder()
     }
     
@@ -98,15 +82,15 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         self.townCity.becomeFirstResponder()
     }
     
-    @IBAction func townCity(_ sender: UITextField) {
+    @IBAction func townCityTxt(_ sender: UITextField) {
         self.stateProvince.becomeFirstResponder()
     }
     
-    @IBAction func stateProvince(_ sender: UITextField) {
+    @IBAction func stateProvinceTxt(_ sender: UITextField) {
         self.zipPostalCode.becomeFirstResponder()
     }
     
-    @IBAction func zipPostalCodeTxt(_ sender: UITextField) {
+    @IBAction func zipPostalCode(_ sender: UITextField) {
         self.phone.becomeFirstResponder()
     }
     

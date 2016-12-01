@@ -28,6 +28,12 @@
 		801A10611DE5ACB600373A22 /* FQBusinessValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */; };
 		801D4C061DDD90DD00BE555F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D4C051DDD90DD00BE555F /* API.swift */; };
 		804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */; };
+		806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */; };
+		806692A41DF08A9900EA3963 /* FQSettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A31DF08A9900EA3963 /* FQSettingsAccountViewController.swift */; };
+		806692A61DF08AB000EA3963 /* FQSettingsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */; };
+		806692A81DF08AC800EA3963 /* FQSettingsAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */; };
+		806692AA1DF08AD900EA3963 /* FQSettingsOperationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */; };
+		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */; };
 		80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */; };
 		80CE42731DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */; };
@@ -62,6 +68,12 @@
 		801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBusinessValidationViewController.swift; sourceTree = "<group>"; };
 		801D4C051DDD90DD00BE555F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQVerificationCodeViewController.swift; sourceTree = "<group>"; };
+		806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTableViewController.swift; sourceTree = "<group>"; };
+		806692A31DF08A9900EA3963 /* FQSettingsAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsAccountViewController.swift; sourceTree = "<group>"; };
+		806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsDetailsViewController.swift; sourceTree = "<group>"; };
+		806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsAddressViewController.swift; sourceTree = "<group>"; };
+		806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsOperationsViewController.swift; sourceTree = "<group>"; };
+		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGetStartedViewController.swift; sourceTree = "<group>"; };
 		80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQProcessQueueTableViewCell.swift; sourceTree = "<group>"; };
 		80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQProcessQueueTableViewController.swift; sourceTree = "<group>"; };
@@ -125,10 +137,22 @@
 			path = FeatherQ;
 			sourceTree = "<group>";
 		};
+		806692A21DF0822000EA3963 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				806692A31DF08A9900EA3963 /* FQSettingsAccountViewController.swift */,
+				806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */,
+				806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */,
+				806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		80C2C11F1DDD78A800D067C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				801A105C1DE56FA800373A22 /* FQBusiness.swift */,
+				80B9C7C61DF02D65000A3B7A /* Session.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -146,6 +170,7 @@
 		80C2C1211DDD78C100D067C1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				806692A21DF0822000EA3963 /* Settings */,
 				801004D81DD39C990070C326 /* FQCategoriesCollectionViewController.swift */,
 				801004DA1DD3FD2A0070C326 /* FQDashboardViewController.swift */,
 				801004DC1DD3FE320070C326 /* FQLoginViewController.swift */,
@@ -160,6 +185,7 @@
 				804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */,
 				80EE0C291DEC458D003B9F7E /* FQForgotPasswordViewController.swift */,
 				80EE0C2B1DED4A26003B9F7E /* FQAboutViewController.swift */,
+				806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -221,6 +247,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -314,6 +343,7 @@
 				801A105D1DE56FA800373A22 /* FQBusiness.swift in Sources */,
 				801004E71DD465FF0070C326 /* FQIssueNumberViewController.swift in Sources */,
 				801A105F1DE578F300373A22 /* Utility.swift in Sources */,
+				806692A61DF08AB000EA3963 /* FQSettingsDetailsViewController.swift in Sources */,
 				801004E11DD400220070C326 /* FQBusinessDetailsViewController.swift in Sources */,
 				80EE0C2A1DEC458D003B9F7E /* FQForgotPasswordViewController.swift in Sources */,
 				80EE0C2C1DED4A26003B9F7E /* FQAboutViewController.swift in Sources */,
@@ -324,12 +354,17 @@
 				801004D91DD39C990070C326 /* FQCategoriesCollectionViewController.swift in Sources */,
 				801A105B1DE5532500373A22 /* FQSearchTableViewCell.swift in Sources */,
 				80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */,
+				806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */,
+				806692A41DF08A9900EA3963 /* FQSettingsAccountViewController.swift in Sources */,
 				801D4C061DDD90DD00BE555F /* API.swift in Sources */,
 				801A10611DE5ACB600373A22 /* FQBusinessValidationViewController.swift in Sources */,
+				806692AA1DF08AD900EA3963 /* FQSettingsOperationsViewController.swift in Sources */,
 				801004DB1DD3FD2A0070C326 /* FQDashboardViewController.swift in Sources */,
 				801004DF1DD3FE5B0070C326 /* FQRegistrationViewController.swift in Sources */,
 				801004DD1DD3FE320070C326 /* FQLoginViewController.swift in Sources */,
 				801004E31DD400410070C326 /* FQOperationsViewController.swift in Sources */,
+				806692A81DF08AC800EA3963 /* FQSettingsAddressViewController.swift in Sources */,
+				80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */,
 				801004C41DD31B850070C326 /* AppDelegate.swift in Sources */,
 				80CE42731DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift in Sources */,
 				801004D71DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift in Sources */,

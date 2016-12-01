@@ -39,7 +39,6 @@ class FQDashboardViewController: UIViewController {
         self.broadcastBtn.layer.cornerRadius = 5.0
         self.broadcastBtn.clipsToBounds = true
         self.autoLoginForRegisteredUser()
-        self.goToDefaultView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,23 +113,28 @@ class FQDashboardViewController: UIViewController {
     }
     
     func autoLoginForRegisteredUser() {
-        SwiftSpinner.show("Loggin in..")
-        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
-        if dictionary != nil {
-            let emailVal = dictionary!["email"] as! String
-            let passwordVal = dictionary!["password"] as! String
-            Alamofire.request(Router.postLogin(email: emailVal, password: passwordVal)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+        if !Session.instance.isLoggedIn {
+            SwiftSpinner.show("Loggin in..")
+            let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
+            if dictionary != nil {
+                let emailVal = dictionary!["email"] as! String
+                let passwordVal = dictionary!["password"] as! String
+                let deviceToken = dictionary!["device_token"] as! String
+                Alamofire.request(Router.postLogin(email: emailVal, password: passwordVal, deviceToken: deviceToken)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    Session.instance.isLoggedIn = true
+                    self.goToDefaultView()
+                    SwiftSpinner.hide()
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
-                SwiftSpinner.hide()
             }
         }
     }

@@ -10,15 +10,14 @@ import UIKit
 import Locksmith
 
 class FQAboutViewController: UIViewController {
-
-    @IBOutlet weak var logOutBtn: UIButton!
+    
+    @IBOutlet var settingsBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.logOutBtn.layer.cornerRadius = 5.0
-        self.logOutBtn.clipsToBounds = true
+        self.showHideSettingsButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,13 +26,7 @@ class FQAboutViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
-        if dictionary != nil {
-            self.logOutBtn.isHidden = false
-        }
-        else {
-            self.logOutBtn.isHidden = true
-        }
+        self.showHideSettingsButton()
     }
 
     /*
@@ -45,27 +38,14 @@ class FQAboutViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-    @IBAction func logoutAccount(_ sender: UIButton) {
-        let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            do{
-                try Locksmith.deleteDataForUserAccount(userAccount: "fqiosappfree")
-                debugPrint("logged out")
-            }catch {
-                debugPrint(error)
-            }
-            UserDefaults.standard.removeObject(forKey: "defaultView")
-            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "getStartedIntro")
-            var rootViewControllers = self.tabBarController?.viewControllers
-            rootViewControllers?[2] = vc
-            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-            self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
-            self.tabBarController?.selectedIndex = 0
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
-        self.present(alertBox, animated: true, completion: nil)
-        return
+    
+    func showHideSettingsButton() {
+        if Session.instance.isLoggedIn {
+            self.navigationItem.rightBarButtonItem = self.settingsBtn
+        }
+        else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
 }
