@@ -23,6 +23,8 @@ enum Router: URLRequestConvertible {
     case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String, deviceToken: String)
     case postLogin(email: String, password: String, deviceToken: String)
     case postEmailVerification(email: String)
+    case getBusiness(business_id: Int)
+    case putBusiness(business_id: Int, name: String, address: String, category: String, time_close: String, number_start: String, number_limit: String)
     
     var method: HTTPMethod {
         switch self {
@@ -36,6 +38,8 @@ enum Router: URLRequestConvertible {
             return .post
         case .postEmailVerification:
             return .post
+        case .putBusiness:
+            return .put
         default:
             return .get
         }
@@ -51,6 +55,11 @@ enum Router: URLRequestConvertible {
             return "/api/login"
         case .postEmailVerification:
             return "/api/email-verification"
+        case .getBusiness(let business_id):
+            let businessId = "\(business_id)"
+            return "/api/business/" + businessId
+        case .putBusiness:
+            return "/api/business"
         default:
             return "/api/search-business"
         }
@@ -61,6 +70,21 @@ enum Router: URLRequestConvertible {
         
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
+        
+        switch self{
+        case .postLogin:
+            break
+        case .postRegister:
+            break
+        default:
+            let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
+            if dictionary != nil {
+                let token = dictionary!["access_token"] as! String
+                debugPrint(token)
+                urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            break
+        }
         
         switch self {
         case .postSearchBusiness(let latitude, let longitude, let key, let category):
@@ -98,6 +122,18 @@ enum Router: URLRequestConvertible {
         case .postEmailVerification(let email):
             let parameters = [
                 "email": email
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .putBusiness(let business_id, let name, let address, let category, let time_close, let number_start, let number_limit):
+            let parameters = [
+                "business_id": "\(business_id)",
+                "name": name,
+                "address": address,
+                "category": category,
+                "time_close": time_close,
+                "number_start": number_start,
+                "number_limit": number_limit
+//                "logo": ""
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

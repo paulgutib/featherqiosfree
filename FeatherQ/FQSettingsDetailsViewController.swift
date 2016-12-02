@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQSettingsDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -37,6 +40,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         ["name": "Entertainment", "image": "CatEntertainment"],
         ["name": "Mass Media", "image": "CatMedia"]
     ]
+    var categoryFlat = ["", "Agriculture", "Energy", "Mining and Quarrying", "Manufacturing", "Government", "Construction", "Wholesale and Retail", "Hotels and Restaurants", "Transportation", "Telecommunications", "Financial", "Education", "Social Services", "Health Care", "Technology", "Entertainment", "Mass Media"]
     var selectedCategory = "- Select a Category -"
     var email: String?
     var password: String?
@@ -59,6 +63,11 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.businessName.text = Session.instance.businessName!
+        self.categoryList.selectRow(self.categoryFlat.index(of: Session.instance.category!)!, inComponent: 0, animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -114,6 +123,27 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     
     @IBAction func removeLogo(_ sender: UIButton) {
         self.logoPic.image = UIImage(named: "PlaceholderLogo")
+    }
+    
+    @IBAction func updateBusiness(_ sender: UIButton) {
+        if self.validateBusinessNameCategory() {
+            SwiftSpinner.show("Updating..")
+            Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                Session.instance.businessName = self.businessName.text!
+                Session.instance.category = self.selectedCategory
+                SwiftSpinner.hide()
+            }
+        }
     }
     
     func validateBusinessNameCategory() -> Bool {

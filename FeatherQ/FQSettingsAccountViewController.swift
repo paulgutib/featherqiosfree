@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
+import Locksmith
 
 class FQSettingsAccountViewController: UIViewController {
 
@@ -29,6 +33,11 @@ class FQSettingsAccountViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
+        self.email.text = dictionary!["email"] as? String
     }
     
     // MARK: - Navigation

@@ -17,7 +17,6 @@ class FQOperationsViewController: UIViewController {
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var firstNumber: UITextField!
     @IBOutlet weak var lastNumber: UITextField!
-    @IBOutlet weak var timeOpen: UIDatePicker!
     @IBOutlet weak var timeClose: UIDatePicker!
     
     var email: String?
@@ -101,6 +100,13 @@ class FQOperationsViewController: UIViewController {
                         "device_token": Session.instance.deviceToken!
                     ], forUserAccount: "fqiosappfree")
                     Session.instance.isLoggedIn = true
+                    Session.instance.category = self.selectedCategory!
+                    Session.instance.timeClose = self.timeCloseVal!
+                    Session.instance.numberLimit = Int(self.lastNumber.text!)!
+                    Session.instance.numberStart = Int(self.firstNumber.text!)!
+                    Session.instance.address = completeAddress
+                    Session.instance.businessName = self.businessName!
+//                    Session.instance.businessId = responseData["business_id"].intValue
                     let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                     var rootViewControllers = self.tabBarController?.viewControllers
                     rootViewControllers?[2] = vc

@@ -10,14 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
-import Locksmith
 
 class FQSettingsOperationsViewController: UIViewController {
     
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var firstNumber: UITextField!
     @IBOutlet weak var lastNumber: UITextField!
-    @IBOutlet weak var timeOpen: UIDatePicker!
     @IBOutlet weak var timeClose: UIDatePicker!
     
     var email: String?
@@ -51,6 +49,14 @@ class FQSettingsOperationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.firstNumber.text = "\(Session.instance.numberStart!)"
+        self.lastNumber.text = "\(Session.instance.numberLimit!)"
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "en_US")
+        df.dateFormat = "h:mm a"
+        self.timeClose.date = df.date(from: Session.instance.timeClose!)!
+    }
 
     /*
     // MARK: - Navigation
@@ -78,45 +84,22 @@ class FQSettingsOperationsViewController: UIViewController {
     }
 
     @IBAction func updateAccount(_ sender: UIButton) {
-//        SwiftSpinner.show("Please wait..")
-//        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.townCity! + ", " + self.stateProvince! + ", " + self.selectedCountry! + ", " + self.zipPostalCode!
-//        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: "", category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!)).responseJSON { response in
-//            if response.result.isFailure {
-//                debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
-//            }
-//            let responseData = JSON(data: response.data!)
-//            debugPrint(responseData)
-//            let access_token = responseData["access_token"].stringValue
-//            if responseData != nil && !access_token.isEmpty {
-//                //store tokens
-//                do {
-//                    try Locksmith.updateData(data: [
-//                        "access_token": access_token,
-//                        "email": self.email!,
-//                        "password": self.password!,
-//                        "device_token": Session.instance.deviceToken!
-//                        ], forUserAccount: "fqiosappfree")
-//                    Session.instance.isLoggedIn = true
-//                    let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-//                    var rootViewControllers = self.tabBarController?.viewControllers
-//                    rootViewControllers?[2] = vc
-//                    vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-//                    self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
-//                }catch {
-//                    debugPrint(error)
-//                }
-//            }
-//            else{
-//                let alertBox = UIAlertController(title: "Server Error", message: "There was a connection error with our servers. Please try submitting again.", preferredStyle: .alert)
-//                alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                self.present(alertBox, animated: true, completion: nil)
-//            }
-//            SwiftSpinner.hide()
-//        }
+        SwiftSpinner.show("Updating..")
+        Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            Session.instance.timeClose = self.timeCloseVal!
+            Session.instance.numberStart = Int(self.firstNumber.text!)!
+            Session.instance.numberLimit = Int(self.lastNumber.text!)!
+            SwiftSpinner.hide()
+        }
     }
 }

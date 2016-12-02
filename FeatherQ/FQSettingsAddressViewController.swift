@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -45,6 +48,16 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let addressData = Session.instance.address!.components(separatedBy: ", ")
+        self.buildingOffice.text = addressData[0]
+        self.streetBlock.text = addressData[1]
+        self.townCity.text = addressData[2]
+        self.stateProvince.text = addressData[3]
+        self.countryList.selectRow(self.countryEntry.index(of: addressData[4])!, inComponent: 0, animated: true)
+        self.zipPostalCode.text = addressData[5]
     }
     
     @available(iOS 2.0, *)
@@ -96,6 +109,27 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     
     @IBAction func phoneTxt(_ sender: UITextField) {
         self.resignFirstResponder()
+    }
+    
+    @IBAction func updateBusiness(_ sender: UIButton) {
+        if self.validateAddresses() {
+            SwiftSpinner.show("Updating..")
+            let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.townCity.text! + ", " + self.stateProvince.text! + ", " + self.selectedCountry + ", " + self.zipPostalCode.text!
+            Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                Session.instance.address = completeAddress
+                SwiftSpinner.hide()
+            }
+        }
     }
     
     func validateAddresses() -> Bool {

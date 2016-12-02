@@ -80,11 +80,41 @@ class FQLoginViewController: UIViewController {
                         "password": self.password.text!,
                         "device_token": Session.instance.deviceToken!
                     ], forUserAccount: "fqiosappfree")
-                    let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-                    var rootViewControllers = self.tabBarController?.viewControllers
-                    rootViewControllers?[2] = vc
-                    vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-                    self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                    Session.instance.isLoggedIn = true
+//                    Session.instance.businessId = responseData["business_id"].intValue
+                    Alamofire.request(Router.getBusiness(business_id: Session.instance.businessId)).responseJSON { response in
+                        if response.result.isFailure {
+                            debugPrint(response.result.error!)
+                            let errorMessage = (response.result.error?.localizedDescription)! as String
+                            SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                            })
+                            return
+                        }
+                        let responseData = JSON(data: response.data!)
+                        debugPrint(responseData)
+                        for business in responseData {
+                            let dataObj = business.1.dictionaryObject!
+                            Session.instance.category = dataObj["category"] as? String
+                            Session.instance.timeClose = dataObj["time_close"] as? String
+                            Session.instance.numberLimit = dataObj["number_limit"] as? Int
+                            Session.instance.servingTime = dataObj["serving_time"] as? String
+                            Session.instance.serviceId = dataObj["service_id"] as? Int
+                            Session.instance.numberStart = dataObj["number_start"] as? Int
+                            Session.instance.key = dataObj["key"] as? String
+                            Session.instance.logo = dataObj["logo"] as? String
+                            Session.instance.address = dataObj["address"] as? String
+                            Session.instance.businessId = dataObj["business_id"] as! Int
+                            Session.instance.peopleInLine = dataObj["people_in_line"] as? Int
+                            Session.instance.businessName = dataObj["name"] as? String
+                        }
+                        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+                        var rootViewControllers = self.tabBarController?.viewControllers
+                        rootViewControllers?[2] = vc
+                        vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+                        self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                        SwiftSpinner.hide()
+                    }
                 }catch {
                     debugPrint(error)
                 }
