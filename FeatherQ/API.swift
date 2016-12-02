@@ -24,7 +24,7 @@ enum Router: URLRequestConvertible {
     case postLogin(email: String, password: String, deviceToken: String)
     case postEmailVerification(email: String)
     case getBusiness(business_id: Int)
-    case putBusiness(business_id: Int, name: String, address: String, category: String, time_close: String, number_start: String, number_limit: String)
+    case putBusiness(business_id: Int, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
     
     var method: HTTPMethod {
         switch self {
@@ -124,7 +124,7 @@ enum Router: URLRequestConvertible {
                 "email": email
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .putBusiness(let business_id, let name, let address, let category, let time_close, let number_start, let number_limit):
+        case .putBusiness(let business_id, let name, let address, let logo, let category, let time_close, let number_start, let number_limit):
             let parameters = [
                 "business_id": "\(business_id)",
                 "name": name,
@@ -132,8 +132,8 @@ enum Router: URLRequestConvertible {
                 "category": category,
                 "time_close": time_close,
                 "number_start": number_start,
-                "number_limit": number_limit
-//                "logo": ""
+                "number_limit": number_limit,
+                "logo": logo
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

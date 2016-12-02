@@ -81,7 +81,7 @@ class FQLoginViewController: UIViewController {
                         "device_token": Session.instance.deviceToken!
                     ], forUserAccount: "fqiosappfree")
                     Session.instance.isLoggedIn = true
-//                    Session.instance.businessId = responseData["business_id"].intValue
+                    Session.instance.businessId = responseData["business_id"].intValue
                     Alamofire.request(Router.getBusiness(business_id: Session.instance.businessId)).responseJSON { response in
                         if response.result.isFailure {
                             debugPrint(response.result.error!)

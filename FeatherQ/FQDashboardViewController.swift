@@ -132,7 +132,7 @@ class FQDashboardViewController: UIViewController {
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)
                     Session.instance.isLoggedIn = true
-//                    Session.instance.businessId = responseData["business_id"].intValue
+                    Session.instance.businessId = responseData["business_id"].intValue
                     Alamofire.request(Router.getBusiness(business_id: Session.instance.businessId)).responseJSON { response in
                         if response.result.isFailure {
                             debugPrint(response.result.error!)

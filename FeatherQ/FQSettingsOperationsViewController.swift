@@ -42,20 +42,18 @@ class FQSettingsOperationsViewController: UIViewController {
         self.submitBtn.clipsToBounds = true
         self.firstNumber.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.lastNumber.inputAccessoryView = UIView.init()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
         self.firstNumber.text = "\(Session.instance.numberStart!)"
         self.lastNumber.text = "\(Session.instance.numberLimit!)"
         let df = DateFormatter()
         df.locale = Locale(identifier: "en_US")
         df.dateFormat = "h:mm a"
         self.timeClose.date = df.date(from: Session.instance.timeClose!)!
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     /*
@@ -85,7 +83,7 @@ class FQSettingsOperationsViewController: UIViewController {
 
     @IBAction func updateAccount(_ sender: UIButton) {
         SwiftSpinner.show("Updating..")
-        Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
+        Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: "", category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -99,6 +97,7 @@ class FQSettingsOperationsViewController: UIViewController {
             Session.instance.timeClose = self.timeCloseVal!
             Session.instance.numberStart = Int(self.firstNumber.text!)!
             Session.instance.numberLimit = Int(self.lastNumber.text!)!
+            self.navigationController!.popViewController(animated: true)
             SwiftSpinner.hide()
         }
     }

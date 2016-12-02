@@ -28,7 +28,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     var logoVal: String?
     var businessName: String?
     var selectedCategory: String?
-    var selectedCountry = "- Select a Country -"
+    var selectedCountry: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +56,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         self.streetBlock.text = addressData[1]
         self.townCity.text = addressData[2]
         self.stateProvince.text = addressData[3]
+        self.selectedCountry = addressData[4]
         self.countryList.selectRow(self.countryEntry.index(of: addressData[4])!, inComponent: 0, animated: true)
         self.zipPostalCode.text = addressData[5]
     }
@@ -114,8 +115,8 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateAddresses() {
             SwiftSpinner.show("Updating..")
-            let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.townCity.text! + ", " + self.stateProvince.text! + ", " + self.selectedCountry + ", " + self.zipPostalCode.text!
-            Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.townCity.text! + ", " + self.stateProvince.text! + ", " + self.selectedCountry! + ", " + self.zipPostalCode.text!
+            Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: "", category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -127,6 +128,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)
                 Session.instance.address = completeAddress
+                self.navigationController!.popViewController(animated: true)
                 SwiftSpinner.hide()
             }
         }
