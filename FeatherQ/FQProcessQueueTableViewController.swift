@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
 class FQProcessQueueTableViewController: UITableViewController {
     
@@ -55,29 +56,46 @@ class FQProcessQueueTableViewController: UITableViewController {
         cell.runningTime.text = "08:21"
         cell.notesValue.text = "Chickenjoy, Burger Steak"
         cell.callNum.tag = indexPath.row
+        
+        //configure left buttons
+        cell.leftButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0)/* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
+            self.serveCallNext(indexPath: indexPath)
+            return true
+        })]
+        cell.leftSwipeSettings.transition = .drag
+        
+        //configure right buttons
+        cell.rightButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0) /* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
+            self.serveCallNext(indexPath: indexPath)
+            return true
+        })]
+        cell.rightSwipeSettings.transition = .drag
+        
+        cell.leftExpansion.buttonIndex = 0
+        cell.leftExpansion.fillOnTrigger = true
+        cell.leftExpansion.threshold = 1.0
+        cell.rightExpansion.buttonIndex = 0
+        cell.rightExpansion.fillOnTrigger = true
+        cell.rightExpansion.threshold = 1.0
 
         return cell
     }
-
-    /*
+    
     // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        // Return false if you do not want the specified item to be editable.
+//        return true
+//    }
 
-    /*
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data source
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
 
     /*
     // Override to support rearranging the table view.
@@ -141,4 +159,10 @@ class FQProcessQueueTableViewController: UITableViewController {
         self.priorityNumbers.remove(at: sender.tag)
         self.tableView.reloadData()
     }
+    
+    func serveCallNext(indexPath: IndexPath) {
+        self.priorityNumbers.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
 }

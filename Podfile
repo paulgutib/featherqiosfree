@@ -13,4 +13,5 @@ target 'FeatherQ' do
   pod 'MarqueeLabel', '3.0.1'
   pod 'IQKeyboardManagerSwift', '4.0.6'
   #pod 'SwiftQRCode'
+  pod 'MGSwipeTableCell'
 end

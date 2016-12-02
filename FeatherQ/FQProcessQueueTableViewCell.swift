@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
-class FQProcessQueueTableViewCell: UITableViewCell {
+class FQProcessQueueTableViewCell: MGSwipeTableCell {
 
     @IBOutlet weak var callNum: UIButton!
     @IBOutlet weak var runningTime: UILabel!
