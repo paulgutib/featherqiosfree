@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQIssueNumberViewController: UIViewController {
 
@@ -14,14 +17,23 @@ class FQIssueNumberViewController: UIViewController {
     @IBOutlet weak var issueSpecific: UIStepper!
     @IBOutlet weak var issueBtn: UIButton!
     @IBOutlet weak var timeForecast: UILabel!
+    @IBOutlet weak var notes: UITextField!
+    
+    var priorityNumbers = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.notes.inputAccessoryView = UIView.init()
         self.issueBtn.layer.cornerRadius = 5.0
         self.issueBtn.clipsToBounds = true
-        self.issueSpecific.value = 16.0
+        for i in Session.instance.numberStart! ... Session.instance.numberLimit! {
+            self.priorityNumbers.append(i)
+        }
+        self.numToIssue.text = "\(self.priorityNumbers[0])"
+        self.issueSpecific.maximumValue = Double(self.priorityNumbers.count-1)
+        self.issueSpecific.minimumValue = 0.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,14 +51,48 @@ class FQIssueNumberViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    @IBAction func notesTxt(_ sender: UITextField) {
+        self.resignFirstResponder()
+    }
 
     @IBAction func incrementDecrement(_ sender: UIStepper) {
-        self.numToIssue.text = "\(Int(sender.value))"
+        self.numToIssue.text = "\(self.priorityNumbers[Int(sender.value)])"
     }
     
     @IBAction func issueNumber(_ sender: Any) {
-        let alertBox = UIAlertController(title: "SUCCESS", message: self.numToIssue.text! + " has been issued. Estimated time until called is around " + self.timeForecast.text! + ". Thanks!", preferredStyle: .alert)
-        alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alertBox, animated: true, completion: nil)
+        SwiftSpinner.show("Issuing number..")
+        Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData["number"] != nil {
+                let dataObj = responseData["number"].dictionaryObject!
+                let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQReceiptViewController") as! FQReceiptViewController
+                modalViewController.issuedNum = self.numToIssue.text!
+                modalViewController.timeEstimate = self.timeForecast.text!
+                modalViewController.transactionNum = "\(dataObj["transaction_number"]!)"
+                modalViewController.confirmCode = dataObj["confirmation_code"] as? String
+                modalViewController.modalPresentationStyle = .overCurrentContext
+                self.priorityNumbers.remove(at: self.priorityNumbers.index(of: Int(self.numToIssue.text!)!)!)
+                self.numToIssue.text = "\(self.priorityNumbers[0])"
+                self.issueSpecific.maximumValue = Double(self.priorityNumbers.count-1)
+                self.issueSpecific.value = 0.0
+                self.notes.text = ""
+                self.present(modalViewController, animated: true, completion: nil)
+            }
+            else {
+                let alertBox = UIAlertController(title: "Number Taken", message: "Please issue an available number.", preferredStyle: .alert)
+                alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertBox, animated: true, completion: nil)
+            }
+            SwiftSpinner.hide()
+        }
     }
 }

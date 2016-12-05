@@ -43,7 +43,7 @@ class FQSettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 1 {
-            let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to logout?", preferredStyle: .alert)
+            let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
             alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
                 do{
                     try Locksmith.deleteDataForUserAccount(userAccount: "fqiosappfree")

@@ -14,4 +14,5 @@ target 'FeatherQ' do
   pod 'IQKeyboardManagerSwift', '4.0.6'
   #pod 'SwiftQRCode'
   pod 'MGSwipeTableCell'
+  pod 'iCarousel'
 end

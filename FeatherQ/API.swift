@@ -24,7 +24,8 @@ enum Router: URLRequestConvertible {
     case postLogin(email: String, password: String, deviceToken: String)
     case postEmailVerification(email: String)
     case getBusiness(business_id: Int)
-    case putBusiness(business_id: Int, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
+    case postUpdateBusiness(business_id: Int, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
+    case postIssueNumber(service_id: Int, priority_number: String, note: String)
     
     var method: HTTPMethod {
         switch self {
@@ -38,8 +39,10 @@ enum Router: URLRequestConvertible {
             return .post
         case .postEmailVerification:
             return .post
-        case .putBusiness:
-            return .put
+        case .postUpdateBusiness:
+            return .post
+        case .postIssueNumber:
+            return .post
         default:
             return .get
         }
@@ -58,8 +61,10 @@ enum Router: URLRequestConvertible {
         case .getBusiness(let business_id):
             let businessId = "\(business_id)"
             return "/api/business/" + businessId
-        case .putBusiness:
-            return "/api/business"
+        case .postUpdateBusiness:
+            return "/api/update-business"
+        case .postIssueNumber:
+            return "/api/issue-number"
         default:
             return "/api/search-business"
         }
@@ -124,7 +129,7 @@ enum Router: URLRequestConvertible {
                 "email": email
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .putBusiness(let business_id, let name, let address, let logo, let category, let time_close, let number_start, let number_limit):
+        case .postUpdateBusiness(let business_id, let name, let address, let logo, let category, let time_close, let number_start, let number_limit):
             let parameters = [
                 "business_id": "\(business_id)",
                 "name": name,
@@ -134,6 +139,13 @@ enum Router: URLRequestConvertible {
                 "number_start": number_start,
                 "number_limit": number_limit,
                 "logo": logo
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postIssueNumber(let service_id, let priority_number, let note):
+            let parameters = [
+                "service_id": "\(service_id)",
+                "priority_number": priority_number,
+                "note": note
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

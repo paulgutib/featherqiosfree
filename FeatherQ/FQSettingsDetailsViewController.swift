@@ -128,7 +128,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateBusinessNameCategory() {
             SwiftSpinner.show("Updating..")
-            Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: "", category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: "", category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String

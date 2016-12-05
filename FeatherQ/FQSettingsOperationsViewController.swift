@@ -83,7 +83,7 @@ class FQSettingsOperationsViewController: UIViewController {
 
     @IBAction func updateAccount(_ sender: UIButton) {
         SwiftSpinner.show("Updating..")
-        Alamofire.request(Router.putBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: "", category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
+        Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: "", category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
