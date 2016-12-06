@@ -26,5 +26,7 @@ class Session {
     var address: String?
     var peopleInLine: Int?
     var businessName: String?
+    var takenNumbers = [String]()
+    var availableNumbers = [Int]()
     
 }

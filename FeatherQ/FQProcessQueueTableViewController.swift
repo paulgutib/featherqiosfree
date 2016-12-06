@@ -50,6 +50,7 @@ class FQProcessQueueTableViewController: UITableViewController {
                 for numberList in responseData["numbers"]["unprocessed_numbers"] {
                     let dataObj = numberList.1.dictionaryObject!
                     self.processQueue.append([
+                        "transaction_number": "\(dataObj["transaction_number"]!)",
                         "priority_number": "\(dataObj["priority_number"]!)",
                         "confirmation_code": dataObj["confirmation_code"] as! String,
                         "time_queued": "\(dataObj["time_queued"]!)",
@@ -176,6 +177,18 @@ class FQProcessQueueTableViewController: UITableViewController {
         let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
         let indexPath = self.tableView.indexPath(for: cell)
         self.processQueue[indexPath!.row]["time_called"] = "\(NSDate().timeIntervalSince1970)"
+        Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+        }
         self.tableView.reloadData()
     }
     

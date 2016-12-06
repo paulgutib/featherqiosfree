@@ -8,13 +8,21 @@
 
 import UIKit
 import iCarousel
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
+import AVFoundation
 
 class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
     @IBOutlet weak var businessCode: UILabel!
     @IBOutlet weak var calledNumbers: iCarousel!
     
-    var priorityNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 123, 123, 888]
+    var timerCounter: Timer?
+    var audioPlayer = AVAudioPlayer()
+    let dingSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
+    
+    var priorityNumbers = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +35,15 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.timerCounter?.invalidate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.readyDingSound()
+        self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
@@ -67,14 +84,14 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
         //views outside of the `if (view == nil) {...}` check otherwise
         //you'll get weird issues with carousel item content appearing
         //in the wrong place in the carousel
-        label.text = "\(self.priorityNumbers[index])"
+        label.text = self.priorityNumbers[index]
         
         return itemView
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
-            return value * 1.1
+            return value * 2.0
         }
         return value
     }
@@ -88,5 +105,46 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func getCustomerBroadcast() {
+        Alamofire.request(Router.getCustomerBroadcast(business_id: "\(Session.instance.businessId)")).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData != nil {
+                let oldNums = self.priorityNumbers
+                self.priorityNumbers.removeAll()
+                for callNums in responseData["broadcast_data"]["called_numbers"] {
+                    let dataObj = callNums.1.dictionaryObject!
+                    let pNum = dataObj["priority_number"] as! String
+                    self.priorityNumbers.append(pNum)
+                }
+                if oldNums != self.priorityNumbers {
+                    self.audioPlayer.play()
+                }
+                self.calledNumbers.reloadData()
+            }
+        }
+    }
+    
+    func timerCallbacks() {
+        self.getCustomerBroadcast()
+    }
+    
+    func readyDingSound() {
+        do{
+            self.audioPlayer = try AVAudioPlayer(contentsOf: self.dingSound as URL, fileTypeHint: nil)
+            self.audioPlayer.prepareToPlay()
+        }catch {
+            print("Error getting the audio file")
+        }
+    }
 
 }

@@ -19,8 +19,6 @@ class FQIssueNumberViewController: UIViewController {
     @IBOutlet weak var timeForecast: UILabel!
     @IBOutlet weak var notes: UITextField!
     
-    var priorityNumbers = [Int]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,10 +27,13 @@ class FQIssueNumberViewController: UIViewController {
         self.issueBtn.layer.cornerRadius = 5.0
         self.issueBtn.clipsToBounds = true
         for i in Session.instance.numberStart! ... Session.instance.numberLimit! {
-            self.priorityNumbers.append(i)
+            let iString = "\(i)"
+            if !Session.instance.takenNumbers.contains(iString) {
+                Session.instance.availableNumbers.append(i)
+            }
         }
-        self.numToIssue.text = "\(self.priorityNumbers[0])"
-        self.issueSpecific.maximumValue = Double(self.priorityNumbers.count-1)
+        self.numToIssue.text = "\(Session.instance.availableNumbers[0])"
+        self.issueSpecific.maximumValue = Double(Session.instance.availableNumbers.count-1)
         self.issueSpecific.minimumValue = 0.0
     }
 
@@ -56,7 +57,7 @@ class FQIssueNumberViewController: UIViewController {
     }
 
     @IBAction func incrementDecrement(_ sender: UIStepper) {
-        self.numToIssue.text = "\(self.priorityNumbers[Int(sender.value)])"
+        self.numToIssue.text = "\(Session.instance.availableNumbers[Int(sender.value)])"
     }
     
     @IBAction func issueNumber(_ sender: Any) {
@@ -80,9 +81,9 @@ class FQIssueNumberViewController: UIViewController {
                 modalViewController.transactionNum = "\(dataObj["transaction_number"]!)"
                 modalViewController.confirmCode = dataObj["confirmation_code"] as? String
                 modalViewController.modalPresentationStyle = .overCurrentContext
-                self.priorityNumbers.remove(at: self.priorityNumbers.index(of: Int(self.numToIssue.text!)!)!)
-                self.numToIssue.text = "\(self.priorityNumbers[0])"
-                self.issueSpecific.maximumValue = Double(self.priorityNumbers.count-1)
+                Session.instance.availableNumbers.remove(at: Session.instance.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
+                self.numToIssue.text = "\(Session.instance.availableNumbers[0])"
+                self.issueSpecific.maximumValue = Double(Session.instance.availableNumbers.count-1)
                 self.issueSpecific.value = 0.0
                 self.notes.text = ""
                 self.present(modalViewController, animated: true, completion: nil)

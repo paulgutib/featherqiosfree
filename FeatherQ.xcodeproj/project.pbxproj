@@ -34,6 +34,7 @@
 		806692A61DF08AB000EA3963 /* FQSettingsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */; };
 		806692A81DF08AC800EA3963 /* FQSettingsAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */; };
 		806692AA1DF08AD900EA3963 /* FQSettingsOperationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */; };
+		808433ED1DF6D2910053C4DB /* doorbell_x.wav in Resources */ = {isa = PBXBuildFile; fileRef = 808433EC1DF6D2910053C4DB /* doorbell_x.wav */; };
 		8084524F1DF5249100249441 /* FQBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8084524E1DF5249100249441 /* FQBroadcastViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */; };
@@ -76,6 +77,7 @@
 		806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsDetailsViewController.swift; sourceTree = "<group>"; };
 		806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsAddressViewController.swift; sourceTree = "<group>"; };
 		806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsOperationsViewController.swift; sourceTree = "<group>"; };
+		808433EC1DF6D2910053C4DB /* doorbell_x.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = doorbell_x.wav; sourceTree = "<group>"; };
 		8084524E1DF5249100249441 /* FQBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBroadcastViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGetStartedViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		80C2C1221DDD78C800D067C1 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				808433EC1DF6D2910053C4DB /* doorbell_x.wav */,
 				801D4C051DDD90DD00BE555F /* API.swift */,
 				801A105E1DE578F300373A22 /* Utility.swift */,
 			);
@@ -285,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				808433ED1DF6D2910053C4DB /* doorbell_x.wav in Resources */,
 				801004CE1DD31B850070C326 /* LaunchScreen.storyboard in Resources */,
 				801004CB1DD31B850070C326 /* Assets.xcassets in Resources */,
 				801004C91DD31B850070C326 /* Main.storyboard in Resources */,
