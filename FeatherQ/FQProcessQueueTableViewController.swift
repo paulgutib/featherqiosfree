@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import Foundation
 import MGSwipeTableCell
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 class FQProcessQueueTableViewController: UITableViewController {
     
-    var priorityNumbers = [Int]()
+    var processQueue = [[String:String]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +25,42 @@ class FQProcessQueueTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        for i in 1 ... 100 {
-            self.priorityNumbers.append(i)
-        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        SwiftSpinner.show("Refreshing..")
+        Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData["numbers"] != nil {
+                self.processQueue.removeAll()
+                for numberList in responseData["numbers"]["unprocessed_numbers"] {
+                    let dataObj = numberList.1.dictionaryObject!
+                    self.processQueue.append([
+                        "priority_number": "\(dataObj["priority_number"]!)",
+                        "confirmation_code": dataObj["confirmation_code"] as! String,
+                        "time_queued": "\(dataObj["time_queued"]!)",
+                        "notes": dataObj["note"] as! String,
+                        "time_called": "\(dataObj["time_called"]!)",
+                    ])
+                }
+            }
+            self.tableView.reloadData()
+            SwiftSpinner.hide()
+        }
     }
 
     // MARK: - Table view data source
@@ -41,7 +72,7 @@ class FQProcessQueueTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.priorityNumbers.count
+        return self.processQueue.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -52,10 +83,31 @@ class FQProcessQueueTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQProcessQueueTableViewCell", for: indexPath) as! FQProcessQueueTableViewCell
 
         // Configure the cell...
-        cell.priorityNum.text = "\(self.priorityNumbers[indexPath.row])"
-        cell.runningTime.text = "08:21"
-        cell.notesValue.text = "Chickenjoy, Burger Steak"
-        cell.callNum.tag = indexPath.row
+        let timeIssued = NSDate(timeIntervalSince1970: Double(self.processQueue[indexPath.row]["time_queued"]!)!)
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "en_US")
+        df.dateFormat = "hh:mm a"
+        cell.runningTime.text = df.string(from: timeIssued as Date)
+        cell.priorityNum.text = self.processQueue[indexPath.row]["priority_number"]
+        cell.confirmCode.text = self.processQueue[indexPath.row]["confirmation_code"]
+        cell.notesValue.text = self.processQueue[indexPath.row]["notes"]
+        cell.serveNum.tag = indexPath.row
+        cell.dropNum.tag = indexPath.row
+//        cell.callNum.tag = indexPath.row
+        
+        if self.processQueue[indexPath.row]["time_called"] != "0" {
+            cell.callNum.isHidden = true
+            cell.serveNum.isHidden = false
+            cell.dropNum.isHidden = false
+//            cell.buttonContainer.subviews.forEach({ $0.removeFromSuperview() })
+//            cell.buttonContainer.addSubview(self.renderServeButton(indexPath: indexPath, cell: cell))
+//            cell.buttonContainer.addSubview(self.renderDropButton(indexPath: indexPath, cell: cell))
+        }
+        else {
+            cell.callNum.isHidden = false
+            cell.serveNum.isHidden = true
+            cell.dropNum.isHidden = true
+        }
         
         //configure left buttons
         cell.leftButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0)/* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
@@ -73,10 +125,8 @@ class FQProcessQueueTableViewController: UITableViewController {
         
         cell.leftExpansion.buttonIndex = 0
         cell.leftExpansion.fillOnTrigger = true
-        cell.leftExpansion.threshold = 1.0
         cell.rightExpansion.buttonIndex = 0
         cell.rightExpansion.fillOnTrigger = true
-        cell.rightExpansion.threshold = 1.0
 
         return cell
     }
@@ -123,46 +173,57 @@ class FQProcessQueueTableViewController: UITableViewController {
     */
     
     @IBAction func callNumNow(_ sender: UIButton) {
-        let serveNum = UIButton(frame: CGRect(x: sender.frame.origin.x, y: sender.frame.origin.y, width: (sender.frame.width / 2.0) - 5.0, height: sender.frame.height))
-        serveNum.layer.cornerRadius = 5.0
-        serveNum.clipsToBounds = true
-        serveNum.setTitle("Serve", for: .normal)
-        serveNum.setTitleColor(UIColor.white, for: .normal)
-        serveNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
-        serveNum.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
-        serveNum.addTarget(self, action: #selector(self.serveNumNow(sender:)), for: .touchUpInside)
-        serveNum.tag = sender.tag
-        
-        let dropNum = UIButton(frame: CGRect(x: sender.frame.origin.x + (sender.frame.width / 2.0) + 5.0, y: sender.frame.origin.y, width: (sender.frame.width / 2.0) - 5.0, height: sender.frame.height))
-        dropNum.layer.cornerRadius = 5.0
-        dropNum.clipsToBounds = true
-        dropNum.setTitle("Drop", for: .normal)
-        dropNum.setTitleColor(UIColor.white, for: .normal)
-        dropNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
-        dropNum.backgroundColor = UIColor(red: 0.9725, green: 0.298, blue: 0.0157, alpha: 1.0) /* #f84c04 */
-        dropNum.addTarget(self, action: #selector(self.dropNumNow(sender:)), for: .touchUpInside)
-        dropNum.tag = sender.tag
-        
-        sender.isHidden = true
-        sender.superview!.addSubview(serveNum)
-        sender.superview!.addSubview(dropNum)
-    }
-    
-    func serveNumNow(sender: UIButton) {
-        debugPrint("served tagged \(sender.tag)")
-        self.priorityNumbers.remove(at: sender.tag)
+        let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
+        let indexPath = self.tableView.indexPath(for: cell)
+        self.processQueue[indexPath!.row]["time_called"] = "\(NSDate().timeIntervalSince1970)"
         self.tableView.reloadData()
     }
     
-    func dropNumNow(sender: UIButton) {
+//    func renderServeButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
+//        let serveNum = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
+//        serveNum.layer.cornerRadius = 5.0
+//        serveNum.clipsToBounds = true
+//        serveNum.setTitle("Serve", for: .normal)
+//        serveNum.setTitleColor(UIColor.white, for: .normal)
+//        serveNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
+//        serveNum.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+//        serveNum.tag = indexPath.row
+//        serveNum.addTarget(self, action: #selector(self.serveNumNow(sender:)), for: .touchUpInside)
+//        return serveNum
+//    }
+//    
+//    func renderDropButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
+//        let dropNum = UIButton(frame: CGRect(x: (cell.buttonContainer.frame.width / 2.0) + 5.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
+//        dropNum.layer.cornerRadius = 5.0
+//        dropNum.clipsToBounds = true
+//        dropNum.setTitle("Drop", for: .normal)
+//        dropNum.setTitleColor(UIColor.white, for: .normal)
+//        dropNum.titleLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
+//        dropNum.backgroundColor = UIColor(red: 0.9725, green: 0.298, blue: 0.0157, alpha: 1.0) /* #f84c04 */
+//        dropNum.tag = indexPath.row
+//        dropNum.addTarget(self, action: #selector(self.dropNumNow(sender:)), for: .touchUpInside)
+//        return dropNum
+//    }
+    
+    @IBAction func dropNumNow(_ sender: UIButton) {
         debugPrint("dropped tagged \(sender.tag)")
-        self.priorityNumbers.remove(at: sender.tag)
-        self.tableView.reloadData()
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        self.removeRowsAndReload(indexPath: indexPath)
+    }
+    
+    @IBAction func serveNumNow(_ sender: UIButton) {
+        debugPrint("served tagged \(sender.tag)")
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        self.removeRowsAndReload(indexPath: indexPath)
     }
     
     func serveCallNext(indexPath: IndexPath) {
-        self.priorityNumbers.remove(at: indexPath.row)
-        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        self.removeRowsAndReload(indexPath: indexPath)
     }
     
+    func removeRowsAndReload(indexPath: IndexPath) {
+        self.processQueue.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        self.tableView.reloadData()
+    }
 }

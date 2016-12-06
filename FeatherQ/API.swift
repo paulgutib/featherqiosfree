@@ -26,6 +26,7 @@ enum Router: URLRequestConvertible {
     case getBusiness(business_id: Int)
     case postUpdateBusiness(business_id: Int, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String)
     case postIssueNumber(service_id: Int, priority_number: String, note: String)
+    case getAllNumbers(business_id: Int)
     
     var method: HTTPMethod {
         switch self {
@@ -65,6 +66,9 @@ enum Router: URLRequestConvertible {
             return "/api/update-business"
         case .postIssueNumber:
             return "/api/issue-number"
+        case .getAllNumbers(let business_id):
+            let businessId = "\(business_id)"
+            return "/api/all-numbers/" + businessId
         default:
             return "/api/search-business"
         }
