@@ -120,7 +120,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     public func updateSearchResults(for searchController: UISearchController) {
         var unwrappedBusinessNames = [String]()
         for business in self.businessList {
-            unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!)
+            unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!+"|"+business.logo!)
         }
         self.filteredBusinesses.removeAll(keepingCapacity: false)
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
@@ -129,15 +129,44 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.tableView.reloadData()
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "viewPublicBroadcast" {
+            let destView = segue.destination as! FQSearchBroadcastViewController
+            if let selectedCell = sender as? FQSearchTableViewCell {
+                let indexPath = self.tableView.indexPath(for: selectedCell)!
+                if self.filterSearch.isActive {
+                    let businessData = self.filteredBusinesses[indexPath.row].components(separatedBy: "|")
+                    var pLine: Int?
+                    if businessData[3] == "less than 5" {
+                        pLine = 4
+                    }
+                    else {
+                        pLine = Int(businessData[3])!
+                    }
+                    destView.selectedBusiness = FQBusiness(modelAttr: [
+                        "name": businessData[0],
+                        "category": businessData[1],
+                        "address": businessData[2],
+                        "people_in_line": pLine!,
+                        "serving_time": businessData[4],
+                        "key": businessData[5],
+                        "business_id": businessData[6],
+                        "time_close": businessData[7],
+                        "logo": businessData[8],
+                    ])
+                    self.filterSearch.isActive = false
+                }
+                else {
+                    destView.selectedBusiness = self.businessList[indexPath.row]
+                }
+            }
+        }
     }
-    */
     
     func postDisplayBusinesses() {
         SwiftSpinner.show("Fetching..")

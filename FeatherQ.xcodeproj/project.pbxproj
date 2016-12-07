@@ -36,6 +36,7 @@
 		806692AA1DF08AD900EA3963 /* FQSettingsOperationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */; };
 		808433ED1DF6D2910053C4DB /* doorbell_x.wav in Resources */ = {isa = PBXBuildFile; fileRef = 808433EC1DF6D2910053C4DB /* doorbell_x.wav */; };
 		8084524F1DF5249100249441 /* FQBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8084524E1DF5249100249441 /* FQBroadcastViewController.swift */; };
+		808FE5901DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80CE426F1DDB5D440054E7C5 /* FQGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */; };
 		80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsOperationsViewController.swift; sourceTree = "<group>"; };
 		808433EC1DF6D2910053C4DB /* doorbell_x.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = doorbell_x.wav; sourceTree = "<group>"; };
 		8084524E1DF5249100249441 /* FQBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBroadcastViewController.swift; sourceTree = "<group>"; };
+		808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSearchBroadcastViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGetStartedViewController.swift; sourceTree = "<group>"; };
 		80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQProcessQueueTableViewCell.swift; sourceTree = "<group>"; };
@@ -154,6 +156,15 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		808FE58E1DF7EE0B00705D83 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				801A10581DE5517300373A22 /* FQSearchTableViewController.swift */,
+				808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		80C2C11F1DDD78A800D067C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +187,7 @@
 		80C2C1211DDD78C100D067C1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				808FE58E1DF7EE0B00705D83 /* Search */,
 				806692A21DF0822000EA3963 /* Settings */,
 				801004D81DD39C990070C326 /* FQCategoriesCollectionViewController.swift */,
 				801004DA1DD3FD2A0070C326 /* FQDashboardViewController.swift */,
@@ -186,7 +198,6 @@
 				801004E61DD465FF0070C326 /* FQIssueNumberViewController.swift */,
 				80CE426E1DDB5D440054E7C5 /* FQGetStartedViewController.swift */,
 				80CE42721DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift */,
-				801A10581DE5517300373A22 /* FQSearchTableViewController.swift */,
 				801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */,
 				804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */,
 				80EE0C291DEC458D003B9F7E /* FQForgotPasswordViewController.swift */,
@@ -371,6 +382,7 @@
 				802B4EB71DF559DB0038891A /* FQReceiptViewController.swift in Sources */,
 				806692AA1DF08AD900EA3963 /* FQSettingsOperationsViewController.swift in Sources */,
 				801004DB1DD3FD2A0070C326 /* FQDashboardViewController.swift in Sources */,
+				808FE5901DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift in Sources */,
 				8084524F1DF5249100249441 /* FQBroadcastViewController.swift in Sources */,
 				801004DF1DD3FE5B0070C326 /* FQRegistrationViewController.swift in Sources */,
 				801004DD1DD3FE320070C326 /* FQLoginViewController.swift in Sources */,

@@ -9,6 +9,9 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Locksmith
+import Alamofire
+import SwiftyJSON
+import SwiftSpinner
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -58,7 +61,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        
+        if application.applicationState == .active {
+            let userInfoDict = userInfo as NSDictionary as! [String: AnyObject]
+            let msgType = userInfoDict["aps"]!["msg_type"]!! as! String
+            if msgType == "call" {
+                Session.instance.playSound = true
+            }
+            else {
+                Session.instance.playSound = false
+            }
+            Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                if responseData != nil {
+                    Session.instance.broadcastNumbers.removeAll()
+                    for callNums in responseData["broadcast_data"]["called_numbers"] {
+                        let dataObj = callNums.1.dictionaryObject!
+                        let pNum = dataObj["priority_number"] as! String
+                        Session.instance.broadcastNumbers.append(pNum)
+                    }
+                }
+            }
+
+            debugPrint("ping received")
+        }
     }
     
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
@@ -70,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print("Device Token (string):", deviceTokenString)
+        print("Device Token (raw):", deviceToken)
         Session.instance.deviceToken = deviceTokenString
 
     }

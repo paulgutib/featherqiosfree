@@ -22,7 +22,7 @@ class FQBusiness {
     
     init(modelAttr: [String: Any]) {
         self.address = modelAttr["address"] as? String
-        self.business_id = "\(modelAttr["business_id"]!)"
+        self.business_id = self.dataTypeChecker(arg0: modelAttr["business_id"]!) //"\(modelAttr["business_id"]!)"
         self.category = modelAttr["category"] as? String
         self.logo = Utility.instance.anyObjectNilChecker(anyObject: modelAttr["logo"]!, placeholder: "")
         self.key = modelAttr["key"] as? String
@@ -38,6 +38,14 @@ class FQBusiness {
             return "less than 5"
         }
         return "\(argVal!)"
+    }
+    
+    func dataTypeChecker(arg0: Any) -> String{
+        let forcedWrap = "\(arg0)"
+        if forcedWrap.isEmpty {
+            return arg0 as! String
+        }
+        return forcedWrap
     }
     
 }

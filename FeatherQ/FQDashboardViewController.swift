@@ -132,7 +132,8 @@ class FQDashboardViewController: UIViewController {
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)
                     Session.instance.isLoggedIn = true
-                    Session.instance.businessId = responseData["business_id"].intValue
+                    Session.instance.businessId = "\(responseData["business_id"])"
+                    Session.instance.serviceId = "\(responseData["service_id"])"
                     for issuedNumber in responseData["issued_numbers"] {
                         let dataObj = issuedNumber.1.dictionaryObject!
                         let pNum = dataObj["priority_number"] as! String
@@ -155,13 +156,11 @@ class FQDashboardViewController: UIViewController {
                             Session.instance.timeClose = dataObj["time_close"] as? String
                             Session.instance.numberLimit = dataObj["number_limit"] as? Int
                             Session.instance.servingTime = dataObj["serving_time"] as? String
-                            Session.instance.serviceId = dataObj["service_id"] as? Int
                             Session.instance.numberStart = dataObj["number_start"] as? Int
                             Session.instance.key = dataObj["key"] as? String
                             Session.instance.logo = dataObj["logo"] as? String
                             Session.instance.address = dataObj["address"] as? String
-                            Session.instance.businessId = dataObj["business_id"] as! Int
-                            Session.instance.peopleInLine = dataObj["people_in_line"] as? Int
+                            Session.instance.peopleInLine = "\(dataObj["people_in_line"]!)"
                             Session.instance.businessName = dataObj["name"] as? String
                         }
                         self.goToDefaultView()

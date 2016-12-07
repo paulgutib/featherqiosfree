@@ -106,7 +106,8 @@ class FQOperationsViewController: UIViewController {
                     Session.instance.numberStart = Int(self.firstNumber.text!)!
                     Session.instance.address = completeAddress
                     Session.instance.businessName = self.businessName!
-                    Session.instance.businessId = responseData["business_id"].intValue
+                    Session.instance.businessId = "\(responseData["business_id"])"
+                    Session.instance.serviceId = "\(responseData["service_id"])"
                     let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                     var rootViewControllers = self.tabBarController?.viewControllers
                     rootViewControllers?[2] = vc

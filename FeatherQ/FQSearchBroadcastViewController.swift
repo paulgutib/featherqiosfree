@@ -1,8 +1,8 @@
 //
-//  FQBroadcastViewController.swift
+//  FQSearchBroadcastViewController.swift
 //  FeatherQ
 //
-//  Created by Paul Andrew Gutib on 12/5/16.
+//  Created by Paul Andrew Gutib on 12/7/16.
 //  Copyright © 2016 Reminisense. All rights reserved.
 //
 
@@ -13,24 +13,28 @@ import SwiftyJSON
 import SwiftSpinner
 import AVFoundation
 
-class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
-    
-    @IBOutlet weak var businessCode: UILabel!
+class FQSearchBroadcastViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
+
     @IBOutlet weak var calledNumbers: iCarousel!
+    @IBOutlet weak var businessAddress: UILabel!
+    @IBOutlet weak var closingTime: UILabel!
+    @IBOutlet weak var linePeople: UILabel!
+    @IBOutlet weak var waitingTimeTotal: UILabel!
     
     var timerCounter: Timer?
     var audioPlayer = AVAudioPlayer()
     let dingSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
+    var selectedBusiness: FQBusiness?
     
     var priorityNumbers = [String]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.calledNumbers.type = .coverFlow2
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -41,9 +45,14 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        Session.instance.viewedBusinessId = Session.instance.businessId
+        self.navigationItem.title = self.selectedBusiness?.name!
+        Session.instance.viewedBusinessId = self.selectedBusiness!.business_id!
+        self.businessAddress.text = self.selectedBusiness?.address!
+        self.closingTime.text = self.selectedBusiness?.time_close!
+        self.linePeople.text = self.selectedBusiness?.people_in_line!
+        self.waitingTimeTotal.text = self.selectedBusiness?.serving_time!
         self.readyDingSound()
-        Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
+        Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -61,12 +70,11 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
                     let pNum = dataObj["priority_number"] as! String
                     self.priorityNumbers.append(pNum)
                 }
-                Session.instance.broadcastNumbers = self.priorityNumbers
                 self.audioPlayer.play()
                 self.calledNumbers.reloadData()
             }
         }
-        self.timerCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
+//        self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
@@ -93,7 +101,7 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
             label = UILabel(frame: itemView.bounds)
             label.backgroundColor = .clear
             label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 400)
+            label.font = UIFont.systemFont(ofSize: 200)
             label.adjustsFontSizeToFitWidth = true
             label.lineBreakMode = .byClipping
             label.numberOfLines = 0
@@ -118,22 +126,20 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
         }
         return value
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     func timerCallbacks() {
         if Session.instance.broadcastNumbers != self.priorityNumbers {
-            if Session.instance.playSound {
-                self.audioPlayer.play()
-            }
+            self.audioPlayer.play()
             self.priorityNumbers = Session.instance.broadcastNumbers
         }
         self.calledNumbers.reloadData()

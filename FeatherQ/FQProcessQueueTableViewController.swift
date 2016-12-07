@@ -180,11 +180,11 @@ class FQProcessQueueTableViewController: UITableViewController {
         Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -221,16 +221,65 @@ class FQProcessQueueTableViewController: UITableViewController {
     @IBAction func dropNumNow(_ sender: UIButton) {
         debugPrint("dropped tagged \(sender.tag)")
         let indexPath = IndexPath(row: sender.tag, section: 0)
+        Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+        }
         self.removeRowsAndReload(indexPath: indexPath)
     }
     
     @IBAction func serveNumNow(_ sender: UIButton) {
         debugPrint("served tagged \(sender.tag)")
         let indexPath = IndexPath(row: sender.tag, section: 0)
+        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+        }
         self.removeRowsAndReload(indexPath: indexPath)
     }
     
     func serveCallNext(indexPath: IndexPath) {
+        self.processQueue[indexPath.row+1]["time_called"] = "\(NSDate().timeIntervalSince1970)"
+        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row+1]["transaction_number"]!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+//                    let errorMessage = (response.result.error?.localizedDescription)! as String
+//                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                        SwiftSpinner.hide()
+//                    })
+//                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+            }
+        }
         self.removeRowsAndReload(indexPath: indexPath)
     }
     
