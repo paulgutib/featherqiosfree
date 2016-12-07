@@ -52,29 +52,7 @@ class FQSearchBroadcastViewController: UIViewController, iCarouselDataSource, iC
         self.linePeople.text = self.selectedBusiness?.people_in_line!
         self.waitingTimeTotal.text = self.selectedBusiness?.serving_time!
         self.readyDingSound()
-        Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            if responseData != nil {
-                self.priorityNumbers.removeAll()
-                for callNums in responseData["broadcast_data"]["called_numbers"] {
-                    let dataObj = callNums.1.dictionaryObject!
-                    let pNum = dataObj["priority_number"] as! String
-                    self.priorityNumbers.append(pNum)
-                }
-                self.audioPlayer.play()
-                self.calledNumbers.reloadData()
-            }
-        }
-//        self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
+        self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
@@ -138,11 +116,31 @@ class FQSearchBroadcastViewController: UIViewController, iCarouselDataSource, iC
      */
     
     func timerCallbacks() {
-        if Session.instance.broadcastNumbers != self.priorityNumbers {
-            self.audioPlayer.play()
-            self.priorityNumbers = Session.instance.broadcastNumbers
+        Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData != nil {
+                let oldNums = self.priorityNumbers
+                self.priorityNumbers.removeAll()
+                for callNums in responseData["broadcast_data"]["called_numbers"] {
+                    let dataObj = callNums.1.dictionaryObject!
+                    let pNum = dataObj["priority_number"] as! String
+                    self.priorityNumbers.append(pNum)
+                }
+                if oldNums != self.priorityNumbers {
+                    self.audioPlayer.play()
+                }
+                self.calledNumbers.reloadData()
+            }
         }
-        self.calledNumbers.reloadData()
     }
     
     func readyDingSound() {
