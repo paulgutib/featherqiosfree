@@ -19,6 +19,9 @@ class FQIssueNumberViewController: UIViewController {
     @IBOutlet weak var timeForecast: UILabel!
     @IBOutlet weak var notes: UITextField!
     
+    var takenNumbers = [String]()
+    var availableNumbers = [Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,15 +29,6 @@ class FQIssueNumberViewController: UIViewController {
         self.notes.inputAccessoryView = UIView.init()
         self.issueBtn.layer.cornerRadius = 5.0
         self.issueBtn.clipsToBounds = true
-        for i in Session.instance.numberStart! ... Session.instance.numberLimit! {
-            let iString = "\(i)"
-            if !Session.instance.takenNumbers.contains(iString) {
-                Session.instance.availableNumbers.append(i)
-            }
-        }
-        self.numToIssue.text = "\(Session.instance.availableNumbers[0])"
-        self.issueSpecific.maximumValue = Double(Session.instance.availableNumbers.count-1)
-        self.issueSpecific.minimumValue = 0.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +36,41 @@ class FQIssueNumberViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        SwiftSpinner.show("Refreshing..")
+        Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData["numbers"] != nil {
+                self.takenNumbers.removeAll()
+                self.availableNumbers.removeAll()
+                for numberList in responseData["numbers"]["unprocessed_numbers"] {
+                    let dataObj = numberList.1.dictionaryObject!
+                    let pNum = "\(dataObj["priority_number"]!)"
+                    self.takenNumbers.append(pNum)
+                }
+                for i in Session.instance.numberStart! ... Session.instance.numberLimit! {
+                    let iString = "\(i)"
+                    if !self.takenNumbers.contains(iString) {
+                        self.availableNumbers.append(i)
+                    }
+                }
+                self.numToIssue.text = "\(self.availableNumbers[0])"
+                self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                self.issueSpecific.minimumValue = 0.0
+            }
+            SwiftSpinner.hide()
+        }
+        
+    }
 
     /*
     // MARK: - Navigation
@@ -57,7 +86,7 @@ class FQIssueNumberViewController: UIViewController {
     }
 
     @IBAction func incrementDecrement(_ sender: UIStepper) {
-        self.numToIssue.text = "\(Session.instance.availableNumbers[Int(sender.value)])"
+        self.numToIssue.text = "\(self.availableNumbers[Int(sender.value)])"
     }
     
     @IBAction func issueNumber(_ sender: Any) {
@@ -81,9 +110,9 @@ class FQIssueNumberViewController: UIViewController {
                 modalViewController.transactionNum = "\(dataObj["transaction_number"]!)"
                 modalViewController.confirmCode = dataObj["confirmation_code"] as? String
                 modalViewController.modalPresentationStyle = .overCurrentContext
-                Session.instance.availableNumbers.remove(at: Session.instance.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
-                self.numToIssue.text = "\(Session.instance.availableNumbers[0])"
-                self.issueSpecific.maximumValue = Double(Session.instance.availableNumbers.count-1)
+                self.availableNumbers.remove(at: self.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
+                self.numToIssue.text = "\(self.availableNumbers[0])"
+                self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
                 self.issueSpecific.value = 0.0
                 self.notes.text = ""
                 self.present(modalViewController, animated: true, completion: nil)

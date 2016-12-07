@@ -134,11 +134,6 @@ class FQDashboardViewController: UIViewController {
                     Session.instance.isLoggedIn = true
                     Session.instance.businessId = "\(responseData["business_id"])"
                     Session.instance.serviceId = "\(responseData["service_id"])"
-                    for issuedNumber in responseData["issued_numbers"] {
-                        let dataObj = issuedNumber.1.dictionaryObject!
-                        let pNum = dataObj["priority_number"] as! String
-                        Session.instance.takenNumbers.append(pNum)
-                    }
                     Alamofire.request(Router.getBusiness(business_id: Session.instance.businessId)).responseJSON { response in
                         if response.result.isFailure {
                             debugPrint(response.result.error!)

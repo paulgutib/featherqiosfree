@@ -111,23 +111,25 @@ class FQProcessQueueTableViewController: UITableViewController {
         }
         
         //configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0)/* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
-            self.serveCallNext(indexPath: indexPath)
-            return true
-        })]
-        cell.leftSwipeSettings.transition = .drag
-        
-        //configure right buttons
-        cell.rightButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0) /* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
-            self.serveCallNext(indexPath: indexPath)
-            return true
-        })]
-        cell.rightSwipeSettings.transition = .drag
-        
-        cell.leftExpansion.buttonIndex = 0
-        cell.leftExpansion.fillOnTrigger = true
-        cell.rightExpansion.buttonIndex = 0
-        cell.rightExpansion.fillOnTrigger = true
+        if indexPath.row < self.processQueue.count-1 {
+            cell.leftButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0)/* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
+                self.serveCallNext(indexPath: indexPath)
+                return true
+            })]
+            cell.leftSwipeSettings.transition = .drag
+            
+            //configure right buttons
+            cell.rightButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0) /* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
+                self.serveCallNext(indexPath: indexPath)
+                return true
+            })]
+            cell.rightSwipeSettings.transition = .drag
+            
+            cell.leftExpansion.buttonIndex = 0
+            cell.leftExpansion.fillOnTrigger = true
+            cell.rightExpansion.buttonIndex = 0
+            cell.rightExpansion.fillOnTrigger = true
+        }
 
         return cell
     }
@@ -267,7 +269,7 @@ class FQProcessQueueTableViewController: UITableViewController {
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
-            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row+1]["transaction_number"]!)).responseJSON { response in
+            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
 //                    let errorMessage = (response.result.error?.localizedDescription)! as String

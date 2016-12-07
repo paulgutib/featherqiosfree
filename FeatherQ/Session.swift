@@ -27,8 +27,6 @@ class Session {
     var address: String?
     var peopleInLine: String?
     var businessName: String?
-    var takenNumbers = [String]()
-    var availableNumbers = [Int]()
     var broadcastNumbers = [String]()
     var playSound = true
     
