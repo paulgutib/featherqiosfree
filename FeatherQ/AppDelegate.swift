@@ -64,34 +64,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.applicationState == .active {
             let userInfoDict = userInfo as NSDictionary as! [String: AnyObject]
             let msgType = userInfoDict["aps"]!["msg_type"]!! as! String
-            if msgType == "call" {
-                Session.instance.playSound = true
-            }
-            else {
-                Session.instance.playSound = false
-            }
-            Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
-                }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
-                if responseData != nil {
-                    Session.instance.broadcastNumbers.removeAll()
-                    for callNums in responseData["broadcast_data"]["called_numbers"] {
-                        let dataObj = callNums.1.dictionaryObject!
-                        let pNum = dataObj["priority_number"] as! String
-                        Session.instance.broadcastNumbers.append(pNum)
+            if msgType == "issue" {
+                Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+//                        let errorMessage = (response.result.error?.localizedDescription)! as String
+//                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                            SwiftSpinner.hide()
+//                        })
+//                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    if responseData["numbers"] != nil {
+                        Session.instance.transactionNums.removeAll()
+                        Session.instance.processQueue.removeAll()
+                        for numberList in responseData["numbers"]["unprocessed_numbers"] {
+                            let dataObj = numberList.1.dictionaryObject!
+                            Session.instance.transactionNums.append("\(dataObj["transaction_number"]!)")
+                            Session.instance.processQueue.append([
+                                "transaction_number": "\(dataObj["transaction_number"]!)",
+                                "priority_number": "\(dataObj["priority_number"]!)",
+                                "confirmation_code": dataObj["confirmation_code"] as! String,
+                                "time_queued": "\(dataObj["time_queued"]!)",
+                                "notes": dataObj["note"] as! String,
+                                "time_called": "\(dataObj["time_called"]!)",
+                            ])
+                        }
                     }
                 }
             }
-
-            debugPrint("ping received")
+            else {
+                if msgType == "call" {
+                    Session.instance.playSound = true
+                    Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
+                        if response.result.isFailure {
+                            debugPrint(response.result.error!)
+                            let errorMessage = (response.result.error?.localizedDescription)! as String
+                            SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                            })
+                            return
+                        }
+                        let responseData = JSON(data: response.data!)
+                        debugPrint(responseData)
+                        if responseData != nil {
+                            Session.instance.broadcastNumbers.removeAll()
+                            for callNums in responseData["broadcast_data"]["called_numbers"] {
+                                let dataObj = callNums.1.dictionaryObject!
+                                let pNum = dataObj["priority_number"] as! String
+                                Session.instance.broadcastNumbers.append(pNum)
+                            }
+                        }
+                    }
+                }
+//                else {
+//                    Session.instance.playSound = false
+//                }
+                
+            }
+            debugPrint(msgType + " received")
         }
     }
     

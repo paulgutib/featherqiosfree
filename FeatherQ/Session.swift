@@ -29,5 +29,8 @@ class Session {
     var businessName: String?
     var broadcastNumbers = [String]()
     var playSound = true
+    var transactionNums = [String]()
+    var processQueue = [[String:String]]()
+    var estimatedSecs: Int?
     
 }

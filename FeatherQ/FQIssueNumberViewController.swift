@@ -37,15 +37,16 @@ class FQIssueNumberViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        SwiftSpinner.show("Refreshing..")
+        SwiftSpinner.show("Preparing..")
+        self.getEstimatedTime()
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -69,7 +70,6 @@ class FQIssueNumberViewController: UIViewController {
             }
             SwiftSpinner.hide()
         }
-        
     }
 
     /*
@@ -87,6 +87,8 @@ class FQIssueNumberViewController: UIViewController {
 
     @IBAction func incrementDecrement(_ sender: UIStepper) {
         self.numToIssue.text = "\(self.availableNumbers[Int(sender.value)])"
+        let totalSecs = (sender.value + 1) * Double(Session.instance.estimatedSecs!)
+        self.showEstimatedTimeText(totalSecs: Int(totalSecs))
     }
     
     @IBAction func issueNumber(_ sender: Any) {
@@ -94,11 +96,11 @@ class FQIssueNumberViewController: UIViewController {
         Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -122,7 +124,34 @@ class FQIssueNumberViewController: UIViewController {
                 alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alertBox, animated: true, completion: nil)
             }
+            self.getEstimatedTime()
             SwiftSpinner.hide()
         }
+    }
+    
+    func getEstimatedTime() {
+        Alamofire.request(Router.getEstimatedTime(business_id: Session.instance.businessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                //                let errorMessage = (response.result.error?.localizedDescription)! as String
+                //                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                //                    SwiftSpinner.hide()
+                //                })
+                //                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            Session.instance.estimatedSecs = abs(responseData["estimated_serving_time"].intValue)
+            self.showEstimatedTimeText(totalSecs: Session.instance.estimatedSecs!)
+        }
+    }
+    
+    func showEstimatedTimeText(totalSecs: Int) {
+        let date = Date()
+        let estimatedTime = date.addingTimeInterval(Double(totalSecs) * 60.0)
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "en_US")
+        df.dateFormat = "h:mm a"
+        self.timeForecast.text = df.string(from: estimatedTime)
     }
 }

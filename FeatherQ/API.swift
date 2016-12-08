@@ -31,6 +31,7 @@ enum Router: URLRequestConvertible {
     case getCustomerBroadcast(business_id: String)
     case getServeNumber(transaction_number: String)
     case getDropNumber(transaction_number: String)
+    case getEstimatedTime(business_id: String)
     
     var method: HTTPMethod {
         switch self {
@@ -79,6 +80,8 @@ enum Router: URLRequestConvertible {
             return "/api/serve-number/" + transaction_number
         case .getDropNumber(let transaction_number):
             return "/api/drop-number/" + transaction_number
+        case .getEstimatedTime(let business_id):
+            return "/api/estimated-time/" + business_id
         default:
             return "/api/search-business"
         }

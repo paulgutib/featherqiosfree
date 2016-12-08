@@ -31,6 +31,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
         self.filterSearch.searchBar.sizeToFit()
+        self.refreshControl?.addTarget(self, action: #selector(FQSearchTableViewController.refresherOrb(_:)), for: .valueChanged)
         self.tableView.tableHeaderView = self.filterSearch.searchBar
         self.tableView.reloadData()
     }
@@ -216,6 +217,35 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["serving_time"] = self.businessList[index].serving_time!
         }
         return listData
+    }
+    
+    func refresherOrb(_ refresher: UIRefreshControl) {
+        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            self.businessList.removeAll()
+            for business in responseData {
+                let dataObj = business.1.dictionaryObject!
+                if self.chosenCategory != "All" {
+                    if dataObj["category"] as! String == self.chosenCategory {
+                        self.businessList.append(FQBusiness(modelAttr: dataObj))
+                    }
+                }
+                else {
+                    self.businessList.append(FQBusiness(modelAttr: dataObj))
+                }
+            }
+            self.tableView.reloadData()
+            refresher.endRefreshing()
+        }
     }
     
 }

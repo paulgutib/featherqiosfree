@@ -16,6 +16,8 @@ import SwiftSpinner
 class FQProcessQueueTableViewController: UITableViewController {
     
     var processQueue = [[String:String]]()
+    var timerCounter: Timer?
+    var transactionNums = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,16 +34,20 @@ class FQProcessQueueTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.timerCounter?.invalidate()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         SwiftSpinner.show("Refreshing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
+//                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -49,6 +55,7 @@ class FQProcessQueueTableViewController: UITableViewController {
                 self.processQueue.removeAll()
                 for numberList in responseData["numbers"]["unprocessed_numbers"] {
                     let dataObj = numberList.1.dictionaryObject!
+                    self.transactionNums.append("\(dataObj["priority_number"]!)")
                     self.processQueue.append([
                         "transaction_number": "\(dataObj["transaction_number"]!)",
                         "priority_number": "\(dataObj["priority_number"]!)",
@@ -58,10 +65,13 @@ class FQProcessQueueTableViewController: UITableViewController {
                         "time_called": "\(dataObj["time_called"]!)",
                     ])
                 }
+                Session.instance.transactionNums = self.transactionNums
+                Session.instance.processQueue = self.processQueue
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
             SwiftSpinner.hide()
         }
+        self.timerCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
 
     // MARK: - Table view data source
@@ -289,5 +299,13 @@ class FQProcessQueueTableViewController: UITableViewController {
         self.processQueue.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .fade)
         self.tableView.reloadData()
+    }
+    
+    func timerCallbacks() {
+        if Session.instance.transactionNums != self.transactionNums {
+            self.transactionNums = Session.instance.transactionNums
+            self.processQueue = Session.instance.processQueue
+            self.tableView.reloadData()
+        }
     }
 }

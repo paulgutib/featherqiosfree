@@ -135,8 +135,8 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
                 self.audioPlayer.play()
             }
             self.priorityNumbers = Session.instance.broadcastNumbers
+            self.calledNumbers.reloadData()
         }
-        self.calledNumbers.reloadData()
     }
     
     func readyDingSound() {
