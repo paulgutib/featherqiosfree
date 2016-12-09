@@ -29,9 +29,12 @@ enum Router: URLRequestConvertible {
     case getAllNumbers(business_id: String)
     case getCallNumber(transaction_number: String)
     case getCustomerBroadcast(business_id: String)
+    case getBusinessBroadcast(business_id: String)
     case getServeNumber(transaction_number: String)
     case getDropNumber(transaction_number: String)
     case getEstimatedTime(business_id: String)
+    case postResetPassword(email: String)
+    case putChangePassword(email: String, password: String, password_confirm: String, verification_code: String)
     
     var method: HTTPMethod {
         switch self {
@@ -49,6 +52,10 @@ enum Router: URLRequestConvertible {
             return .post
         case .postIssueNumber:
             return .post
+        case .postResetPassword:
+            return .post
+        case .putChangePassword:
+            return .put
         default:
             return .get
         }
@@ -76,12 +83,18 @@ enum Router: URLRequestConvertible {
             return "/api/call-number/" + transaction_number
         case .getCustomerBroadcast(let business_id):
             return "/api/customer-broadcast/" + business_id
+        case .getBusinessBroadcast(let business_id):
+            return "/api/business-broadcast/" + business_id
         case .getServeNumber(let transaction_number):
             return "/api/serve-number/" + transaction_number
         case .getDropNumber(let transaction_number):
             return "/api/drop-number/" + transaction_number
         case .getEstimatedTime(let business_id):
             return "/api/estimated-time/" + business_id
+        case .postResetPassword:
+            return "/api/reset-password"
+        case .putChangePassword:
+            return "/api/change-password"
         default:
             return "/api/search-business"
         }
@@ -97,6 +110,12 @@ enum Router: URLRequestConvertible {
         case .postLogin:
             break
         case .postRegister:
+            break
+        case .postResetPassword:
+            break
+        case .putChangePassword:
+            break
+        case .getCustomerBroadcast:
             break
         default:
             let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
@@ -163,6 +182,19 @@ enum Router: URLRequestConvertible {
                 "service_id": service_id,
                 "priority_number": priority_number,
                 "note": note
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postResetPassword(let email):
+            let parameters = [
+                "email": email
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .putChangePassword(let email, let password, let password_confirm, let verification_code):
+            let parameters = [
+                "email": email,
+                "password": password,
+                "password_confirm": password_confirm,
+                "verification_code": verification_code
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

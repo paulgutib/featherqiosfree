@@ -20,7 +20,7 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
     
     var timerCounter: Timer?
     var audioPlayer = AVAudioPlayer()
-    let dingSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
+    let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     
     var priorityNumbers = [String]()
 
@@ -43,7 +43,7 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
     override func viewWillAppear(_ animated: Bool) {
         Session.instance.viewedBusinessId = Session.instance.businessId
         self.readyDingSound()
-        Alamofire.request(Router.getCustomerBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
+        Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String

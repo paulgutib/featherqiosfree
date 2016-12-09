@@ -23,7 +23,7 @@ class FQSearchBroadcastViewController: UIViewController, iCarouselDataSource, iC
     
     var timerCounter: Timer?
     var audioPlayer = AVAudioPlayer()
-    let dingSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
+    let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     var selectedBusiness: FQBusiness?
     
     var priorityNumbers = [String]()

@@ -24,15 +24,15 @@ class FQBusiness {
         self.address = modelAttr["address"] as? String
         self.business_id = self.dataTypeChecker(arg0: modelAttr["business_id"]!) //"\(modelAttr["business_id"]!)"
         self.category = modelAttr["category"] as? String
-        self.logo = Utility.instance.anyObjectNilChecker(anyObject: modelAttr["logo"]!, placeholder: "")
+        self.logo = Utility.instance.anyObjectNilChecker(modelAttr["logo"]!, placeholder: "")
         self.key = modelAttr["key"] as? String
         self.people_in_line = self.peopleInLineChecker(arg0: modelAttr["people_in_line"]!)
         self.time_close = modelAttr["time_close"] as? String
         self.name = modelAttr["name"] as? String
-        self.serving_time = Utility.instance.anyObjectNilChecker(anyObject: modelAttr["serving_time"]!, placeholder: "less than 1 minute")
+        self.serving_time = Utility.instance.anyObjectNilChecker(modelAttr["serving_time"]!, placeholder: "less than 1 minute")
     }
     
-    func peopleInLineChecker(arg0: Any) -> String {
+    func peopleInLineChecker(_ arg0: Any) -> String {
         let argVal = arg0 as? Int
         if argVal! < 5 {
             return "less than 5"
@@ -40,7 +40,7 @@ class FQBusiness {
         return "\(argVal!)"
     }
     
-    func dataTypeChecker(arg0: Any) -> String{
+    func dataTypeChecker(_ arg0: Any) -> String{
         let forcedWrap = "\(arg0)"
         if forcedWrap.isEmpty {
             return arg0 as! String

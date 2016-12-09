@@ -45,6 +45,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     var email: String?
     var password: String?
     let imagePicker = UIImagePickerController()
+    var logoImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,18 +79,19 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.logoPic.contentMode = .scaleToFill
             self.logoPic.image = pickedImage
+            self.logoImage = pickedImage
         }
         
         dismiss(animated: true, completion: nil)
     }
     
     @available(iOS 2.0, *)
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.categoryEntry.count
     }
     
     @available(iOS 2.0, *)
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     

@@ -12,7 +12,7 @@ class Utility {
     
     static let instance = Utility()
     
-    func anyObjectNilChecker(anyObject: Any, placeholder: String) -> String {
+    func anyObjectNilChecker(_ anyObject: Any, placeholder: String) -> String {
         var toString = anyObject as? String
         if toString == nil || (toString?.isEmpty)! || toString == "" {
             toString = placeholder

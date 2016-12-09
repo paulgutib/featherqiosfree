@@ -64,7 +64,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQSearchTableViewCell", for: indexPath) as! FQSearchTableViewCell
 
         // Configure the cell...
-        let listData = self.businessListingDetails(index: indexPath.row)
+        let listData = self.businessListingDetails(indexPath.row)
         cell.businessName.text = listData["name"]
         cell.categoryName.text = listData["category"]
         cell.address.text = listData["address"]
@@ -118,7 +118,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     */
     
     @available(iOS 8.0, *)
-    public func updateSearchResults(for searchController: UISearchController) {
+    open func updateSearchResults(for searchController: UISearchController) {
         var unwrappedBusinessNames = [String]()
         for business in self.businessList {
             unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!+"|"+business.logo!)
@@ -199,7 +199,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         }
     }
     
-    func businessListingDetails(index: Int) -> [String:String] {
+    func businessListingDetails(_ index: Int) -> [String:String] {
         var listData = [String:String]()
         if self.filterSearch.isActive {
             let businessData = self.filteredBusinesses[index].components(separatedBy: "|")

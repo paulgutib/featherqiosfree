@@ -88,7 +88,7 @@ class FQIssueNumberViewController: UIViewController {
     @IBAction func incrementDecrement(_ sender: UIStepper) {
         self.numToIssue.text = "\(self.availableNumbers[Int(sender.value)])"
         let totalSecs = (sender.value + 1) * Double(Session.instance.estimatedSecs!)
-        self.showEstimatedTimeText(totalSecs: Int(totalSecs))
+        self.showEstimatedTimeText(Int(totalSecs))
     }
     
     @IBAction func issueNumber(_ sender: Any) {
@@ -142,16 +142,17 @@ class FQIssueNumberViewController: UIViewController {
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             Session.instance.estimatedSecs = abs(responseData["estimated_serving_time"].intValue)
-            self.showEstimatedTimeText(totalSecs: Session.instance.estimatedSecs!)
+            self.showEstimatedTimeText(Session.instance.estimatedSecs!)
         }
     }
     
-    func showEstimatedTimeText(totalSecs: Int) {
+    func showEstimatedTimeText(_ totalSecs: Int) {
         let date = Date()
-        let estimatedTime = date.addingTimeInterval(Double(totalSecs) * 60.0)
+        let upperBound = date.addingTimeInterval(Double(totalSecs) + (10.0 * 60.0))
+        let lowerBound = date.addingTimeInterval(Double(totalSecs) - (10.0 * 60.0))
         let df = DateFormatter()
         df.locale = Locale(identifier: "en_US")
         df.dateFormat = "h:mm a"
-        self.timeForecast.text = df.string(from: estimatedTime)
+        self.timeForecast.text = df.string(from: lowerBound) + " ~ " + df.string(from: upperBound)
     }
 }

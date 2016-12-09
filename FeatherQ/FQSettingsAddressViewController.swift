@@ -62,12 +62,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     }
     
     @available(iOS 2.0, *)
-    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.countryEntry.count
     }
     
     @available(iOS 2.0, *)
-    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     

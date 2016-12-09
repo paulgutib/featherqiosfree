@@ -94,7 +94,7 @@ class FQProcessQueueTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQProcessQueueTableViewCell", for: indexPath) as! FQProcessQueueTableViewCell
 
         // Configure the cell...
-        let timeIssued = NSDate(timeIntervalSince1970: Double(self.processQueue[indexPath.row]["time_queued"]!)!)
+        let timeIssued = Date(timeIntervalSince1970: Double(self.processQueue[indexPath.row]["time_queued"]!)!)
         let df = DateFormatter()
         df.locale = Locale(identifier: "en_US")
         df.dateFormat = "hh:mm a"
@@ -123,14 +123,14 @@ class FQProcessQueueTableViewController: UITableViewController {
         //configure left buttons
         if indexPath.row < self.processQueue.count-1 {
             cell.leftButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0)/* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
-                self.serveCallNext(indexPath: indexPath)
+                self.serveCallNext(indexPath)
                 return true
             })]
             cell.leftSwipeSettings.transition = .drag
             
             //configure right buttons
             cell.rightButtons = [MGSwipeButton(title: "Serve and Call Next", icon: UIImage(named:"check.png"), backgroundColor: UIColor(red: 0, green: 0.4588, blue: 0.0667, alpha: 1.0) /* #007511 */, callback: { (sender: MGSwipeTableCell!) -> Bool in
-                self.serveCallNext(indexPath: indexPath)
+                self.serveCallNext(indexPath)
                 return true
             })]
             cell.rightSwipeSettings.transition = .drag
@@ -188,7 +188,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     @IBAction func callNumNow(_ sender: UIButton) {
         let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
         let indexPath = self.tableView.indexPath(for: cell)
-        self.processQueue[indexPath!.row]["time_called"] = "\(NSDate().timeIntervalSince1970)"
+        self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
         Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
@@ -245,7 +245,7 @@ class FQProcessQueueTableViewController: UITableViewController {
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
         }
-        self.removeRowsAndReload(indexPath: indexPath)
+        self.removeRowsAndReload(indexPath)
     }
     
     @IBAction func serveNumNow(_ sender: UIButton) {
@@ -263,11 +263,11 @@ class FQProcessQueueTableViewController: UITableViewController {
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
         }
-        self.removeRowsAndReload(indexPath: indexPath)
+        self.removeRowsAndReload(indexPath)
     }
     
-    func serveCallNext(indexPath: IndexPath) {
-        self.processQueue[indexPath.row+1]["time_called"] = "\(NSDate().timeIntervalSince1970)"
+    func serveCallNext(_ indexPath: IndexPath) {
+        self.processQueue[indexPath.row+1]["time_called"] = "\(Date().timeIntervalSince1970)"
         Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
@@ -292,10 +292,10 @@ class FQProcessQueueTableViewController: UITableViewController {
                 debugPrint(responseData)
             }
         }
-        self.removeRowsAndReload(indexPath: indexPath)
+        self.removeRowsAndReload(indexPath)
     }
     
-    func removeRowsAndReload(indexPath: IndexPath) {
+    func removeRowsAndReload(_ indexPath: IndexPath) {
         self.processQueue.remove(at: indexPath.row)
         self.tableView.deleteRows(at: [indexPath], with: .fade)
         self.tableView.reloadData()

@@ -106,7 +106,7 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         let squareSize = (UIScreen.main.bounds.width / 3.0) - 3.0
         return CGSize(width: squareSize, height: squareSize)
     }

@@ -69,7 +69,7 @@ class FQDashboardViewController: UIViewController {
         }
         processBool = false
         broadcastBool = false
-        self.setDefaultBusinessView(boolVal: issueBool, viewType: "autoIssue")
+        self.setDefaultBusinessView(issueBool, viewType: "autoIssue")
     }
     
     @IBAction func processSetDefault(_ sender: UIButton) {
@@ -84,7 +84,7 @@ class FQDashboardViewController: UIViewController {
         }
         issueBool = false
         broadcastBool = false
-        self.setDefaultBusinessView(boolVal: processBool, viewType: "autoProcess")
+        self.setDefaultBusinessView(processBool, viewType: "autoProcess")
     }
     
     @IBAction func broadcastSetDefault(_ sender: UIButton) {
@@ -99,11 +99,11 @@ class FQDashboardViewController: UIViewController {
         }
         processBool = false
         issueBool = false
-        self.setDefaultBusinessView(boolVal: broadcastBool, viewType: "autoBroadcast")
+        self.setDefaultBusinessView(broadcastBool, viewType: "autoBroadcast")
     }
     
     
-    func setDefaultBusinessView(boolVal: Bool, viewType: String) {
+    func setDefaultBusinessView(_ boolVal: Bool, viewType: String) {
         if boolVal {
             UserDefaults.standard.set(viewType, forKey: "defaultView")
         }
@@ -170,12 +170,12 @@ class FQDashboardViewController: UIViewController {
         let defaultView = UserDefaults.standard.value(forKey: "defaultView")
         if defaultView != nil {
             let dv = defaultView as! String
-            self.markDefaultBusinessView(dv: dv)
+            self.markDefaultBusinessView(dv)
             self.performSegue(withIdentifier: dv, sender: self)
         }
     }
     
-    func markDefaultBusinessView(dv: String) {
+    func markDefaultBusinessView(_ dv: String) {
         if dv == "autoIssue" {
             self.issueDefault.setImage(self.checkboxChecked, for: .normal)
             self.processDefault.setImage(self.checkBoxEmpty, for: .normal)
