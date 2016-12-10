@@ -39,6 +39,11 @@ class FQAboutViewController: UIViewController {
     }
     */
     
+    @IBAction func viewGuide(_ sender: UIBarButtonItem) {
+        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func showHideSettingsButton() {
         if Session.instance.isLoggedIn {
             self.navigationItem.rightBarButtonItem = self.settingsBtn

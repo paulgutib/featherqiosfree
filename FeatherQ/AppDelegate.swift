@@ -158,6 +158,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabBarController.setViewControllers(rootViewControllers, animated: false)
             tabBarController.selectedIndex = 2
         }
+        else {
+            self.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
+        }
     }
 }
 

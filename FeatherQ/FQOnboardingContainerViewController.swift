@@ -11,6 +11,11 @@ import UIKit
 class FQOnboardingContainerViewController: UIViewController, UIPageViewControllerDataSource {
     
     @IBOutlet weak var startServingBtn: UIButton!
+    @IBOutlet weak var fqLogo: UIImageView!
+    @IBOutlet weak var whiteLogo: UIImageView!
+    @IBOutlet weak var logoBackground: UIImageView!
+    @IBOutlet weak var prevBtn: UIImageView!
+    @IBOutlet weak var nextBtn: UIImageView!
     
     var pageViewController: UIPageViewController!
     var pageTitles: NSArray!
@@ -22,8 +27,8 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         // Do any additional setup after loading the view.
         self.startServingBtn.layer.cornerRadius = 5.0
         self.startServingBtn.clipsToBounds = true
-        self.pageTitles = NSArray(objects: "Intro1", "Intro3", "Intro2")
-        self.pageImages = NSArray(objects: "Intro1", "Intro3", "Intro2")
+        self.pageTitles = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5", "Onboarding6")
+        self.pageImages = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5", "Onboarding6")
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "FQOnboardingPageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
         let startVC = self.viewControllerAtIndex(0) as FQOnboardingContentViewController
@@ -33,10 +38,14 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         self.addChildViewController(self.pageViewController)
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMove(toParentViewController: self)
-//        self.view.bringSubviewToFront(self.logoTitle)
-//        self.view.bringSubviewToFront(self.swipeIndex)
-//        self.view.bringSubviewToFront(self.subTitle)
-//        self.view.bringSubviewToFront(self.subDesc)
+        self.view.bringSubview(toFront: self.logoBackground)
+        self.view.bringSubview(toFront: self.fqLogo)
+        self.view.bringSubview(toFront: self.whiteLogo)
+        self.view.bringSubview(toFront: self.prevBtn)
+        self.prevBtn.isHidden = true
+        self.view.bringSubview(toFront: self.nextBtn)
+        self.startServingBtn.isHidden = true
+        self.view.bringSubview(toFront: self.startServingBtn)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,6 +57,11 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         let vc = viewController as! FQOnboardingContentViewController
         var index = vc.pageIndex as Int
         index += 1
+        if index == self.pageTitles.count - 1 {
+            self.startServingBtn.isHidden = false
+            self.nextBtn.isHidden = true
+        }
+        self.prevBtn.isHidden = false
         if (index == NSNotFound || index == self.pageTitles.count)
         {
             return nil
@@ -59,7 +73,9 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         let vc = viewController as! FQOnboardingContentViewController
         var index = vc.pageIndex as Int
         self.startServingBtn.isHidden = true
+        self.nextBtn.isHidden = false
         if (index == 0 || index == NSNotFound) {
+            self.prevBtn.isHidden = true
             return nil
         }
         index -= 1
@@ -91,6 +107,10 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
     }
     */
     
+    @IBAction func startServing(_ sender: UIButton) {
+        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+        self.present(vc, animated: true, completion: nil)
+    }
     
 
 }

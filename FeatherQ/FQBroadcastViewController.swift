@@ -41,6 +41,8 @@ class FQBroadcastViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationItem.title = Session.instance.businessName!
+        self.businessCode.text = Session.instance.key!.uppercased()
         Session.instance.viewedBusinessId = Session.instance.businessId
         self.readyDingSound()
         Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
