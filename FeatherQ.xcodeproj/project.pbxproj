@@ -27,6 +27,7 @@
 		801A105F1DE578F300373A22 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A105E1DE578F300373A22 /* Utility.swift */; };
 		801A10611DE5ACB600373A22 /* FQBusinessValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */; };
 		801D4C061DDD90DD00BE555F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D4C051DDD90DD00BE555F /* API.swift */; };
+		802102461DFCE9EF00FBDC2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802102451DFCE9EF00FBDC2E /* CoreLocation.framework */; };
 		802B4EB71DF559DB0038891A /* FQReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */; };
 		804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */; };
 		806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */; };
@@ -75,6 +76,7 @@
 		801A105E1DE578F300373A22 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		801A10601DE5ACB600373A22 /* FQBusinessValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBusinessValidationViewController.swift; sourceTree = "<group>"; };
 		801D4C051DDD90DD00BE555F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		802102451DFCE9EF00FBDC2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQReceiptViewController.swift; sourceTree = "<group>"; };
 		804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				802102461DFCE9EF00FBDC2E /* CoreLocation.framework in Frameworks */,
 				2B3D034FCB12E967861A1D3C /* Pods_FeatherQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +115,7 @@
 		053BCEC1C9E44ED4C483ECE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				802102451DFCE9EF00FBDC2E /* CoreLocation.framework */,
 				6607281255C44A67D9FEDE19 /* Pods_FeatherQ.framework */,
 			);
 			name = Frameworks;

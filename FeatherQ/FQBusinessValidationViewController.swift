@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import CoreLocation
 
-class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate {
 
     @IBOutlet weak var countryList: UIPickerView!
     @IBOutlet weak var next3Btn: UIButton!
     @IBOutlet weak var buildingOffice: UITextField!
     @IBOutlet weak var streetBlock: UITextField!
+    @IBOutlet weak var barangaySublocality: UITextField!
     @IBOutlet weak var townCity: UITextField!
     @IBOutlet weak var stateProvince: UITextField!
     @IBOutlet weak var zipPostalCode: UITextField!
@@ -26,6 +28,10 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     var businessName: String?
     var selectedCategory: String?
     var selectedCountry = "- Select a Country -"
+    var cllManager = CLLocationManager()
+    var latitudeLoc: String?
+    var longitudeLoc: String?
+    var isLocationUpdated = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +53,13 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.cllManager.delegate = self
+        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.cllManager.requestWhenInUseAuthorization()
+        self.cllManager.startUpdatingLocation()
+    }
+    
     @available(iOS 2.0, *)
     open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.countryEntry.count
@@ -63,6 +76,40 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedCountry = self.countryEntry[row]
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !self.isLocationUpdated {
+            let userLocation = locations[0]
+            self.latitudeLoc = "\(userLocation.coordinate.latitude)"
+            self.longitudeLoc = "\(userLocation.coordinate.longitude)"
+            
+            CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
+                if (error != nil) {
+                    debugPrint("Reverse geocoder failed with error" + error!.localizedDescription)
+                    return
+                }
+                let townCity = (placemarks![0].locality != nil) ? placemarks![0].locality : ""
+                let barangay = (placemarks![0].subLocality != nil) ? placemarks![0].subLocality : ""
+                let postalCode = (placemarks![0].postalCode != nil) ? placemarks![0].postalCode : ""
+                let streetAd = (placemarks![0].thoroughfare != nil) ? placemarks![0].thoroughfare : ""
+                let streetAd2 = (placemarks![0].subThoroughfare != nil) ? placemarks![0].subThoroughfare : ""
+                let stateProvince = (placemarks![0].administrativeArea != nil) ? placemarks![0].administrativeArea : ""
+//                let stateProvince2 = (placemarks![0].subAdministrativeArea != nil) ? placemarks![0].subAdministrativeArea : ""
+                let country = (placemarks![0].country != nil) ? placemarks![0].country : ""
+                let countryIndex = (self.countryEntry.index(of: country!) != nil) ? self.countryEntry.index(of: country!) : 0
+                self.countryList.selectRow(countryIndex!, inComponent: 0, animated: true)
+                self.buildingOffice.text = streetAd2!
+                self.streetBlock.text = streetAd!
+                self.barangaySublocality.text = barangay!
+                self.townCity.text = townCity!
+                self.stateProvince.text = stateProvince!
+                self.zipPostalCode.text = postalCode!
+            })
+            
+            self.cllManager.stopUpdatingLocation()
+            self.isLocationUpdated = true
+        }
     }
 
     // MARK: - Navigation
@@ -95,6 +142,10 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     }
     
     @IBAction func streetBlockTxt(_ sender: UITextField) {
+        self.barangaySublocality.becomeFirstResponder()
+    }
+    
+    @IBAction func barangayTxt(_ sender: UITextField) {
         self.townCity.becomeFirstResponder()
     }
     

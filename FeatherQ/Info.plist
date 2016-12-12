@@ -50,5 +50,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app will provide you a list of businesses near your current location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The app will provide you a list of businesses near your current location.</string>
 </dict>
 </plist>

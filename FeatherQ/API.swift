@@ -17,7 +17,7 @@ enum Router: URLRequestConvertible {
     //static let clientId = "fqiosapp" //use in OAuth
     //static let clientSecret = "fqiosapp" //use in OAuth
     
-    case postSearchBusiness(latitude: String, longitude: String, key: String, category: String)
+    case postSearchBusiness(latitude: String, longitude: String)
     case postDisplayBusinesses
     case getCategories
     case postRegister(email: String, password: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String, deviceToken: String)
@@ -128,12 +128,12 @@ enum Router: URLRequestConvertible {
         }
         
         switch self {
-        case .postSearchBusiness(let latitude, let longitude, let key, let category):
+        case .postSearchBusiness(let latitude, let longitude):
             let parameters = [
                 "latitude": latitude,
                 "longitude": longitude,
-                "key": key,
-                "category": category
+                "key": "",
+                "category": ""
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         case .postRegister(let email, let password, let name, let address, let logo, let category, let time_close, let number_start, let number_limit, let deviceToken):

@@ -53,32 +53,32 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         // Dispose of any resources that can be recreated.
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let vc = viewController as! FQOnboardingContentViewController
-        var index = vc.pageIndex as Int
-        index += 1
-        if index == self.pageTitles.count - 1 {
-            self.startServingBtn.isHidden = false
-            self.nextBtn.isHidden = true
-        }
-        self.prevBtn.isHidden = false
-        if (index == NSNotFound || index == self.pageTitles.count)
-        {
-            return nil
-        }
-        return self.viewControllerAtIndex(index)
-    }
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let vc = viewController as! FQOnboardingContentViewController
-        var index = vc.pageIndex as Int
         self.startServingBtn.isHidden = true
         self.nextBtn.isHidden = false
-        if (index == 0 || index == NSNotFound) {
+        let vc = viewController as! FQOnboardingContentViewController
+        var index = vc.pageIndex as Int
+        if index == 0 || index == NSNotFound {
             self.prevBtn.isHidden = true
             return nil
         }
         index -= 1
+        return self.viewControllerAtIndex(index)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        self.prevBtn.isHidden = false
+        let vc = viewController as! FQOnboardingContentViewController
+        var index = vc.pageIndex as Int
+        if index == NSNotFound {
+            return nil
+        }
+        index += 1
+        if index == self.pageTitles.count {
+            self.nextBtn.isHidden = true
+            self.startServingBtn.isHidden = false
+            return nil
+        }
         return self.viewControllerAtIndex(index)
     }
     
@@ -94,6 +94,7 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         let vc: FQOnboardingContentViewController = self.storyboard?.instantiateViewController(withIdentifier: "FQOnboardingContentViewController") as! FQOnboardingContentViewController
         vc.imageFile = self.pageImages[index] as! String
         vc.pageIndex = index
+        debugPrint(index)
         return vc
     }
 

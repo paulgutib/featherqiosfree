@@ -10,13 +10,19 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import CoreLocation
 
-class FQSearchTableViewController: UITableViewController, UISearchResultsUpdating {
+class FQSearchTableViewController: UITableViewController, UISearchResultsUpdating, CLLocationManagerDelegate {
     
     var filterSearch = UISearchController()
     var businessList = [FQBusiness]()
     var filteredBusinesses = [String]()
     var chosenCategory = "All"
+    var cllManager = CLLocationManager()
+    var latitudeLoc: String?
+    var longitudeLoc: String?
+    var isLocationUpdated = false
+    var recurseIfEmpty = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +48,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.postDisplayBusinesses()
+        self.getCurrentLocation()
     }
 
     // MARK: - Table view data source
@@ -129,6 +135,17 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.filteredBusinesses = array as! [String]
         self.tableView.reloadData()
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !self.isLocationUpdated {
+            let userLocation = locations[0]
+            self.latitudeLoc = "\(userLocation.coordinate.latitude)"
+            self.longitudeLoc = "\(userLocation.coordinate.longitude)"
+            self.cllManager.stopUpdatingLocation()
+            self.postDisplayBusinesses()
+            self.isLocationUpdated = true
+        }
+    }
 
     // MARK: - Navigation
 
@@ -169,9 +186,31 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         }
     }
     
+    @IBAction func locateMe(_ sender: UIBarButtonItem) {
+        self.recurseIfEmpty = false
+        self.isLocationUpdated = false
+        self.getCurrentLocation()
+    }
+    
+    func getCurrentLocation() {
+        self.cllManager.delegate = self
+        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.cllManager.requestWhenInUseAuthorization()
+        self.cllManager.startUpdatingLocation()
+    }
+    
     func postDisplayBusinesses() {
-        SwiftSpinner.show("Fetching..")
-        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
+        if !self.recurseIfEmpty {
+            SwiftSpinner.show("Fetching..")
+        }
+        var urlVal: URLRequestConvertible?
+        if (self.latitudeLoc != nil) && !self.recurseIfEmpty {
+            urlVal = Router.postSearchBusiness(latitude: self.latitudeLoc!, longitude: self.longitudeLoc!)
+        }
+        else {
+            urlVal = Router.postDisplayBusinesses
+        }
+        Alamofire.request(urlVal!).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -193,6 +232,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                 else {
                     self.businessList.append(FQBusiness(modelAttr: dataObj))
                 }
+            }
+            if self.businessList.isEmpty {
+                self.recurseIfEmpty = true
+                self.postDisplayBusinesses()
             }
             self.tableView.reloadData()
             SwiftSpinner.hide()

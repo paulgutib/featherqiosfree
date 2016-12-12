@@ -42,7 +42,7 @@ class FQOnboardingContentViewController: UIViewController {
     
     func displaySubtitles() {
         if self.pageIndex == 0 {
-            self.subtitle.text = "Go to \"My Business\" and follow on-screen instructions to register your business for free.\nAfter registration, you will be redirected to your dashboard where you can choose your line processing.\nYou can also set what process you are using frequently to make it as default on the next time you start the app."
+            self.subtitle.text = "Go to \"My Business\" and follow on-screen instructions to register your business for free.\nYou will then be redirected to your dashboard where you can choose your line operations.\nOptionally set a default process next time the app starts for your preference."
         }
         else if self.pageIndex == 1 {
             self.subtitle.text = "You can issue a number specifically along with an annotation to your clients.\nThere is also a time estimation for when each issued number might be called.\nAfter issuing a number, a popup will show along with its confirmation code for reference."
@@ -54,7 +54,7 @@ class FQOnboardingContentViewController: UIViewController {
             self.subtitle.text = "For faster transactions, you can full swipe to either left or right to serve the current number and automatically call the next one."
         }
         else if self.pageIndex == 4 {
-            self.subtitle.text = "All called numbers will be shown on the broadcast screen.\nAlso shown in the broadcast screen is the unique 4-character key that can be used to search your business faster."
+            self.subtitle.text = "All called numbers will be shown on the broadcast screen.\nAlso shown in the broadcast screen is the unique 4-character key that can be used by customers to search your business faster."
         }
         else if self.pageIndex == 5 {
             self.subtitle.text = "You can review this guide in the \"Help (?)\" section of the app.\n\n\n"
