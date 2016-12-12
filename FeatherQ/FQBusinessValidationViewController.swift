@@ -24,7 +24,6 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     var countryEntry = ["- Select a Country -", "Philippines", "China", "Russia", "USA", "Austrailia", "Singapore", "Japan"]
     var email: String?
     var password: String?
-    var logoVal: String?
     var businessName: String?
     var selectedCategory: String?
     var selectedCountry = "- Select a Country -"
@@ -32,6 +31,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     var latitudeLoc: String?
     var longitudeLoc: String?
     var isLocationUpdated = false
+    var logoPath: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +41,11 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         self.next3Btn.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+        self.barangaySublocality.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.townCity.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.stateProvince.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.zipPostalCode.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.phone.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
-        self.logoVal = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,7 +123,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 let destView = segue.destination as! FQOperationsViewController
                 destView.email = self.email!
                 destView.password = self.password!
-                destView.logoVal = self.logoVal!
+                destView.logoPath = self.logoPath!
                 destView.businessName = self.businessName!
                 destView.selectedCategory = self.selectedCategory!
                 destView.selectedCountry = self.selectedCountry
@@ -134,6 +134,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 destView.zipPostalCode = self.zipPostalCode.text!
                 destView.phone = self.phone.text!
                 destView.barangaySublocality = self.barangaySublocality.text!
+                destView.longitudeVal = self.longitudeLoc!
+                destView.latitudeVal = self.latitudeLoc!
             }
         }
     }

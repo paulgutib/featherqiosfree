@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Uploadcare
+import SwiftSpinner
 
 class FQBusinessDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -41,6 +43,9 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     var email: String?
     var password: String?
     let imagePicker = UIImagePickerController()
+    var uploadMenu: UCMenuViewController?
+    var logoPath: String?
+    var isLogoUploaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +59,24 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
         self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+    
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if isLogoUploaded {
+            let url = URL(string: "https://ucarecdn.com/" + self.logoPath! + "/image")
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    self.logoPic.image = UIImage(data: data!)
+                }
+            }
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -105,6 +123,7 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
                 destView.password = self.password!
                 destView.businessName = self.businessName.text!
                 destView.selectedCategory = self.selectedCategory
+                destView.logoPath = self.logoPath!
             }
         }
     }
@@ -114,9 +133,24 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     }
     
     @IBAction func chooseLogo(_ sender: Any) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
+//        imagePicker.allowsEditing = false
+//        imagePicker.sourceType = .photoLibrary
+//        self.present(imagePicker, animated: true, completion: nil)
+        self.uploadMenu = UCMenuViewController(progress: {(_ bytesSent: UInt, _ bytesExpectedToSend: UInt) -> Void in
+            SwiftSpinner.show("Uploading..")
+        }, completion: {(_ fileId: String?, _ response: Any?, _ error: Error?) -> Void in
+            if (error != nil) {
+                debugPrint(error!)
+            } else {
+                let responseData = response as AnyObject
+                self.logoPath = responseData["file"] as? String
+                self.isLogoUploaded = true
+                SwiftSpinner.hide({
+                    self.dismiss(animated: true, completion: nil)
+                })
+            }
+        })
+        self.uploadMenu?.present(from: self)
     }
 
     @IBAction func removeLogo(_ sender: UIButton) {

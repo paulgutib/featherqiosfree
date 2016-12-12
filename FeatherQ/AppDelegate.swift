@@ -12,6 +12,7 @@ import Locksmith
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import Uploadcare
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,7 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
         UINavigationBar.appearance().tintColor = UIColor.white // set a universal tint color for all views depending on app motiff
         UISegmentedControl.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0)
+        
         IQKeyboardManager.sharedManager().enable = true
+        UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
+        
         self.selectMyBusinessAsDefault()
         
         return true
@@ -145,6 +149,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Session.instance.deviceToken = "F5AF8369B371F5CA8AF1AFAA6062FE3C60223C26EE2FA22066CB4BAAD6B5E1EA"
         debugPrint(Session.instance.deviceToken!)
         print("Failed to register:", error)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return UCClient.default().handle(url)
     }
     
     func selectMyBusinessAsDefault() {

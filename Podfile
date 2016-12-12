@@ -15,4 +15,5 @@ target 'FeatherQ' do
   #pod 'SwiftQRCode'
   pod 'MGSwipeTableCell'
   pod 'iCarousel'
+  pod 'Uploadcare'
 end

@@ -21,7 +21,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     var cllManager = CLLocationManager()
     var latitudeLoc: String?
     var longitudeLoc: String?
-    var isLocationUpdated = false
+//    var isLocationUpdated = false
     var recurseIfEmpty = false
 
     override func viewDidLoad() {
@@ -76,6 +76,15 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         cell.address.text = listData["address"]
         cell.peopleInLine.text = listData["people_in_line"]
         cell.waitingTIme.text = listData["serving_time"]
+        if !listData["logo"]!.isEmpty {
+            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    cell.businessLogo.image = UIImage(data: data!)
+                }
+            }
+        }
 
         return cell
     }
@@ -137,14 +146,15 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !self.isLocationUpdated {
+//        debugPrint(self.isLocationUpdated)
+//        if !self.isLocationUpdated {
             let userLocation = locations[0]
             self.latitudeLoc = "\(userLocation.coordinate.latitude)"
             self.longitudeLoc = "\(userLocation.coordinate.longitude)"
             self.cllManager.stopUpdatingLocation()
             self.postDisplayBusinesses()
-            self.isLocationUpdated = true
-        }
+//            self.isLocationUpdated = true
+//        }
     }
 
     // MARK: - Navigation
@@ -188,7 +198,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     
     @IBAction func locateMe(_ sender: UIBarButtonItem) {
         self.recurseIfEmpty = false
-        self.isLocationUpdated = false
+//        self.isLocationUpdated = false
         self.getCurrentLocation()
     }
     
@@ -251,6 +261,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["address"] = businessData[2]
             listData["people_in_line"] = businessData[3]
             listData["serving_time"] = businessData[4]
+            listData["logo"] = businessData[8]
         }
         else {
             listData["name"] = self.businessList[index].name!
@@ -258,6 +269,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["address"] = self.businessList[index].address!
             listData["people_in_line"] = self.businessList[index].people_in_line!
             listData["serving_time"] = self.businessList[index].serving_time!
+            listData["logo"] = self.businessList[index].logo!
         }
         return listData
     }
