@@ -34,6 +34,7 @@ class FQOperationsViewController: UIViewController {
     var timeOpenVal: String?
     var timeCloseVal: String?
     var deviceToken: String?
+    var barangaySublocality: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +78,7 @@ class FQOperationsViewController: UIViewController {
 
     @IBAction func registerAccount(_ sender: UIButton) {
         SwiftSpinner.show("Please wait..")
-        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.townCity! + ", " + self.stateProvince! + ", " + self.selectedCountry! + ", " + self.zipPostalCode!
+        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + self.stateProvince! + ", " + self.selectedCountry! + ", " + self.zipPostalCode!
         Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: "", category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)

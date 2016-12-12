@@ -133,6 +133,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 destView.stateProvince = self.stateProvince.text!
                 destView.zipPostalCode = self.zipPostalCode.text!
                 destView.phone = self.phone.text!
+                destView.barangaySublocality = self.barangaySublocality.text!
             }
         }
     }
