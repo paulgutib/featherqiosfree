@@ -85,6 +85,9 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                 }
             }
         }
+        else {
+            cell.businessLogo.image = UIImage(named: "PlaceholderLogo")
+        }
 
         return cell
     }

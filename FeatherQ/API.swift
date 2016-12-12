@@ -150,7 +150,7 @@ enum Router: URLRequestConvertible {
                 "number_limit": number_limit,
                 "device_token": deviceToken,
                 "longitude": longitudeVal,
-                "latitude": latitudeVal
+                "latitude": latitudeVal,
                 "platform": "iOS"
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
