@@ -109,8 +109,13 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
     */
     
     @IBAction func startServing(_ sender: UIButton) {
-        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
-        self.present(vc, animated: true, completion: nil)
+        if !Session.instance.isLoggedIn {
+            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+            self.present(vc, animated: true, completion: nil)
+        }
+        else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
 
