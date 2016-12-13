@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import Uploadcare
 
 class FQSettingsDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -45,7 +46,9 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     var email: String?
     var password: String?
     let imagePicker = UIImagePickerController()
-    var logoImage: UIImage?
+    var uploadMenu: UCMenuViewController?
+    var logoPath: String?
+    var isLogoUploaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +72,15 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     override func viewWillAppear(_ animated: Bool) {
         self.businessName.text = Session.instance.businessName!
         self.categoryList.selectRow(self.categoryFlat.index(of: Session.instance.category!)!, inComponent: 0, animated: true)
+        if isLogoUploaded {
+            let url = URL(string: "https://ucarecdn.com/" + self.logoPath! + "/image")
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    self.logoPic.image = UIImage(data: data!)
+                }
+            }
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -79,7 +91,6 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.logoPic.contentMode = .scaleToFill
             self.logoPic.image = pickedImage
-            self.logoImage = pickedImage
         }
         
         dismiss(animated: true, completion: nil)
@@ -118,9 +129,24 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     }
     
     @IBAction func chooseLogo(_ sender: UIButton) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
+//        imagePicker.allowsEditing = false
+//        imagePicker.sourceType = .photoLibrary
+//        self.present(imagePicker, animated: true, completion: nil)
+        self.uploadMenu = UCMenuViewController(progress: {(_ bytesSent: UInt, _ bytesExpectedToSend: UInt) -> Void in
+            SwiftSpinner.show("Uploading..")
+        }, completion: {(_ fileId: String?, _ response: Any?, _ error: Error?) -> Void in
+            if (error != nil) {
+                debugPrint(error!)
+            } else {
+                let responseData = response as AnyObject
+                self.logoPath = responseData["file"] as? String
+                self.isLogoUploaded = true
+                SwiftSpinner.hide({
+                    self.dismiss(animated: true, completion: nil)
+                })
+            }
+        })
+        self.uploadMenu?.present(from: self)
     }
     
     @IBAction func removeLogo(_ sender: UIButton) {
@@ -130,7 +156,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateBusinessNameCategory() {
             SwiftSpinner.show("Updating..")
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: "", category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: self.logoPath!, category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String

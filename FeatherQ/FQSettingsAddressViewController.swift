@@ -116,7 +116,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         if self.validateAddresses() {
             SwiftSpinner.show("Updating..")
             let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.townCity.text! + ", " + self.stateProvince.text! + ", " + self.selectedCountry! + ", " + self.zipPostalCode.text!
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: "", category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
