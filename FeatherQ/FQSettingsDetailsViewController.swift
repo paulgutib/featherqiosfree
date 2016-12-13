@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import SwiftSpinner
 import Uploadcare
+import CoreLocation
 
 class FQSettingsDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -49,6 +50,8 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     var uploadMenu: UCMenuViewController?
     var logoPath: String?
     var isLogoUploaded = false
+    var latitudeLoc: String?
+    var longitudeLoc: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,7 +159,8 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateBusinessNameCategory() {
             SwiftSpinner.show("Updating..")
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: self.logoPath!, category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            self.generateCoordinatesFromAddress()
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: self.logoPath!, category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -190,4 +194,21 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         }
         return true
     }
+    
+    func generateCoordinatesFromAddress() {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(Session.instance.address!, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                debugPrint(error!)
+            }
+            if let placemark = placemarks?.first {
+                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                self.latitudeLoc = "\(coordinates.latitude)"
+                self.longitudeLoc = "\(coordinates.longitude)"
+                debugPrint(self.latitudeLoc!)
+                debugPrint(self.longitudeLoc!)
+            }
+        })
+    }
+    
 }

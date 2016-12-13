@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SwiftSpinner
+import CoreLocation
 
 class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -21,14 +22,216 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var updateBtn: UIButton!
+    @IBOutlet weak var barangaySublocality: UITextField!
     
-    var countryEntry = ["- Select a Country -", "Philippines", "China", "Russia", "USA", "Austrailia", "Singapore", "Japan"]
+    var countryEntry = [
+        "- Select a Country -",
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "Andorra",
+        "Angola",
+        "Antigua and Barbuda",
+        "Argentina",
+        "Armenia",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahamas",
+        "Bahrain",
+        "Bangladesh",
+        "Barbados",
+        "Belarus",
+        "Belgium",
+        "Belize",
+        "Benin",
+        "Bhutan",
+        "Bolivia",
+        "Bosnia and Herzegovina",
+        "Botswana",
+        "Brazil",
+        "Brunei",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cabo Verde",
+        "Cambodia",
+        "Cameroon",
+        "Canada",
+        "Central African Republic (CAR)",
+        "Chad",
+        "Chile",
+        "China",
+        "Colombia",
+        "Comoros",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Costa Rica",
+        "Cote d'Ivoire",
+        "Croatia",
+        "Cuba",
+        "Cyprus",
+        "Czech Republic",
+        "Denmark",
+        "Djibouti",
+        "Dominica",
+        "Dominican Republic",
+        "Ecuador",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Eritrea",
+        "Estonia",
+        "Ethiopia",
+        "Fiji",
+        "Finland",
+        "France",
+        "Gabon",
+        "Gambia",
+        "Georgia",
+        "Germany",
+        "Ghana",
+        "Greece",
+        "Grenada",
+        "Guatemala",
+        "Guinea",
+        "Guinea-Bissau",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Iraq",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Jamaica",
+        "Japan",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kiribati",
+        "Kosovo",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Laos",
+        "Latvia",
+        "Lebanon",
+        "Lesotho",
+        "Liberia",
+        "Libya",
+        "Liechtenstein",
+        "Lithuania",
+        "Luxembourg",
+        "Macedonia",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldives",
+        "Mali",
+        "Malta",
+        "Marshall Islands",
+        "Mauritania",
+        "Mauritius",
+        "Mexico",
+        "Micronesia",
+        "Moldova",
+        "Monaco",
+        "Mongolia",
+        "Montenegro",
+        "Morocco",
+        "Mozambique",
+        "Myanmar (Burma)",
+        "Namibia",
+        "Nauru",
+        "Nepal",
+        "Netherlands",
+        "New Zealand",
+        "Nicaragua",
+        "Niger",
+        "Nigeria",
+        "North Korea",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Palau",
+        "Palestine",
+        "Panama",
+        "Papua New Guinea",
+        "Paraguay",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Qatar",
+        "Romania",
+        "Russia",
+        "Rwanda",
+        "Saint Kitts and Nevis",
+        "Saint Lucia",
+        "Saint Vincent and the Grenadines",
+        "Samoa",
+        "San Marino",
+        "Sao Tome and Principe",
+        "Saudi Arabia",
+        "Senegal",
+        "Serbia",
+        "Seychelles",
+        "Sierra Leone",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "Solomon Islands",
+        "Somalia",
+        "South Africa",
+        "South Korea",
+        "South Sudan",
+        "Spain",
+        "Sri Lanka",
+        "Sudan",
+        "Suriname",
+        "Swaziland",
+        "Sweden",
+        "Switzerland",
+        "Syria",
+        "Taiwan",
+        "Tajikistan",
+        "Tanzania",
+        "Thailand",
+        "Timor-Leste",
+        "Togo",
+        "Tonga",
+        "Trinidad and Tobago",
+        "Tunisia",
+        "Turkey",
+        "Turkmenistan",
+        "Tuvalu",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates (UAE)",
+        "United Kingdom (UK)",
+        "United States of America (USA)",
+        "Uruguay",
+        "Uzbekistan",
+        "Vanuatu",
+        "Vatican City (Holy See)",
+        "Venezuela",
+        "Vietnam",
+        "Yemen",
+        "Zambia",
+        "Zimbabwe"
+    ]
     var email: String?
     var password: String?
     var logoVal: String?
     var businessName: String?
     var selectedCategory: String?
     var selectedCountry: String?
+    var latitudeLoc: String?
+    var longitudeLoc: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,8 +318,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateAddresses() {
             SwiftSpinner.show("Updating..")
-            let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.townCity.text! + ", " + self.stateProvince.text! + ", " + self.selectedCountry! + ", " + self.zipPostalCode.text!
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)")).responseJSON { response in
+            self.generateCoordinatesFromAddress()
+            let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
+            let address2 = self.barangaySublocality.text! + " " + self.townCity.text! + ", "
+            let address3 = self.zipPostalCode.text! + " " + self.stateProvince.text! + ", "
+            let completeAddress = address1 + address2 + address3 + self.selectedCountry!
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -166,6 +373,26 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
             return false
         }
         return true
+    }
+    
+    func generateCoordinatesFromAddress() {
+        let geocoder = CLGeocoder()
+        let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
+        let address2 = self.barangaySublocality.text! + " " + self.townCity.text! + ", "
+        let address3 = self.zipPostalCode.text! + " " + self.stateProvince.text! + ", "
+        let completeAddress = address1 + address2 + address3 + self.selectedCountry!
+        geocoder.geocodeAddressString(completeAddress, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                debugPrint(error!)
+            }
+            if let placemark = placemarks?.first {
+                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                self.latitudeLoc = "\(coordinates.latitude)"
+                self.longitudeLoc = "\(coordinates.longitude)"
+                debugPrint(self.latitudeLoc!)
+                debugPrint(self.longitudeLoc!)
+            }
+        })
     }
 
 }

@@ -21,7 +21,206 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
     
-    var countryEntry = ["- Select a Country -", "Philippines", "China", "Russia", "USA", "Austrailia", "Singapore", "Japan"]
+    var countryEntry = [
+        "- Select a Country -",
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "Andorra",
+        "Angola",
+        "Antigua and Barbuda",
+        "Argentina",
+        "Armenia",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahamas",
+        "Bahrain",
+        "Bangladesh",
+        "Barbados",
+        "Belarus",
+        "Belgium",
+        "Belize",
+        "Benin",
+        "Bhutan",
+        "Bolivia",
+        "Bosnia and Herzegovina",
+        "Botswana",
+        "Brazil",
+        "Brunei",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cabo Verde",
+        "Cambodia",
+        "Cameroon",
+        "Canada",
+        "Central African Republic (CAR)",
+        "Chad",
+        "Chile",
+        "China",
+        "Colombia",
+        "Comoros",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Costa Rica",
+        "Cote d'Ivoire",
+        "Croatia",
+        "Cuba",
+        "Cyprus",
+        "Czech Republic",
+        "Denmark",
+        "Djibouti",
+        "Dominica",
+        "Dominican Republic",
+        "Ecuador",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Eritrea",
+        "Estonia",
+        "Ethiopia",
+        "Fiji",
+        "Finland",
+        "France",
+        "Gabon",
+        "Gambia",
+        "Georgia",
+        "Germany",
+        "Ghana",
+        "Greece",
+        "Grenada",
+        "Guatemala",
+        "Guinea",
+        "Guinea-Bissau",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Iraq",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Jamaica",
+        "Japan",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kiribati",
+        "Kosovo",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Laos",
+        "Latvia",
+        "Lebanon",
+        "Lesotho",
+        "Liberia",
+        "Libya",
+        "Liechtenstein",
+        "Lithuania",
+        "Luxembourg",
+        "Macedonia",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldives",
+        "Mali",
+        "Malta",
+        "Marshall Islands",
+        "Mauritania",
+        "Mauritius",
+        "Mexico",
+        "Micronesia",
+        "Moldova",
+        "Monaco",
+        "Mongolia",
+        "Montenegro",
+        "Morocco",
+        "Mozambique",
+        "Myanmar (Burma)",
+        "Namibia",
+        "Nauru",
+        "Nepal",
+        "Netherlands",
+        "New Zealand",
+        "Nicaragua",
+        "Niger",
+        "Nigeria",
+        "North Korea",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Palau",
+        "Palestine",
+        "Panama",
+        "Papua New Guinea",
+        "Paraguay",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Qatar",
+        "Romania",
+        "Russia",
+        "Rwanda",
+        "Saint Kitts and Nevis",
+        "Saint Lucia",
+        "Saint Vincent and the Grenadines",
+        "Samoa",
+        "San Marino",
+        "Sao Tome and Principe",
+        "Saudi Arabia",
+        "Senegal",
+        "Serbia",
+        "Seychelles",
+        "Sierra Leone",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "Solomon Islands",
+        "Somalia",
+        "South Africa",
+        "South Korea",
+        "South Sudan",
+        "Spain",
+        "Sri Lanka",
+        "Sudan",
+        "Suriname",
+        "Swaziland",
+        "Sweden",
+        "Switzerland",
+        "Syria",
+        "Taiwan",
+        "Tajikistan",
+        "Tanzania",
+        "Thailand",
+        "Timor-Leste",
+        "Togo",
+        "Tonga",
+        "Trinidad and Tobago",
+        "Tunisia",
+        "Turkey",
+        "Turkmenistan",
+        "Tuvalu",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates (UAE)",
+        "United Kingdom (UK)",
+        "United States of America (USA)",
+        "Uruguay",
+        "Uzbekistan",
+        "Vanuatu",
+        "Vatican City (Holy See)",
+        "Venezuela",
+        "Vietnam",
+        "Yemen",
+        "Zambia",
+        "Zimbabwe"
+    ]
     var email: String?
     var password: String?
     var businessName: String?
@@ -83,7 +282,6 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             let userLocation = locations[0]
             self.latitudeLoc = "\(userLocation.coordinate.latitude)"
             self.longitudeLoc = "\(userLocation.coordinate.longitude)"
-            
             CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
                 if (error != nil) {
                     debugPrint("Reverse geocoder failed with error" + error!.localizedDescription)
@@ -99,6 +297,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 let country = (placemarks![0].country != nil) ? placemarks![0].country : ""
                 let countryIndex = (self.countryEntry.index(of: country!) != nil) ? self.countryEntry.index(of: country!) : 0
                 self.countryList.selectRow(countryIndex!, inComponent: 0, animated: true)
+                self.selectedCountry = country!
                 self.buildingOffice.text = streetAd2!
                 self.streetBlock.text = streetAd!
                 self.barangaySublocality.text = barangay!
@@ -106,7 +305,6 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 self.stateProvince.text = stateProvince!
                 self.zipPostalCode.text = postalCode!
             })
-            
             self.cllManager.stopUpdatingLocation()
             self.isLocationUpdated = true
         }
@@ -120,6 +318,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         // Pass the selected object to the new view controller.
         if segue.identifier == "toBusinessOperations" {
             if self.validateAddresses() {
+                self.generateCoordinatesFromAddress()
                 let destView = segue.destination as! FQOperationsViewController
                 destView.email = self.email!
                 destView.password = self.password!
@@ -200,6 +399,23 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             return false
         }
         return true
+    }
+    
+    func generateCoordinatesFromAddress() {
+        let geocoder = CLGeocoder()
+        let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.barangaySublocality.text! + ", " + self.townCity.text! + ", " + self.zipPostalCode.text! + " " + self.stateProvince.text! + ", " + self.selectedCountry
+        geocoder.geocodeAddressString(completeAddress, completionHandler: {(placemarks, error) -> Void in
+            if((error) != nil){
+                debugPrint(error!)
+            }
+            if let placemark = placemarks?.first {
+                let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
+                self.latitudeLoc = "\(coordinates.latitude)"
+                self.longitudeLoc = "\(coordinates.longitude)"
+                debugPrint(self.latitudeLoc!)
+                debugPrint(self.longitudeLoc!)
+            }
+        })
     }
 
 }

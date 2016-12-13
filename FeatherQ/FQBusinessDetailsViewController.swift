@@ -122,6 +122,9 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
                 destView.password = self.password!
                 destView.businessName = self.businessName.text!
                 destView.selectedCategory = self.selectedCategory
+                if self.logoPath == nil {
+                    self.logoPath = ""
+                }
                 destView.logoPath = self.logoPath!
             }
         }
