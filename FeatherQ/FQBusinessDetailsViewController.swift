@@ -59,7 +59,7 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
         self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
-    
+        self.logoPic.contentMode = .scaleAspectFit
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,7 +85,6 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.logoPic.contentMode = .scaleToFill
             self.logoPic.image = pickedImage
         }
         
