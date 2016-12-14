@@ -49,7 +49,6 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     let imagePicker = UIImagePickerController()
     var uploadMenu: UCMenuViewController?
     var logoPath: String?
-    var isLogoUploaded = false
     var latitudeLoc: String?
     var longitudeLoc: String?
 
@@ -76,7 +75,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     override func viewWillAppear(_ animated: Bool) {
         self.businessName.text = Session.instance.businessName!
         self.categoryList.selectRow(self.categoryFlat.index(of: Session.instance.category!)!, inComponent: 0, animated: true)
-        if isLogoUploaded {
+        if self.logoPath != nil && !self.logoPath!.isEmpty {
             let url = URL(string: "https://ucarecdn.com/" + self.logoPath! + "/image")
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
@@ -143,7 +142,6 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
             } else {
                 let responseData = response as AnyObject
                 self.logoPath = responseData["file"] as? String
-                self.isLogoUploaded = true
                 SwiftSpinner.hide({
                     self.dismiss(animated: true, completion: nil)
                 })

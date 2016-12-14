@@ -257,11 +257,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         let addressData = Session.instance.address!.components(separatedBy: ", ")
         self.buildingOffice.text = addressData[0]
         self.streetBlock.text = addressData[1]
-        self.townCity.text = addressData[2]
-        self.stateProvince.text = addressData[3]
-        self.selectedCountry = addressData[4]
-        self.countryList.selectRow(self.countryEntry.index(of: addressData[4])!, inComponent: 0, animated: true)
-        self.zipPostalCode.text = addressData[5]
+        self.barangaySublocality.text = addressData[2]
+        self.townCity.text = addressData[3]
+        self.stateProvince.text = addressData[5]
+        self.selectedCountry = addressData[6]
+        self.countryList.selectRow(self.countryEntry.index(of: addressData[6])!, inComponent: 0, animated: true)
+        self.zipPostalCode.text = addressData[4]
     }
     
     @available(iOS 2.0, *)
@@ -320,8 +321,8 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
             SwiftSpinner.show("Updating..")
             self.generateCoordinatesFromAddress()
             let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
-            let address2 = self.barangaySublocality.text! + " " + self.townCity.text! + ", "
-            let address3 = self.zipPostalCode.text! + " " + self.stateProvince.text! + ", "
+            let address2 = self.barangaySublocality.text! + ", " + self.townCity.text! + ", "
+            let address3 = self.zipPostalCode.text! + ", " + self.stateProvince.text! + ", "
             let completeAddress = address1 + address2 + address3 + self.selectedCountry!
             Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
                 if response.result.isFailure {

@@ -80,7 +80,7 @@ class FQOperationsViewController: UIViewController {
 
     @IBAction func registerAccount(_ sender: UIButton) {
         SwiftSpinner.show("Please wait..")
-        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + self.zipPostalCode! + " " + self.stateProvince! + ", " + self.selectedCountry!
+        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + self.zipPostalCode! + ", " + self.stateProvince! + ", " + self.selectedCountry!
         Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)

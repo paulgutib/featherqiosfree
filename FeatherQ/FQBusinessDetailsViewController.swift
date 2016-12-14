@@ -45,7 +45,6 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     let imagePicker = UIImagePickerController()
     var uploadMenu: UCMenuViewController?
     var logoPath: String?
-    var isLogoUploaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +67,7 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if isLogoUploaded {
+        if self.logoPath != nil && !self.logoPath!.isEmpty {
             let url = URL(string: "https://ucarecdn.com/" + self.logoPath! + "/image")
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
@@ -146,7 +145,6 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
             } else {
                 let responseData = response as AnyObject
                 self.logoPath = responseData["file"] as? String
-                self.isLogoUploaded = true
                 SwiftSpinner.hide({
                     self.dismiss(animated: true, completion: nil)
                 })
