@@ -64,7 +64,23 @@ class FQSettingsAccountViewController: UIViewController {
     }
     
     @IBAction func updateAccount(_ sender: UIButton) {
-        
+        if self.emailPasswordValidity() {
+            SwiftSpinner.show("Updating..")
+            Alamofire.request(Router.putUpdatePassword(email: self.email.text!, password: self.password.text!, password_confirm: self.confirmPassword.text!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+//                    let errorMessage = (response.result.error?.localizedDescription)! as String
+//                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                        SwiftSpinner.hide()
+//                    })
+//                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                self.navigationController!.popViewController(animated: true)
+                SwiftSpinner.hide()
+            }
+        }
     }
     
     func emailPasswordValidity() -> Bool {

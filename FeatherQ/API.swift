@@ -35,6 +35,7 @@ enum Router: URLRequestConvertible {
     case getEstimatedTime(business_id: String)
     case postResetPassword(email: String)
     case putChangePassword(email: String, password: String, password_confirm: String, verification_code: String)
+    case putUpdatePassword(email: String, password: String, password_confirm: String)
     
     var method: HTTPMethod {
         switch self {
@@ -55,6 +56,8 @@ enum Router: URLRequestConvertible {
         case .postResetPassword:
             return .post
         case .putChangePassword:
+            return .put
+        case .putUpdatePassword:
             return .put
         default:
             return .get
@@ -95,6 +98,8 @@ enum Router: URLRequestConvertible {
             return "/api/reset-password"
         case .putChangePassword:
             return "/api/change-password"
+        case .putUpdatePassword:
+            return "/api/update-password"
         default:
             return "/api/search-business"
         }
@@ -199,6 +204,13 @@ enum Router: URLRequestConvertible {
                 "password": password,
                 "password_confirm": password_confirm,
                 "verification_code": verification_code
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .putUpdatePassword(let email, let password, let password_confirm):
+            let parameters = [
+                "email": email,
+                "password": password,
+                "password_confirm": password_confirm
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
