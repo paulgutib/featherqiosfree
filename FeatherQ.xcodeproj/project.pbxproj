@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B3D034FCB12E967861A1D3C /* Pods_FeatherQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6607281255C44A67D9FEDE19 /* Pods_FeatherQ.framework */; };
 		801004C41DD31B850070C326 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004C31DD31B850070C326 /* AppDelegate.swift */; };
 		801004C61DD31B850070C326 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801004C51DD31B850070C326 /* ViewController.swift */; };
 		801004C91DD31B850070C326 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 801004C71DD31B850070C326 /* Main.storyboard */; };
@@ -48,12 +47,11 @@
 		80DD61641DFA8A86009AB134 /* FQChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DD61631DFA8A86009AB134 /* FQChangePasswordViewController.swift */; };
 		80EE0C2A1DEC458D003B9F7E /* FQForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE0C291DEC458D003B9F7E /* FQForgotPasswordViewController.swift */; };
 		80EE0C2C1DED4A26003B9F7E /* FQAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE0C2B1DED4A26003B9F7E /* FQAboutViewController.swift */; };
+		FC76AC73FCDDB8F185F8E2F7 /* Pods_FeatherQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F38B46CE39F6E78C4005B540 /* Pods_FeatherQ.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		307296F953F5B019654901CA /* Pods-FeatherQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.release.xcconfig"; sourceTree = "<group>"; };
-		6607281255C44A67D9FEDE19 /* Pods_FeatherQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatherQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		662D3AF4A7342A39886F9A15 /* Pods-FeatherQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.debug.xcconfig"; sourceTree = "<group>"; };
+		596134021EAE0D3CBEAF0B06 /* Pods-FeatherQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.debug.xcconfig"; sourceTree = "<group>"; };
 		801004C01DD31B850070C326 /* FeatherQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeatherQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		801004C31DD31B850070C326 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		801004C51DD31B850070C326 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		80DD61631DFA8A86009AB134 /* FQChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQChangePasswordViewController.swift; sourceTree = "<group>"; };
 		80EE0C291DEC458D003B9F7E /* FQForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		80EE0C2B1DED4A26003B9F7E /* FQAboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQAboutViewController.swift; sourceTree = "<group>"; };
+		F1EAC70D54D11EED369F474E /* Pods-FeatherQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatherQ.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ.release.xcconfig"; sourceTree = "<group>"; };
+		F38B46CE39F6E78C4005B540 /* Pods_FeatherQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatherQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				802102461DFCE9EF00FBDC2E /* CoreLocation.framework in Frameworks */,
-				2B3D034FCB12E967861A1D3C /* Pods_FeatherQ.framework in Frameworks */,
+				FC76AC73FCDDB8F185F8E2F7 /* Pods_FeatherQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,9 +116,18 @@
 			isa = PBXGroup;
 			children = (
 				802102451DFCE9EF00FBDC2E /* CoreLocation.framework */,
-				6607281255C44A67D9FEDE19 /* Pods_FeatherQ.framework */,
+				F38B46CE39F6E78C4005B540 /* Pods_FeatherQ.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4BE33407B35FA0A6D47A5CD2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				596134021EAE0D3CBEAF0B06 /* Pods-FeatherQ.debug.xcconfig */,
+				F1EAC70D54D11EED369F474E /* Pods-FeatherQ.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		801004B71DD31B850070C326 = {
@@ -126,8 +135,8 @@
 			children = (
 				801004C21DD31B850070C326 /* FeatherQ */,
 				801004C11DD31B850070C326 /* Products */,
-				9A7A7568392648615B0CD039 /* Pods */,
 				053BCEC1C9E44ED4C483ECE0 /* Frameworks */,
+				4BE33407B35FA0A6D47A5CD2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -243,15 +252,6 @@
 			name = Lib;
 			sourceTree = "<group>";
 		};
-		9A7A7568392648615B0CD039 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				662D3AF4A7342A39886F9A15 /* Pods-FeatherQ.debug.xcconfig */,
-				307296F953F5B019654901CA /* Pods-FeatherQ.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -259,12 +259,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 801004D21DD31B850070C326 /* Build configuration list for PBXNativeTarget "FeatherQ" */;
 			buildPhases = (
-				D8A76980F1CFD2E484F00172 /* [CP] Check Pods Manifest.lock */,
+				58AC4712C21DB5A5B423C670 /* [CP] Check Pods Manifest.lock */,
 				801004BC1DD31B850070C326 /* Sources */,
 				801004BD1DD31B850070C326 /* Frameworks */,
 				801004BE1DD31B850070C326 /* Resources */,
-				3E5AC8107380F6BB09BBE6EF /* [CP] Embed Pods Frameworks */,
-				B9584FBF6CFDE3F1363BFF18 /* [CP] Copy Pods Resources */,
+				2F2C5A4851D5E2378540308D /* [CP] Embed Pods Frameworks */,
+				E70F3F1B1286FF96C33609A3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -282,7 +282,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Reminisense;
 				TargetAttributes = {
 					801004BF1DD31B850070C326 = {
@@ -337,9 +337,9 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3E5AC8107380F6BB09BBE6EF /* [CP] Embed Pods Frameworks */ = {
+		2F2C5A4851D5E2378540308D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
@@ -352,22 +352,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B9584FBF6CFDE3F1363BFF18 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8A76980F1CFD2E484F00172 /* [CP] Check Pods Manifest.lock */ = {
+		58AC4712C21DB5A5B423C670 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,6 +365,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E70F3F1B1286FF96C33609A3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FeatherQ/Pods-FeatherQ-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -546,7 +546,7 @@
 		};
 		801004D31DD31B850070C326 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 662D3AF4A7342A39886F9A15 /* Pods-FeatherQ.debug.xcconfig */;
+			baseConfigurationReference = 596134021EAE0D3CBEAF0B06 /* Pods-FeatherQ.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -567,7 +567,7 @@
 		};
 		801004D41DD31B850070C326 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 307296F953F5B019654901CA /* Pods-FeatherQ.release.xcconfig */;
+			baseConfigurationReference = F1EAC70D54D11EED369F474E /* Pods-FeatherQ.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

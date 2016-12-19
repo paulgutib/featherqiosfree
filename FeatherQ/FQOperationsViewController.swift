@@ -18,6 +18,7 @@ class FQOperationsViewController: UIViewController {
     @IBOutlet weak var firstNumber: UITextField!
     @IBOutlet weak var lastNumber: UITextField!
     @IBOutlet weak var timeClose: UIDatePicker!
+    @IBOutlet weak var timeOpen: UIDatePicker!
     
     var email: String?
     var password: String?
@@ -71,6 +72,13 @@ class FQOperationsViewController: UIViewController {
         self.resignFirstResponder()
     }
     
+    @IBAction func timeOpenPicker(_ sender: UIDatePicker) {
+        let timeFormatter = DateFormatter()
+        timeFormatter.timeStyle = .short
+        timeFormatter.locale = Locale(identifier: "en_US")
+        self.timeOpenVal = timeFormatter.string(from: sender.date)
+    }
+    
     @IBAction func timeClosePicker(_ sender: UIDatePicker) {
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
@@ -80,8 +88,8 @@ class FQOperationsViewController: UIViewController {
 
     @IBAction func registerAccount(_ sender: UIButton) {
         SwiftSpinner.show("Please wait..")
-        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + self.zipPostalCode! + ", " + self.stateProvince! + ", " + self.selectedCountry!
-        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
+        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
+        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -111,6 +119,7 @@ class FQOperationsViewController: UIViewController {
                     Session.instance.businessName = self.businessName!
                     Session.instance.businessId = "\(responseData["business_id"])"
                     Session.instance.serviceId = "\(responseData["service_id"])"
+                    Session.instance.key = responseData["raw_code"].stringValue
                     let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                     var rootViewControllers = self.tabBarController?.viewControllers
                     rootViewControllers?[2] = vc

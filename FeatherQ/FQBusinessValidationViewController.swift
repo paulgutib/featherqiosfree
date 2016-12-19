@@ -18,7 +18,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var barangaySublocality: UITextField!
     @IBOutlet weak var townCity: UITextField!
     @IBOutlet weak var stateProvince: UITextField!
-    @IBOutlet weak var zipPostalCode: UITextField!
+//    @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
     
     var countryEntry = [
@@ -243,7 +243,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         self.barangaySublocality.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.townCity.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.stateProvince.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
-        self.zipPostalCode.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+//        self.zipPostalCode.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.phone.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
     }
 
@@ -289,7 +289,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 }
                 let townCity = (placemarks![0].locality != nil) ? placemarks![0].locality : ""
                 let barangay = (placemarks![0].subLocality != nil) ? placemarks![0].subLocality : ""
-                let postalCode = (placemarks![0].postalCode != nil) ? placemarks![0].postalCode : ""
+//                let postalCode = (placemarks![0].postalCode != nil) ? placemarks![0].postalCode : ""
                 let streetAd = (placemarks![0].thoroughfare != nil) ? placemarks![0].thoroughfare : ""
                 let streetAd2 = (placemarks![0].subThoroughfare != nil) ? placemarks![0].subThoroughfare : ""
                 let stateProvince = (placemarks![0].administrativeArea != nil) ? placemarks![0].administrativeArea : ""
@@ -303,7 +303,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 self.barangaySublocality.text = barangay!
                 self.townCity.text = townCity!
                 self.stateProvince.text = stateProvince!
-                self.zipPostalCode.text = postalCode!
+//                self.zipPostalCode.text = postalCode!
             })
             self.cllManager.stopUpdatingLocation()
             self.isLocationUpdated = true
@@ -330,7 +330,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 destView.streetBlock = self.streetBlock.text!
                 destView.townCity = self.townCity.text!
                 destView.stateProvince = self.stateProvince.text!
-                destView.zipPostalCode = self.zipPostalCode.text!
+                destView.zipPostalCode = "" //self.zipPostalCode.text!
                 destView.phone = self.phone.text!
                 destView.barangaySublocality = self.barangaySublocality.text!
                 destView.longitudeVal = self.longitudeLoc!
@@ -356,12 +356,12 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     }
     
     @IBAction func stateProvince(_ sender: UITextField) {
-        self.zipPostalCode.becomeFirstResponder()
-    }
-    
-    @IBAction func zipPostalCodeTxt(_ sender: UITextField) {
         self.phone.becomeFirstResponder()
     }
+    
+//    @IBAction func zipPostalCodeTxt(_ sender: UITextField) {
+//        self.phone.becomeFirstResponder()
+//    }
     
     @IBAction func phoneTxt(_ sender: UITextField) {
         self.resignFirstResponder()
@@ -386,12 +386,12 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             self.present(alertBox, animated: true, completion: nil)
             return false
         }
-        else if self.zipPostalCode.text!.isEmpty {
-            let alertBox = UIAlertController(title: "Invalid Zip/Postal Code", message: "Please provide the correct zip or postal code on where your business is located.", preferredStyle: .alert)
-            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertBox, animated: true, completion: nil)
-            return false
-        }
+//        else if self.zipPostalCode.text!.isEmpty {
+//            let alertBox = UIAlertController(title: "Invalid Zip/Postal Code", message: "Please provide the correct zip or postal code on where your business is located.", preferredStyle: .alert)
+//            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertBox, animated: true, completion: nil)
+//            return false
+//        }
         else if self.selectedCountry == "- Select a Country -" {
             let alertBox = UIAlertController(title: "Invalid Country", message: "Please select the country of your business location.", preferredStyle: .alert)
             alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -403,7 +403,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     
     func generateCoordinatesFromAddress() {
         let geocoder = CLGeocoder()
-        let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.barangaySublocality.text! + ", " + self.townCity.text! + ", " + self.zipPostalCode.text! + " " + self.stateProvince.text! + ", " + self.selectedCountry
+        let completeAddress = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", " + self.barangaySublocality.text! + ", " + self.townCity.text! + ", " + /*self.zipPostalCode.text! + " " +*/ self.stateProvince.text! + ", " + self.selectedCountry
         geocoder.geocodeAddressString(completeAddress, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
                 debugPrint(error!)
