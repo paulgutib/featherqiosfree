@@ -50,7 +50,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
         self.navigationItem.title = self.selectedBusiness?.name!
         Session.instance.viewedBusinessId = self.selectedBusiness!.business_id!
         self.businessAddress.text = self.selectedBusiness?.address!
-        self.closingTime.text = self.selectedBusiness?.time_close!
+        self.closingTime.text = self.selectedBusiness!.time_open! + " - " + self.selectedBusiness!.time_close!
         self.linePeople.text = self.selectedBusiness?.people_in_line!
         self.waitingTimeTotal.text = self.selectedBusiness?.serving_time!
         self.readyDingSound()

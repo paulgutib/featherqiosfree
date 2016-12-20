@@ -11,7 +11,6 @@ import UIKit
 class FQReceiptViewController: UIViewController {
 
     @IBOutlet weak var priorityNumber: UILabel!
-    @IBOutlet weak var transactionNumber: UILabel!
     @IBOutlet weak var confirmationCode: UILabel!
     @IBOutlet weak var estimatedCallTime: UILabel!
     @IBOutlet weak var okBtn: UIButton!
@@ -19,7 +18,6 @@ class FQReceiptViewController: UIViewController {
     
     var confirmCode: String?
     var issuedNum: String?
-    var transactionNum: String?
     var timeEstimate: String?
     
     override func viewDidLoad() {
@@ -32,7 +30,6 @@ class FQReceiptViewController: UIViewController {
         self.modalContainer.clipsToBounds = true
         
         self.priorityNumber.text = self.issuedNum!
-        self.transactionNumber.text = self.transactionNum!
         self.confirmationCode.text = self.confirmCode!
         self.estimatedCallTime.text = self.timeEstimate!
     }

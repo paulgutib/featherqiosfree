@@ -40,27 +40,24 @@ class FQRegistrationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "toBusinessDetails" {
+        if segue.identifier == "toEmailVerification" {
             if self.emailPasswordValidity() {
                 SwiftSpinner.show("Sending verification code..")
                 Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
                     if response.result.isFailure {
                         debugPrint(response.result.error!)
-                        let errorMessage = (response.result.error?.localizedDescription)! as String
-                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                            SwiftSpinner.hide()
-                        })
-                        return
+//                        let errorMessage = (response.result.error?.localizedDescription)! as String
+//                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                            SwiftSpinner.hide()
+//                        })
+//                        return
                     }
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)
-                    let destView = segue.destination as! FQBusinessDetailsViewController
+                    let destView = segue.destination as! FQVerificationCodeViewController
                     destView.email = self.email.text!
                     destView.password = self.password.text!
-                    let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQVerificationCodeViewController") as! FQVerificationCodeViewController
-                    modalViewController.confirmationCode = responseData["code"].stringValue
-                    modalViewController.modalPresentationStyle = .overCurrentContext
-                    self.present(modalViewController, animated: true, completion: nil)
+                    destView.confirmationCode = responseData["code"].stringValue
                     SwiftSpinner.hide()
                 }
             }

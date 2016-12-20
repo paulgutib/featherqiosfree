@@ -109,7 +109,6 @@ class FQIssueNumberViewController: UIViewController {
                 let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQReceiptViewController") as! FQReceiptViewController
                 modalViewController.issuedNum = self.numToIssue.text!
                 modalViewController.timeEstimate = self.timeForecast.text!
-                modalViewController.transactionNum = "\(dataObj["transaction_number"]!)"
                 modalViewController.confirmCode = dataObj["confirmation_code"] as? String
                 modalViewController.modalPresentationStyle = .overCurrentContext
                 self.availableNumbers.remove(at: self.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)

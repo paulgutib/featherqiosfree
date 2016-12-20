@@ -17,6 +17,7 @@ class FQBusiness {
     var key: String?
     var people_in_line: String?
     var time_close: String?
+    var time_open: String?
     var name: String?
     var serving_time: String?
     
@@ -28,6 +29,7 @@ class FQBusiness {
         self.key = modelAttr["key"] as? String
         self.people_in_line = self.peopleInLineChecker(arg0: modelAttr["people_in_line"]!)
         self.time_close = modelAttr["time_close"] as? String
+        self.time_open = modelAttr["time_open"] as? String
         self.name = modelAttr["name"] as? String
         self.serving_time = Utility.instance.anyObjectNilChecker(modelAttr["serving_time"]!, placeholder: "less than 1 minute")
     }

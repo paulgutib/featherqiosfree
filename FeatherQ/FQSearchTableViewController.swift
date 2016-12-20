@@ -33,6 +33,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        SwiftSpinner.show("Fetching..")
         self.filterSearch = UISearchController(searchResultsController: nil)
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
@@ -93,7 +94,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140.0
+        return 144.0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -139,7 +140,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     open func updateSearchResults(for searchController: UISearchController) {
         var unwrappedBusinessNames = [String]()
         for business in self.businessList {
-            unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!+"|"+business.logo!)
+            unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!+"|"+business.time_open!+"|"+business.logo!)
         }
         self.filteredBusinesses.removeAll(keepingCapacity: false)
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
@@ -188,7 +189,8 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                         "key": businessData[5],
                         "business_id": businessData[6],
                         "time_close": businessData[7],
-                        "logo": businessData[8],
+                        "time_open": businessData[8],
+                        "logo": businessData[9],
                     ])
                     self.filterSearch.isActive = false
                 }
@@ -213,9 +215,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     func postDisplayBusinesses() {
-        if !self.recurseIfEmpty {
-            SwiftSpinner.show("Fetching..")
-        }
         var urlVal: URLRequestConvertible?
         if (self.latitudeLoc != nil) && !self.recurseIfEmpty {
             urlVal = Router.postSearchBusiness(latitude: self.latitudeLoc!, longitude: self.longitudeLoc!)
@@ -226,10 +225,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         Alamofire.request(urlVal!).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
                 return
             }
             let responseData = JSON(data: response.data!)
@@ -264,7 +263,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["address"] = businessData[2]
             listData["people_in_line"] = businessData[3]
             listData["serving_time"] = businessData[4]
-            listData["logo"] = businessData[8]
+            listData["logo"] = businessData[9]
         }
         else {
             listData["name"] = self.businessList[index].name!
@@ -281,10 +280,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
+//                let errorMessage = (response.result.error?.localizedDescription)! as String
+//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                    SwiftSpinner.hide()
+//                })
                 return
             }
             let responseData = JSON(data: response.data!)

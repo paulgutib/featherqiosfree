@@ -231,21 +231,32 @@ class FQProcessQueueTableViewController: UITableViewController {
 //    }
     
     @IBAction func dropNumNow(_ sender: UIButton) {
-        debugPrint("dropped tagged \(sender.tag)")
-        let indexPath = IndexPath(row: sender.tag, section: 0)
-        Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+        let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            debugPrint("dropped tagged \(sender.tag)")
+            let indexPath = IndexPath(row: sender.tag, section: 0)
+            Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+//                    let errorMessage = (response.result.error?.localizedDescription)! as String
+//                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+//                        SwiftSpinner.hide()
+//                    })
+//                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
             }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
+            self.removeRowsAndReload(indexPath)
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+        if let popoverController = alertBox.popoverPresentationController {
+            let chosenIndexPath = IndexPath(row: sender.tag, section: 1)
+            let chosenCell = self.tableView.cellForRow(at: chosenIndexPath)
+            popoverController.sourceView = chosenCell
+            popoverController.sourceRect = chosenCell!.bounds
         }
-        self.removeRowsAndReload(indexPath)
+        self.present(alertBox, animated: true, completion: nil)
     }
     
     @IBAction func serveNumNow(_ sender: UIButton) {

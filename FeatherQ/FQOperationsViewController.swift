@@ -47,6 +47,7 @@ class FQOperationsViewController: UIViewController {
         self.submitBtn.clipsToBounds = true
         self.firstNumber.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.lastNumber.inputAccessoryView = UIView.init()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,54 +88,80 @@ class FQOperationsViewController: UIViewController {
     }
 
     @IBAction func registerAccount(_ sender: UIButton) {
-        SwiftSpinner.show("Please wait..")
-        let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
-        Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            let access_token = responseData["access_token"].stringValue
-            if responseData != nil && !access_token.isEmpty {
-                //store tokens
-                do {
-                    try Locksmith.updateData(data: [
-                        "access_token": access_token,
-                        "email": self.email!,
-                        "password": self.password!,
-                        "device_token": Session.instance.deviceToken!
-                    ], forUserAccount: "fqiosappfree")
-                    Session.instance.isLoggedIn = true
-                    Session.instance.category = self.selectedCategory!
-                    Session.instance.timeClose = self.timeCloseVal!
-                    Session.instance.numberLimit = Int(self.lastNumber.text!)!
-                    Session.instance.numberStart = Int(self.firstNumber.text!)!
-                    Session.instance.address = completeAddress
-                    Session.instance.businessName = self.businessName!
-                    Session.instance.businessId = "\(responseData["business_id"])"
-                    Session.instance.serviceId = "\(responseData["service_id"])"
-                    Session.instance.key = responseData["raw_code"].stringValue
-                    let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-                    var rootViewControllers = self.tabBarController?.viewControllers
-                    rootViewControllers?[2] = vc
-                    vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-                    self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
-                }catch {
-                    debugPrint(error)
+        if self.filledUpRequiredFields() {
+            SwiftSpinner.show("Please wait..")
+            let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
+            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
                 }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                let access_token = responseData["access_token"].stringValue
+                if responseData != nil && !access_token.isEmpty {
+                    //store tokens
+                    do {
+                        try Locksmith.updateData(data: [
+                            "access_token": access_token,
+                            "email": self.email!,
+                            "password": self.password!,
+                            "device_token": Session.instance.deviceToken!
+                        ], forUserAccount: "fqiosappfree")
+                        Session.instance.isLoggedIn = true
+                        Session.instance.category = self.selectedCategory!
+                        Session.instance.timeClose = self.timeCloseVal!
+                        Session.instance.numberLimit = Int(self.lastNumber.text!)!
+                        Session.instance.numberStart = Int(self.firstNumber.text!)!
+                        Session.instance.address = completeAddress
+                        Session.instance.businessName = self.businessName!
+                        Session.instance.businessId = "\(responseData["business_id"])"
+                        Session.instance.serviceId = "\(responseData["service_id"])"
+                        Session.instance.key = responseData["raw_code"].stringValue
+                        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+                        var rootViewControllers = self.tabBarController?.viewControllers
+                        rootViewControllers?[2] = vc
+                        vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+                        self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                    }catch {
+                        debugPrint(error)
+                    }
+                }
+                else{
+                    let alertBox = UIAlertController(title: "Server Error", message: "There was a connection error with our servers. Please try submitting again.", preferredStyle: .alert)
+                    alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertBox, animated: true, completion: nil)
+                }
+                SwiftSpinner.hide()
             }
-            else{
-                let alertBox = UIAlertController(title: "Server Error", message: "There was a connection error with our servers. Please try submitting again.", preferredStyle: .alert)
-                alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alertBox, animated: true, completion: nil)
-            }
-            SwiftSpinner.hide()
         }
+    }
+    
+    func filledUpRequiredFields() -> Bool {
+        let fNum = self.firstNumber.text!
+        let lNum = self.lastNumber.text!
+        if fNum.isEmpty || lNum.isEmpty || Int(fNum) == nil || Int(lNum) == nil {
+            let alertBox = UIAlertController(title: "Required First/Last Numbers", message: "Make sure that you specify the first and last numbers of your line correctly.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        else if Int(fNum)! > Int(lNum)! {
+            let alertBox = UIAlertController(title: "First Number is Invalid", message: "The first number must be lesser than the last number.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        else if self.timeOpenVal == nil || self.timeCloseVal == nil {
+            let alertBox = UIAlertController(title: "Invalid Business Hours", message: "Provide an opening and a closing time for your business.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        return true
     }
 }
