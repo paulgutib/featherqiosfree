@@ -24,25 +24,26 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     
     var categoryEntry = [
         ["name": "- Select a Category -", "image": ""],
-        ["name": "Agriculture", "image": "CatAgriculture"],
-        ["name": "Energy", "image": "CatEnergy"],
-        ["name": "Mining and Quarrying", "image": "CatMining"],
-        ["name": "Manufacturing", "image": "CatManufacturing"],
-        ["name": "Government", "image": "CatGovernment"],
-        ["name": "Construction", "image": "CatConstruction"],
-        ["name": "Wholesale and Retail", "image": "CatRetail"],
-        ["name": "Hotels and Restaurants", "image": "CatHotel"],
+        //        ["name": "Agriculture", "image": "CatAgriculture"],
+        ["name": "Utilities", "image": "CatEnergy"],
+        //        ["name": "Mining and Quarrying", "image": "CatMining"],
+        //        ["name": "Manufacturing", "image": "CatManufacturing"],
+        ["name": "Government Institutions", "image": "CatGovernment"],
+        //        ["name": "Construction", "image": "CatConstruction"],
+        ["name": "Retail", "image": "CatRetail"],
+        ["name": "Restaurants", "image": "CatHotel"],
         ["name": "Transportation", "image": "CatTransportation"],
-        ["name": "Telecommunications", "image": "CatTelecommunications"],
-        ["name": "Financial", "image": "CatFinancial"],
+        //        ["name": "Telecommunications", "image": "CatTelecommunications"],
+        ["name": "Banking", "image": "CatFinancial"],
         ["name": "Education", "image": "CatEducation"],
-        ["name": "Social Services", "image": "CatSocial"],
+        //        ["name": "Social Services", "image": "CatSocial"],
         ["name": "Health Care", "image": "CatHealth"],
         ["name": "Technology", "image": "CatTechnology"],
-        ["name": "Entertainment", "image": "CatEntertainment"],
-        ["name": "Mass Media", "image": "CatMedia"]
+        //        ["name": "Entertainment", "image": "CatEntertainment"],
+        ["name": "Ticketing", "image": "CatTicketing"]
     ]
-    var categoryFlat = ["", "Agriculture", "Energy", "Mining and Quarrying", "Manufacturing", "Government", "Construction", "Wholesale and Retail", "Hotels and Restaurants", "Transportation", "Telecommunications", "Financial", "Education", "Social Services", "Health Care", "Technology", "Entertainment", "Mass Media"]
+//    var categoryFlat = ["", "Agriculture", "Energy", "Mining and Quarrying", "Manufacturing", "Government", "Construction", "Wholesale and Retail", "Hotels and Restaurants", "Transportation", "Telecommunications", "Financial", "Education", "Social Services", "Health Care", "Technology", "Entertainment", "Mass Media"]
+    var categoryFlat = ["", "Utilities", "Government Institutions", "Retail", "Restaurants", "Transportation", "Banking", "Education", "Health Care", "Technology", "Ticketing"]
     var selectedCategory = "- Select a Category -"
     var email: String?
     var password: String?
@@ -64,7 +65,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
         self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
-        self.logoPic.contentMode = .scaleAspectFit
+        self.logoPic.contentMode = .scaleAspectFill
     }
 
     override func didReceiveMemoryWarning() {

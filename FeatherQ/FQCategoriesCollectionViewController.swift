@@ -13,23 +13,24 @@ private let reuseIdentifier = "FQCategoriesCollectionViewCell"
 class FQCategoriesCollectionViewController: UICollectionViewController {
     
     var categoryList = [
-        ["name": "Agriculture", "image": "CatAgriculture"],
-        ["name": "Energy", "image": "CatEnergy"],
-        ["name": "Mining and Quarrying", "image": "CatMining"],
-        ["name": "Manufacturing", "image": "CatManufacturing"],
-        ["name": "Government", "image": "CatGovernment"],
-        ["name": "Construction", "image": "CatConstruction"],
-        ["name": "Wholesale and Retail", "image": "CatRetail"],
-        ["name": "Hotels and Restaurants", "image": "CatHotel"],
+//        ["name": "Agriculture", "image": "CatAgriculture"],
+        ["name": "Utilities", "image": "CatEnergy"],
+//        ["name": "Mining and Quarrying", "image": "CatMining"],
+//        ["name": "Manufacturing", "image": "CatManufacturing"],
+        ["name": "Government Institutions", "image": "CatGovernment"],
+//        ["name": "Construction", "image": "CatConstruction"],
+        ["name": "Retail", "image": "CatRetail"],
+        ["name": "Restaurants", "image": "CatHotel"],
         ["name": "Transportation", "image": "CatTransportation"],
-        ["name": "Telecommunications", "image": "CatTelecommunications"],
-        ["name": "Financial", "image": "CatFinancial"],
+//        ["name": "Telecommunications", "image": "CatTelecommunications"],
+        ["name": "Banking", "image": "CatFinancial"],
         ["name": "Education", "image": "CatEducation"],
-        ["name": "Social Services", "image": "CatSocial"],
+//        ["name": "Social Services", "image": "CatSocial"],
         ["name": "Health Care", "image": "CatHealth"],
         ["name": "Technology", "image": "CatTechnology"],
-        ["name": "Entertainment", "image": "CatEntertainment"],
-        ["name": "Mass Media", "image": "CatMedia"],
+//        ["name": "Entertainment", "image": "CatEntertainment"],
+        ["name": "Ticketing", "image": "CatTicketing"],
+        ["name": "Others", "image": "AboutLogo"],
         ["name": "All", "image": "AboutLogo"]
     ]
 
@@ -61,7 +62,6 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
 //            self.collectionView?.reloadData()
 //            SwiftSpinner.hide()
 //        }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,14 +100,20 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FQCategoriesCollectionViewCell
     
         // Configure the cell
-        cell.categoryTitle.text = self.categoryList[indexPath.row]["name"]
+//        cell.categoryTitle.text = self.categoryList[indexPath.row]["name"]
+        cell.categoryTitle.attributedText = NSAttributedString(string: self.categoryList[indexPath.row]["name"]!, attributes: [
+            NSStrokeColorAttributeName: UIColor.black,
+            NSStrokeWidthAttributeName: -3,
+            NSForegroundColorAttributeName: UIColor.white
+        ])
+        cell.categoryBackground.contentMode = .scaleAspectFill
         cell.categoryBackground.image = UIImage(named: self.categoryList[indexPath.row]["image"]!)
     
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        let squareSize = (UIScreen.main.bounds.width / 3.0) - 3.0
+        let squareSize = (UIScreen.main.bounds.width / 2.0) - 2.0
         return CGSize(width: squareSize, height: squareSize)
     }
 
