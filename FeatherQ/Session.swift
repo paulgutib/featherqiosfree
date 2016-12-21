@@ -18,6 +18,7 @@ class Session {
     var viewedBusinessId = "209"
     var category: String?
     var timeClose: String?
+    var timeOpen: String?
     var numberLimit: Int?
     var servingTime: String?
     var serviceId: String?

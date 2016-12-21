@@ -24,7 +24,7 @@ enum Router: URLRequestConvertible {
     case postLogin(email: String, password: String, deviceToken: String)
     case postEmailVerification(email: String)
     case getBusiness(business_id: String)
-    case postUpdateBusiness(business_id: String, name: String, address: String, logo: String, category: String, time_close: String, number_start: String, number_limit: String, longitudeVal: String, latitudeVal: String)
+    case postUpdateBusiness(business_id: String, name: String, address: String, logo: String, category: String, time_open: String, time_close: String, number_start: String, number_limit: String, longitudeVal: String, latitudeVal: String)
     case postIssueNumber(service_id: String, priority_number: String, note: String)
     case getAllNumbers(business_id: String)
     case getCallNumber(transaction_number: String)
@@ -173,13 +173,14 @@ enum Router: URLRequestConvertible {
                 "email": email
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .postUpdateBusiness(let business_id, let name, let address, let logo, let category, let time_close, let number_start, let number_limit, let longitudeVal, let latitudeVal):
+        case .postUpdateBusiness(let business_id, let name, let address, let logo, let category, let time_open, let time_close, let number_start, let number_limit, let longitudeVal, let latitudeVal):
             let parameters = [
                 "business_id": business_id,
                 "name": name,
                 "address": address,
                 "category": category,
                 "time_close": time_close,
+                "time_open": time_open,
                 "number_start": number_start,
                 "number_limit": number_limit,
                 "logo": logo,

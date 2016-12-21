@@ -115,6 +115,7 @@ class FQOperationsViewController: UIViewController {
                         Session.instance.isLoggedIn = true
                         Session.instance.category = self.selectedCategory!
                         Session.instance.timeClose = self.timeCloseVal!
+                        Session.instance.timeOpen = self.timeOpenVal!
                         Session.instance.numberLimit = Int(self.lastNumber.text!)!
                         Session.instance.numberStart = Int(self.firstNumber.text!)!
                         Session.instance.address = completeAddress
@@ -122,6 +123,7 @@ class FQOperationsViewController: UIViewController {
                         Session.instance.businessId = "\(responseData["business_id"])"
                         Session.instance.serviceId = "\(responseData["service_id"])"
                         Session.instance.key = responseData["raw_code"].stringValue
+                        Session.instance.logo = self.logoPath!
                         let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                         var rootViewControllers = self.tabBarController?.viewControllers
                         rootViewControllers?[2] = vc

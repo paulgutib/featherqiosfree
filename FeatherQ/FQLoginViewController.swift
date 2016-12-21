@@ -98,11 +98,12 @@ class FQLoginViewController: UIViewController {
                             let dataObj = business.1.dictionaryObject!
                             Session.instance.category = dataObj["category"] as? String
                             Session.instance.timeClose = dataObj["time_close"] as? String
+                            Session.instance.timeOpen = dataObj["time_open"] as? String
                             Session.instance.numberLimit = dataObj["number_limit"] as? Int
                             Session.instance.servingTime = dataObj["serving_time"] as? String
                             Session.instance.numberStart = dataObj["number_start"] as? Int
                             Session.instance.key = dataObj["key"] as? String
-                            Session.instance.logo = dataObj["logo"] as? String
+                            Session.instance.logo = Utility.instance.anyObjectNilChecker(dataObj["logo"]!, placeholder: "")
                             Session.instance.address = dataObj["address"] as? String
                             Session.instance.peopleInLine = "\(dataObj["people_in_line"]!)"
                             Session.instance.businessName = dataObj["name"] as? String

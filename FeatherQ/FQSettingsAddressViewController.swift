@@ -12,14 +12,14 @@ import SwiftyJSON
 import SwiftSpinner
 import CoreLocation
 
-class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var countryList: UIPickerView!
     @IBOutlet weak var buildingOffice: UITextField!
     @IBOutlet weak var streetBlock: UITextField!
     @IBOutlet weak var townCity: UITextField!
     @IBOutlet weak var stateProvince: UITextField!
-    @IBOutlet weak var zipPostalCode: UITextField!
+//    @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var updateBtn: UIButton!
     @IBOutlet weak var barangaySublocality: UITextField!
@@ -243,7 +243,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.townCity.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.stateProvince.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
-        self.zipPostalCode.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
+//        self.zipPostalCode.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.phone.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.logoVal = ""
     }
@@ -259,10 +259,10 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         self.streetBlock.text = addressData[1]
         self.barangaySublocality.text = addressData[2]
         self.townCity.text = addressData[3]
-        self.stateProvince.text = addressData[5]
-        self.selectedCountry = addressData[6]
-        self.countryList.selectRow(self.countryEntry.index(of: addressData[6])!, inComponent: 0, animated: true)
-        self.zipPostalCode.text = addressData[4]
+        self.stateProvince.text = addressData[4]
+        self.selectedCountry = addressData[5]
+        self.countryList.selectRow(self.countryEntry.index(of: addressData[5])!, inComponent: 0, animated: true)
+//        self.zipPostalCode.text = addressData[4]
     }
     
     @available(iOS 2.0, *)
@@ -305,12 +305,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     }
     
     @IBAction func stateProvinceTxt(_ sender: UITextField) {
-        self.zipPostalCode.becomeFirstResponder()
-    }
-    
-    @IBAction func zipPostalCode(_ sender: UITextField) {
         self.phone.becomeFirstResponder()
     }
+    
+//    @IBAction func zipPostalCode(_ sender: UITextField) {
+//        self.phone.becomeFirstResponder()
+//    }
     
     @IBAction func phoneTxt(_ sender: UITextField) {
         self.resignFirstResponder()
@@ -318,27 +318,26 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateAddresses() {
-            SwiftSpinner.show("Updating..")
-            self.generateCoordinatesFromAddress()
-            let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
-            let address2 = self.barangaySublocality.text! + ", " + self.townCity.text! + ", "
-            let address3 = self.zipPostalCode.text! + ", " + self.stateProvince.text! + ", "
-            let completeAddress = address1 + address2 + address3 + self.selectedCountry!
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+            self.generateCoordinatesFromAddress(closure: {
+                let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
+                let address2 = self.barangaySublocality.text! + ", " + self.townCity.text! + ", "
+                let address3 = /*self.zipPostalCode.text! + ", " + */self.stateProvince.text! + ", "
+                let completeAddress = address1 + address2 + address3 + self.selectedCountry!
+                Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: completeAddress, logo: Session.instance.logo!, category: Session.instance.category!, time_open: Session.instance.timeOpen!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
                 Session.instance.address = completeAddress
                 self.navigationController!.popViewController(animated: true)
-                SwiftSpinner.hide()
-            }
+            })
         }
     }
     
@@ -361,12 +360,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
             self.present(alertBox, animated: true, completion: nil)
             return false
         }
-        else if self.zipPostalCode.text!.isEmpty {
-            let alertBox = UIAlertController(title: "Invalid Zip/Postal Code", message: "Please provide the correct zip or postal code on where your business is located.", preferredStyle: .alert)
-            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertBox, animated: true, completion: nil)
-            return false
-        }
+//        else if self.zipPostalCode.text!.isEmpty {
+//            let alertBox = UIAlertController(title: "Invalid Zip/Postal Code", message: "Please provide the correct zip or postal code on where your business is located.", preferredStyle: .alert)
+//            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alertBox, animated: true, completion: nil)
+//            return false
+//        }
         else if self.selectedCountry == "- Select a Country -" {
             let alertBox = UIAlertController(title: "Invalid Country", message: "Please select the country of your business location.", preferredStyle: .alert)
             alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -376,11 +375,11 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         return true
     }
     
-    func generateCoordinatesFromAddress() {
+    func generateCoordinatesFromAddress(closure: @escaping () -> Void) {
         let geocoder = CLGeocoder()
         let address1 = self.buildingOffice.text! + ", " + self.streetBlock.text! + ", "
         let address2 = self.barangaySublocality.text! + " " + self.townCity.text! + ", "
-        let address3 = self.zipPostalCode.text! + " " + self.stateProvince.text! + ", "
+        let address3 = /*self.zipPostalCode.text! + " " + */self.stateProvince.text! + ", "
         let completeAddress = address1 + address2 + address3 + self.selectedCountry!
         geocoder.geocodeAddressString(completeAddress, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
@@ -392,6 +391,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
                 self.longitudeLoc = "\(coordinates.longitude)"
                 debugPrint(self.latitudeLoc!)
                 debugPrint(self.longitudeLoc!)
+                closure()
             }
         })
     }

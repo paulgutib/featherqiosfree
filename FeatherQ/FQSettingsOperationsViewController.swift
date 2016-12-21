@@ -12,12 +12,13 @@ import SwiftyJSON
 import SwiftSpinner
 import CoreLocation
 
-class FQSettingsOperationsViewController: UIViewController {
+class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var firstNumber: UITextField!
     @IBOutlet weak var lastNumber: UITextField!
     @IBOutlet weak var timeClose: UIDatePicker!
+    @IBOutlet weak var timeOpen: UIDatePicker!
     
     var email: String?
     var password: String?
@@ -52,6 +53,7 @@ class FQSettingsOperationsViewController: UIViewController {
         df.locale = Locale(identifier: "en_US")
         df.dateFormat = "h:mm a"
         self.timeClose.date = df.date(from: Session.instance.timeClose!)!
+        self.timeOpen.date = df.date(from: Session.instance.timeOpen!)!
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,6 +78,13 @@ class FQSettingsOperationsViewController: UIViewController {
         self.timeCloseVal = timeFormatter.string(from: sender.date)
     }
     
+    @IBAction func timeOpenPicker(_ sender: UIDatePicker) {
+        let timeFormatter = DateFormatter()
+        timeFormatter.timeStyle = .short
+        timeFormatter.locale = Locale(identifier: "en_US")
+        self.timeOpenVal = timeFormatter.string(from: sender.date)
+    }
+    
     @IBAction func firstNumberTxt(_ sender: UITextField) {
         self.lastNumber.becomeFirstResponder()
     }
@@ -85,28 +94,28 @@ class FQSettingsOperationsViewController: UIViewController {
     }
 
     @IBAction func updateAccount(_ sender: UIButton) {
-        SwiftSpinner.show("Updating..")
-        self.generateCoordinatesFromAddress()
-        Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: Session.instance.logo!, category: Session.instance.category!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+        self.generateCoordinatesFromAddress(closure: {
+            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: Session.instance.logo!, category: Session.instance.category!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
             }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
             Session.instance.timeClose = self.timeCloseVal!
+            Session.instance.timeOpen = self.timeOpenVal!
             Session.instance.numberStart = Int(self.firstNumber.text!)!
             Session.instance.numberLimit = Int(self.lastNumber.text!)!
             self.navigationController!.popViewController(animated: true)
-            SwiftSpinner.hide()
-        }
+        })
     }
     
-    func generateCoordinatesFromAddress() {
+    func generateCoordinatesFromAddress(closure: @escaping () -> Void) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(Session.instance.address!, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
@@ -118,6 +127,7 @@ class FQSettingsOperationsViewController: UIViewController {
                 self.longitudeLoc = "\(coordinates.longitude)"
                 debugPrint(self.latitudeLoc!)
                 debugPrint(self.longitudeLoc!)
+                closure()
             }
         })
     }

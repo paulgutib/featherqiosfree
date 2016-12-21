@@ -13,7 +13,7 @@ import SwiftSpinner
 import Uploadcare
 import CoreLocation
 
-class FQSettingsDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class FQSettingsDetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var logoPic: UIImageView!
     @IBOutlet weak var categoryList: UIPickerView!
@@ -73,6 +73,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.logoPath = Session.instance.logo!
         self.businessName.text = Session.instance.businessName!
         self.categoryList.selectRow(self.categoryFlat.index(of: Session.instance.category!)!, inComponent: 0, animated: true)
         if self.logoPath != nil && !self.logoPath!.isEmpty {
@@ -156,24 +157,23 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     
     @IBAction func updateBusiness(_ sender: UIButton) {
         if self.validateBusinessNameCategory() {
-            SwiftSpinner.show("Updating..")
-            self.generateCoordinatesFromAddress()
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: self.logoPath!, category: self.selectedCategory, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+            self.generateCoordinatesFromAddress(closure: {
+                Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: self.businessName.text!, address: Session.instance.address!, logo: self.logoPath!, category: self.selectedCategory, time_open: Session.instance.timeOpen!, time_close: Session.instance.timeClose!, number_start: "\(Session.instance.numberStart!)", number_limit: "\(Session.instance.numberLimit!)", longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
                 Session.instance.businessName = self.businessName.text!
                 Session.instance.category = self.selectedCategory
                 self.navigationController!.popViewController(animated: true)
-                SwiftSpinner.hide()
-            }
+            })
         }
     }
     
@@ -193,7 +193,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         return true
     }
     
-    func generateCoordinatesFromAddress() {
+    func generateCoordinatesFromAddress(closure: @escaping () -> Void) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(Session.instance.address!, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
@@ -205,6 +205,7 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
                 self.longitudeLoc = "\(coordinates.longitude)"
                 debugPrint(self.latitudeLoc!)
                 debugPrint(self.longitudeLoc!)
+                closure()
             }
         })
     }
