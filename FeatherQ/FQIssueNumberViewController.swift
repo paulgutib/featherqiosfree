@@ -18,6 +18,7 @@ class FQIssueNumberViewController: UIViewController {
     @IBOutlet weak var issueBtn: UIButton!
     @IBOutlet weak var timeForecast: UILabel!
     @IBOutlet weak var notes: UITextField!
+    @IBOutlet weak var noAvailableNum: UILabel!
     
     var takenNumbers = [String]()
     var availableNumbers = [Int]()
@@ -29,6 +30,8 @@ class FQIssueNumberViewController: UIViewController {
         self.notes.inputAccessoryView = UIView.init()
         self.issueBtn.layer.cornerRadius = 5.0
         self.issueBtn.clipsToBounds = true
+        self.noAvailableNum.layer.cornerRadius = 5.0
+        self.noAvailableNum.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +41,6 @@ class FQIssueNumberViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         SwiftSpinner.show("Preparing..")
-        self.getEstimatedTime()
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
@@ -64,8 +66,26 @@ class FQIssueNumberViewController: UIViewController {
                         self.availableNumbers.append(i)
                     }
                 }
-                self.numToIssue.text = "\(self.availableNumbers[0])"
-                self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                if !self.availableNumbers.isEmpty {
+                    self.getEstimatedTime()
+                    self.numToIssue.text = "\(self.availableNumbers[0])"
+                    self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                    self.issueSpecific.isEnabled = true
+                    self.notes.isEnabled = true
+                    self.noAvailableNum.isHidden = true
+                    self.issueBtn.isEnabled = true
+                    self.issueBtn.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+                }
+                else {
+                    self.numToIssue.text = ""
+                    self.issueSpecific.maximumValue = 1
+                    self.issueSpecific.isEnabled = false
+                    self.notes.isEnabled = false
+                    self.noAvailableNum.isHidden = false
+                    self.timeForecast.text = "-"
+                    self.issueBtn.isEnabled = false
+                    self.issueBtn.backgroundColor = UIColor.gray
+                }
                 self.issueSpecific.minimumValue = 0.0
             }
             SwiftSpinner.hide()
@@ -93,6 +113,7 @@ class FQIssueNumberViewController: UIViewController {
     
     @IBAction func issueNumber(_ sender: Any) {
         SwiftSpinner.show("Issuing number..")
+        debugPrint(self.numToIssue.text!)
         Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
@@ -112,8 +133,26 @@ class FQIssueNumberViewController: UIViewController {
                 modalViewController.confirmCode = dataObj["confirmation_code"] as? String
                 modalViewController.modalPresentationStyle = .overCurrentContext
                 self.availableNumbers.remove(at: self.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
-                self.numToIssue.text = "\(self.availableNumbers[0])"
-                self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                if !self.availableNumbers.isEmpty {
+                    self.numToIssue.text = "\(self.availableNumbers[0])"
+                    self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                    self.issueSpecific.isEnabled = true
+                    self.notes.isEnabled = true
+                    self.noAvailableNum.isHidden = true
+                    self.issueBtn.isEnabled = true
+                    self.issueBtn.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+                    self.getEstimatedTime()
+                }
+                else {
+                    self.numToIssue.text = ""
+                    self.issueSpecific.maximumValue = 1
+                    self.issueSpecific.isEnabled = false
+                    self.notes.isEnabled = false
+                    self.noAvailableNum.isHidden = false
+                    self.issueBtn.isEnabled = false
+                    self.issueBtn.backgroundColor = UIColor.gray
+                    self.timeForecast.text = "-"
+                }
                 self.issueSpecific.value = 0.0
                 self.notes.text = ""
                 self.present(modalViewController, animated: true, completion: nil)
@@ -123,7 +162,6 @@ class FQIssueNumberViewController: UIViewController {
                 alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alertBox, animated: true, completion: nil)
             }
-            self.getEstimatedTime()
             SwiftSpinner.hide()
         }
     }
