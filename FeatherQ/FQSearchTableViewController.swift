@@ -33,7 +33,9 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        SwiftSpinner.show("Fetching..")
+        SwiftSpinner.show("Fetching..").addTapHandler({
+            SwiftSpinner.hide()
+        }, subtitle: "Tap to put the current process in the background.")
         self.filterSearch = UISearchController(searchResultsController: nil)
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
@@ -225,10 +227,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         Alamofire.request(urlVal!).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
                 return
             }
             let responseData = JSON(data: response.data!)
@@ -245,7 +247,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                     self.businessList.append(FQBusiness(modelAttr: dataObj))
                 }
             }
-            if self.businessList.isEmpty {
+            if self.businessList.isEmpty && self.chosenCategory == "All" {
                 self.recurseIfEmpty = true
                 self.postDisplayBusinesses()
             }
@@ -280,10 +282,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
                 return
             }
             let responseData = JSON(data: response.data!)

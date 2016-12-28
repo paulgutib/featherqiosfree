@@ -46,11 +46,12 @@ class FQRegistrationViewController: UIViewController {
                 Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
                     if response.result.isFailure {
                         debugPrint(response.result.error!)
-//                        let errorMessage = (response.result.error?.localizedDescription)! as String
-//                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                            SwiftSpinner.hide()
-//                        })
-//                        return
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            self.navigationController!.popViewController(animated: true)
+                            SwiftSpinner.hide()
+                        })
+                        return
                     }
                     let responseData = JSON(data: response.data!)
                     debugPrint(responseData)

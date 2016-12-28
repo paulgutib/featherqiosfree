@@ -32,8 +32,6 @@ class FQOperationsViewController: UIViewController {
     var stateProvince: String?
     var zipPostalCode: String?
     var phone: String?
-    var timeOpenVal: String?
-    var timeCloseVal: String?
     var deviceToken: String?
     var barangaySublocality: String?
     var longitudeVal: String?
@@ -74,24 +72,29 @@ class FQOperationsViewController: UIViewController {
     }
     
     @IBAction func timeOpenPicker(_ sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        timeFormatter.locale = Locale(identifier: "en_US")
-        self.timeOpenVal = timeFormatter.string(from: sender.date)
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.timeStyle = .short
+//        timeFormatter.locale = Locale(identifier: "en_US")
+//        self.timeOpenVal = timeFormatter.string(from: sender.date)
     }
     
     @IBAction func timeClosePicker(_ sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        timeFormatter.locale = Locale(identifier: "en_US")
-        self.timeCloseVal = timeFormatter.string(from: sender.date)
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.timeStyle = .short
+//        timeFormatter.locale = Locale(identifier: "en_US")
+//        self.timeCloseVal = timeFormatter.string(from: sender.date)
     }
 
     @IBAction func registerAccount(_ sender: UIButton) {
         if self.filledUpRequiredFields() {
             SwiftSpinner.show("Please wait..")
+            let timeFormatter = DateFormatter()
+            timeFormatter.timeStyle = .short
+            timeFormatter.locale = Locale(identifier: "en_US")
+            let timeOpenVal = timeFormatter.string(from: self.timeOpen.date)
+            let timeCloseVal = timeFormatter.string(from: self.timeClose.date)
             let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
-            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
+            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -114,8 +117,8 @@ class FQOperationsViewController: UIViewController {
                         ], forUserAccount: "fqiosappfree")
                         Session.instance.isLoggedIn = true
                         Session.instance.category = self.selectedCategory!
-                        Session.instance.timeClose = self.timeCloseVal!
-                        Session.instance.timeOpen = self.timeOpenVal!
+                        Session.instance.timeClose = timeCloseVal
+                        Session.instance.timeOpen = timeOpenVal
                         Session.instance.numberLimit = Int(self.lastNumber.text!)!
                         Session.instance.numberStart = Int(self.firstNumber.text!)!
                         Session.instance.address = completeAddress
@@ -158,8 +161,8 @@ class FQOperationsViewController: UIViewController {
             self.present(alertBox, animated: true, completion: nil)
             return false
         }
-        else if self.timeOpenVal == nil || self.timeCloseVal == nil {
-            let alertBox = UIAlertController(title: "Invalid Business Hours", message: "Provide an opening and a closing time for your business.", preferredStyle: .alert)
+        else if self.timeOpen.date >= self.timeClose.date {
+            let alertBox = UIAlertController(title: "Invalid Business Hours", message: "Provide an opening and a closing time for your business. Closing time must be later than the opening time.", preferredStyle: .alert)
             alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertBox, animated: true, completion: nil)
             return false

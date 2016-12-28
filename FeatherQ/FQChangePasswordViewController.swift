@@ -18,6 +18,7 @@ class FQChangePasswordViewController: UIViewController {
     @IBOutlet weak var confirmNewPass: UITextField!
     @IBOutlet weak var tokenCode: UITextField!
     @IBOutlet weak var submitBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
     
     var confirmToken: String?
     var userEmail: String?
@@ -30,6 +31,8 @@ class FQChangePasswordViewController: UIViewController {
         self.modalContainer.clipsToBounds = true
         self.submitBtn.layer.cornerRadius = 5.0
         self.submitBtn.clipsToBounds = true
+        self.cancelBtn.layer.cornerRadius = 5.0
+        self.cancelBtn.clipsToBounds = true
         self.newPass.inputAccessoryView = UIView.init()
         self.confirmNewPass.inputAccessoryView = UIView.init()
         self.tokenCode.inputAccessoryView = UIView.init()
@@ -98,4 +101,9 @@ class FQChangePasswordViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func cancelChange(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

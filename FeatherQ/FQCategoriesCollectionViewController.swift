@@ -30,8 +30,8 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
         ["name": "Technology", "image": "CatTechnology"],
 //        ["name": "Entertainment", "image": "CatEntertainment"],
         ["name": "Ticketing", "image": "CatTicketing"],
-        ["name": "Others", "image": "AboutLogo"],
-        ["name": "All", "image": "AboutLogo"]
+        ["name": "Others", "image": "CatOthers"],
+        ["name": "All", "image": "PlaceholderLogo"]
     ]
 
     override func viewDidLoad() {

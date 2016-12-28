@@ -21,7 +21,7 @@ class FQSearchTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.businessLogo.contentMode = .scaleAspectFill
+        self.businessLogo.contentMode = .scaleAspectFit
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

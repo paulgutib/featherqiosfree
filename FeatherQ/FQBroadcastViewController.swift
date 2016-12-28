@@ -52,6 +52,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
                 SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    self.navigationController!.popViewController(animated: true)
                     SwiftSpinner.hide()
                 })
                 return

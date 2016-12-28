@@ -32,8 +32,6 @@ class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDel
     var stateProvince: String?
     var zipPostalCode: String?
     var phone: String?
-    var timeOpenVal: String?
-    var timeCloseVal: String?
     var deviceToken: String?
     var latitudeLoc: String?
     var longitudeLoc: String?
@@ -72,17 +70,17 @@ class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDel
     */
     
     @IBAction func timeClosePicker(_ sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        timeFormatter.locale = Locale(identifier: "en_US")
-        self.timeCloseVal = timeFormatter.string(from: sender.date)
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.timeStyle = .short
+//        timeFormatter.locale = Locale(identifier: "en_US")
+//        self.timeCloseVal = timeFormatter.string(from: sender.date)
     }
     
     @IBAction func timeOpenPicker(_ sender: UIDatePicker) {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        timeFormatter.locale = Locale(identifier: "en_US")
-        self.timeOpenVal = timeFormatter.string(from: sender.date)
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.timeStyle = .short
+//        timeFormatter.locale = Locale(identifier: "en_US")
+//        self.timeOpenVal = timeFormatter.string(from: sender.date)
     }
     
     @IBAction func firstNumberTxt(_ sender: UITextField) {
@@ -94,25 +92,56 @@ class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDel
     }
 
     @IBAction func updateAccount(_ sender: UIButton) {
-        self.generateCoordinatesFromAddress(closure: {
-            Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: Session.instance.logo!, category: Session.instance.category!, time_open: self.timeOpenVal!, time_close: self.timeCloseVal!, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+        if self.filledUpRequiredFields() {
+            self.generateCoordinatesFromAddress(closure: {
+                let timeFormatter = DateFormatter()
+                timeFormatter.timeStyle = .short
+                timeFormatter.locale = Locale(identifier: "en_US")
+                let timeOpenVal = timeFormatter.string(from: self.timeOpen.date)
+                let timeCloseVal = timeFormatter.string(from: self.timeClose.date)
+                Alamofire.request(Router.postUpdateBusiness(business_id: Session.instance.businessId, name: Session.instance.businessName!, address: Session.instance.address!, logo: Session.instance.logo!, category: Session.instance.category!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, longitudeVal: self.longitudeLoc!, latitudeVal: self.latitudeLoc!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
-            }
-            Session.instance.timeClose = self.timeCloseVal!
-            Session.instance.timeOpen = self.timeOpenVal!
-            Session.instance.numberStart = Int(self.firstNumber.text!)!
-            Session.instance.numberLimit = Int(self.lastNumber.text!)!
-            self.navigationController!.popViewController(animated: true)
-        })
+                Session.instance.timeClose = timeCloseVal
+                Session.instance.timeOpen = timeOpenVal
+                Session.instance.numberStart = Int(self.firstNumber.text!)!
+                Session.instance.numberLimit = Int(self.lastNumber.text!)!
+                self.navigationController!.popViewController(animated: true)
+            })
+        }
+    }
+    
+    func filledUpRequiredFields() -> Bool {
+        let fNum = self.firstNumber.text!
+        let lNum = self.lastNumber.text!
+        if fNum.isEmpty || lNum.isEmpty || Int(fNum) == nil || Int(lNum) == nil {
+            let alertBox = UIAlertController(title: "Required First/Last Numbers", message: "Make sure that you specify the first and last numbers of your line correctly.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        else if Int(fNum)! > Int(lNum)! {
+            let alertBox = UIAlertController(title: "First Number is Invalid", message: "The first number must be lesser than the last number.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        else if self.timeOpen.date >= self.timeClose.date {
+            let alertBox = UIAlertController(title: "Invalid Business Hours", message: "Provide an opening and a closing time for your business. Closing time must be later than the opening time.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
+        return true
     }
     
     func generateCoordinatesFromAddress(closure: @escaping () -> Void) {

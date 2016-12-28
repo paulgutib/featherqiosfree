@@ -348,6 +348,12 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
             self.present(alertBox, animated: true, completion: nil)
             return false
         }
+        else if self.barangaySublocality.text!.isEmpty {
+            let alertBox = UIAlertController(title: "Invalid Sublocality/Barangay", message: "Please provide the correct sublocality or barangay on where your business is located.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return false
+        }
         else if self.townCity.text!.isEmpty {
             let alertBox = UIAlertController(title: "Invalid Town/City", message: "Please provide the correct town or city on where your business is located.", preferredStyle: .alert)
             alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

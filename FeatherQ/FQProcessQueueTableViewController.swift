@@ -39,15 +39,16 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        SwiftSpinner.show("Refreshing..")
+        SwiftSpinner.show("Preparing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    self.navigationController!.popViewController(animated: true)
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -192,11 +193,11 @@ class FQProcessQueueTableViewController: UITableViewController {
         Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -238,11 +239,11 @@ class FQProcessQueueTableViewController: UITableViewController {
             Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
-//                    let errorMessage = (response.result.error?.localizedDescription)! as String
-//                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                        SwiftSpinner.hide()
-//                    })
-//                    return
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
                 }
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)
@@ -265,11 +266,11 @@ class FQProcessQueueTableViewController: UITableViewController {
         Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -282,22 +283,22 @@ class FQProcessQueueTableViewController: UITableViewController {
         Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
-//                    let errorMessage = (response.result.error?.localizedDescription)! as String
-//                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                        SwiftSpinner.hide()
-//                    })
-//                    return
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
                 }
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)

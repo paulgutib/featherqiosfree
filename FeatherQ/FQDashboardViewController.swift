@@ -38,12 +38,15 @@ class FQDashboardViewController: UIViewController {
         self.issueNumberBtn.clipsToBounds = true
         self.broadcastBtn.layer.cornerRadius = 5.0
         self.broadcastBtn.clipsToBounds = true
-        self.autoLoginForRegisteredUser()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.autoLoginForRegisteredUser()
     }
     
 
@@ -125,6 +128,7 @@ class FQDashboardViewController: UIViewController {
                         debugPrint(response.result.error!)
                         let errorMessage = (response.result.error?.localizedDescription)! as String
                         SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            self.tabBarController!.selectedIndex = 0
                             SwiftSpinner.hide()
                         })
                         return

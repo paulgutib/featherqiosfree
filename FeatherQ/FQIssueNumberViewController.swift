@@ -44,11 +44,12 @@ class FQIssueNumberViewController: UIViewController {
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    self.navigationController!.popViewController(animated: true)
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -117,11 +118,11 @@ class FQIssueNumberViewController: UIViewController {
         Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-//                let errorMessage = (response.result.error?.localizedDescription)! as String
-//                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                    SwiftSpinner.hide()
-//                })
-//                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
@@ -170,11 +171,11 @@ class FQIssueNumberViewController: UIViewController {
         Alamofire.request(Router.getEstimatedTime(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
-                //                let errorMessage = (response.result.error?.localizedDescription)! as String
-                //                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                //                    SwiftSpinner.hide()
-                //                })
-                //                return
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
