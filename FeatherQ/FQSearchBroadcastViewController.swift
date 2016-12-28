@@ -49,7 +49,13 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationItem.title = self.selectedBusiness?.name!
         Session.instance.viewedBusinessId = self.selectedBusiness!.business_id!
-        self.businessAddress.text = self.selectedBusiness?.address!
+        var finalAddress = self.selectedBusiness?.address!
+        let firstChar = self.selectedBusiness?.address!.characters.first
+        if firstChar == "," {
+            finalAddress = String(finalAddress!.characters.dropFirst()) // drop 2 characters because ", "
+            finalAddress = String(finalAddress!.characters.dropFirst()) // drop 2 characters because ", "
+        }
+        self.businessAddress.text = finalAddress
         self.closingTime.text = self.selectedBusiness!.time_open! + " - " + self.selectedBusiness!.time_close!
         self.linePeople.text = self.selectedBusiness?.people_in_line!
         self.waitingTimeTotal.text = self.selectedBusiness?.serving_time!

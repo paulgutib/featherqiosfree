@@ -260,17 +260,29 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         var listData = [String:String]()
         if self.filterSearch.isActive {
             let businessData = self.filteredBusinesses[index].components(separatedBy: "|")
+            var finalAddress = businessData[2]
+            let firstChar = businessData[2].characters.first
+            if firstChar == "," {
+                finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
+                finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
+            }
             listData["name"] = businessData[0]
             listData["category"] = businessData[1]
-            listData["address"] = businessData[2]
+            listData["address"] = finalAddress
             listData["people_in_line"] = businessData[3]
             listData["serving_time"] = businessData[4]
             listData["logo"] = businessData[9]
         }
         else {
+            var finalAddress = self.businessList[index].address!
+            let firstChar = self.businessList[index].address!.characters.first
+            if firstChar == "," {
+                finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
+                finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
+            }
             listData["name"] = self.businessList[index].name!
             listData["category"] = self.businessList[index].category!
-            listData["address"] = self.businessList[index].address!
+            listData["address"] = finalAddress
             listData["people_in_line"] = self.businessList[index].people_in_line!
             listData["serving_time"] = self.businessList[index].serving_time!
             listData["logo"] = self.businessList[index].logo!
