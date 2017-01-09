@@ -12,6 +12,7 @@ class FQOnboardingContentViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var subtitle: UILabel!
+    @IBOutlet weak var headerTitle: UILabel!
     
     var imageFile: String!
     var pageIndex: Int!
@@ -42,23 +43,29 @@ class FQOnboardingContentViewController: UIViewController {
     
     func displaySubtitles() {
         if self.pageIndex == 0 {
-            self.subtitle.text = "Go to \"My Business\" and follow on-screen instructions to register your business for free.\nYou will then be redirected to your dashboard where you can choose your line operations.\nOptionally set a default process next time the app starts for your preference."
+//            self.subtitle.text = "Go to \"My Business\" and follow on-screen instructions to register your business for free.\nYou will then be redirected to your dashboard where you can choose your line operations.\nOptionally set a default process next time the app starts for your preference."
+            self.headerTitle.text = "Nearby Businesses"
+            self.subtitle.text = "Step 1: Allow the app to know where you are."
         }
         else if self.pageIndex == 1 {
-            self.subtitle.text = "You can issue a number specifically along with an annotation to your clients.\nThere is also a time estimation for when each issued number might be called.\nAfter issuing a number, a popup will show along with its confirmation code for reference."
+//            self.subtitle.text = "You can issue a number specifically along with an annotation to your clients.\nThere is also a time estimation for when each issued number might be called.\nAfter issuing a number, a popup will show along with its confirmation code for reference."
+            self.headerTitle.text = "Easy Business Search"
+            self.subtitle.text = "Step 2: Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
         }
         else if self.pageIndex == 2 {
-            self.subtitle.text = "You will be given an option to serve or drop a number after calling it.\nReference information such as the time the number was issued, the annotations attached to it, and its confirmation code will be shown in this view."
+//            self.subtitle.text = "You will be given an option to serve or drop a number after calling it.\nReference information such as the time the number was issued, the annotations attached to it, and its confirmation code will be shown in this view."
+            self.headerTitle.text = "Line Status Monitoring"
+            self.subtitle.text = "Step 3: Keep updated with the business' progress by checking out its broadcast screen."
         }
-        else if self.pageIndex == 3 {
-            self.subtitle.text = "For faster transactions, you can full swipe to either left or right to serve the current number and automatically call the next one."
-        }
-        else if self.pageIndex == 4 {
-            self.subtitle.text = "All called numbers will be shown on the broadcast screen.\nAlso shown in the broadcast screen is the unique 4-character key that can be used by customers to search your business faster."
-        }
-        else if self.pageIndex == 5 {
-            self.subtitle.text = "You can review this guide in the \"Help (?)\" section of the app.\n\n\n"
-        }
+//        else if self.pageIndex == 3 {
+//            self.subtitle.text = "For faster transactions, you can full swipe to either left or right to serve the current number and automatically call the next one."
+//        }
+//        else if self.pageIndex == 4 {
+//            self.subtitle.text = "All called numbers will be shown on the broadcast screen.\nAlso shown in the broadcast screen is the unique 4-character key that can be used by customers to search your business faster."
+//        }
+//        else if self.pageIndex == 5 {
+//            self.subtitle.text = "You can review this guide in the \"Help (?)\" section of the app.\n\n\n"
+//        }
     }
 
 }
