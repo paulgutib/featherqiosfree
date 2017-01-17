@@ -13,6 +13,8 @@ class FQOnboardingContentViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
+    @IBOutlet weak var startQueue: UIButton!
+    @IBOutlet weak var indexMarker: UILabel!
     
     var imageFile: String!
     var pageIndex: Int!
@@ -23,6 +25,18 @@ class FQOnboardingContentViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.imageView.image = UIImage(named: self.imageFile)
         self.displaySubtitles()
+        self.startQueue.layer.cornerRadius = 5.0
+        self.startQueue.clipsToBounds = true
+        self.view.bringSubview(toFront: self.startQueue)
+        if self.pageIndex == 1 {
+//        if self.pageIndex == 4 {
+            self.startQueue.isHidden = false
+        }
+        else {
+            self.startQueue.isHidden = true
+        }
+        self.indexMarker.text = "(\(self.pageIndex+1)/2)"
+//        self.indexMarker.text = "(\(self.pageIndex+1)/5)"
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,29 +57,44 @@ class FQOnboardingContentViewController: UIViewController {
     
     func displaySubtitles() {
         if self.pageIndex == 0 {
-//            self.subtitle.text = "Go to \"My Business\" and follow on-screen instructions to register your business for free.\nYou will then be redirected to your dashboard where you can choose your line operations.\nOptionally set a default process next time the app starts for your preference."
-            self.headerTitle.text = "Nearby Businesses"
-            self.subtitle.text = "Step 1: Allow the app to know where you are."
+//            self.headerTitle.text = "Dashboard Display"
+//            self.subtitle.text = "Queuing options are available in the dashboard. Checking an option makes it the default screen to show the next time the app starts."
+            self.headerTitle.text = "Easy Business Search"
+            self.subtitle.text = "Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
         }
         else if self.pageIndex == 1 {
-//            self.subtitle.text = "You can issue a number specifically along with an annotation to your clients.\nThere is also a time estimation for when each issued number might be called.\nAfter issuing a number, a popup will show along with its confirmation code for reference."
-            self.headerTitle.text = "Easy Business Search"
-            self.subtitle.text = "Step 2: Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
-        }
-        else if self.pageIndex == 2 {
-//            self.subtitle.text = "You will be given an option to serve or drop a number after calling it.\nReference information such as the time the number was issued, the annotations attached to it, and its confirmation code will be shown in this view."
+//            self.headerTitle.text = "Issuing a Number"
+//            self.subtitle.text = "Choose a number you want to issue and put in notes if necessary."
             self.headerTitle.text = "Line Status Monitoring"
-            self.subtitle.text = "Step 3: Keep updated with the business' progress by checking out its broadcast screen."
+            self.subtitle.text = "Keep updated with the business' progress by checking out its broadcast screen."
         }
+//        else if self.pageIndex == 2 {
+//            self.headerTitle.text = "Calling a Number"
+//            self.subtitle.text = "You can call a single or multiple numbers in the line in any order you want."
+//
+//        }
 //        else if self.pageIndex == 3 {
-//            self.subtitle.text = "For faster transactions, you can full swipe to either left or right to serve the current number and automatically call the next one."
+//            self.headerTitle.text = "Serve or Drop"
+//            self.subtitle.text = "Serving or dropping a number is enabled once it has been called. Swiping from left to right serves the current number and calls the next one."
 //        }
 //        else if self.pageIndex == 4 {
-//            self.subtitle.text = "All called numbers will be shown on the broadcast screen.\nAlso shown in the broadcast screen is the unique 4-character key that can be used by customers to search your business faster."
+//            self.headerTitle.text = "Broadcast Publicly"
+//            self.subtitle.text = "Display this screen in a visible area of your establishment for waiting customers to see the progress of the line."
 //        }
 //        else if self.pageIndex == 5 {
 //            self.subtitle.text = "You can review this guide in the \"Help (?)\" section of the app.\n\n\n"
 //        }
+    }
+    
+    @IBAction func startServing(_ sender: UIButton) {
+        if !Session.instance.isLoggedIn {
+            UserDefaults.standard.set(100, forKey: "fqiosappfreeonboard")
+            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+            self.present(vc, animated: true, completion: nil)
+        }
+        else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
 }

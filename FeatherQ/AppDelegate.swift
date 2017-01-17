@@ -37,7 +37,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
-        self.selectMyBusinessAsDefault()
+        let locationGrant = UserDefaults.standard.string(forKey: "fqiosappfreelocation")
+        if locationGrant == nil {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingGetStartedViewController")
+        }
+        else if locationGrant == "denied" {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingLocationViewController")
+        }
+        else if UserDefaults.standard.integer(forKey: "fqiosappfreeonboard") != 100 {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
+        }
+        else {
+            self.selectMyBusinessAsDefault()
+        }
         
         return true
     }
@@ -165,9 +177,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
             tabBarController.setViewControllers(rootViewControllers, animated: false)
             tabBarController.selectedIndex = 2
-        }
-        else {
-            self.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
         }
     }
 }

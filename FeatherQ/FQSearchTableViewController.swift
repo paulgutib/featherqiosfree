@@ -203,11 +203,11 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         }
     }
     
-    @IBAction func locateMe(_ sender: UIBarButtonItem) {
-        self.recurseIfEmpty = false
-//        self.isLocationUpdated = false
-        self.getCurrentLocation()
-    }
+//    @IBAction func locateMe(_ sender: UIBarButtonItem) {
+//        self.recurseIfEmpty = false
+////        self.isLocationUpdated = false
+//        self.getCurrentLocation()
+//    }
     
     func getCurrentLocation() {
         self.cllManager.delegate = self

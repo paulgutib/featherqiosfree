@@ -37,6 +37,8 @@
 		808433ED1DF6D2910053C4DB /* doorbell_x.wav in Resources */ = {isa = PBXBuildFile; fileRef = 808433EC1DF6D2910053C4DB /* doorbell_x.wav */; };
 		8084524F1DF5249100249441 /* FQBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8084524E1DF5249100249441 /* FQBroadcastViewController.swift */; };
 		808FE5901DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */; };
+		8099E8291E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */; };
+		8099E82B1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */; };
 		80C296341DFAA51700444E5A /* FQOnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */; };
@@ -85,6 +87,8 @@
 		808433EC1DF6D2910053C4DB /* doorbell_x.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = doorbell_x.wav; sourceTree = "<group>"; };
 		8084524E1DF5249100249441 /* FQBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQBroadcastViewController.swift; sourceTree = "<group>"; };
 		808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSearchBroadcastViewController.swift; sourceTree = "<group>"; };
+		8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingLocationViewController.swift; sourceTree = "<group>"; };
+		8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingGetStartedViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */,
 				80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */,
 				80C296351DFAA55900444E5A /* FQOnboardingContentViewController.swift */,
+				8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */,
+				8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				801004C61DD31B850070C326 /* ViewController.swift in Sources */,
 				804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */,
 				801A10591DE5517300373A22 /* FQSearchTableViewController.swift in Sources */,
+				8099E82B1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift in Sources */,
 				80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */,
 				801004D91DD39C990070C326 /* FQCategoriesCollectionViewController.swift in Sources */,
 				801A105B1DE5532500373A22 /* FQSearchTableViewCell.swift in Sources */,
@@ -422,6 +429,7 @@
 				806692A81DF08AC800EA3963 /* FQSettingsAddressViewController.swift in Sources */,
 				80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */,
 				801004C41DD31B850070C326 /* AppDelegate.swift in Sources */,
+				8099E8291E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift in Sources */,
 				80CE42731DDC6A420054E7C5 /* FQProcessQueueTableViewController.swift in Sources */,
 				801004D71DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift in Sources */,
 			);
