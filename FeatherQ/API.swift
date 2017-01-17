@@ -36,6 +36,7 @@ enum Router: URLRequestConvertible {
     case postResetPassword(email: String)
     case putChangePassword(email: String, password: String, password_confirm: String, verification_code: String)
     case putUpdatePassword(email: String, password: String, password_confirm: String)
+    case getMeanWeights(service_id: String)
     
     var method: HTTPMethod {
         switch self {
@@ -100,6 +101,8 @@ enum Router: URLRequestConvertible {
             return "/api/change-password"
         case .putUpdatePassword:
             return "/api/update-password"
+        case .getMeanWeights(let service_id):
+            return "/api/mean-weights/" + service_id
         default:
             return "/api/search-business"
         }

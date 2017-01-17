@@ -79,6 +79,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         cell.address.text = listData["address"]
         cell.peopleInLine.text = listData["people_in_line"]
         cell.waitingTIme.text = listData["serving_time"]
+        cell.keyLabel.text = listData["key"]
         if !listData["logo"]!.isEmpty {
             let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
             DispatchQueue.global().async {
@@ -271,6 +272,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["address"] = finalAddress
             listData["people_in_line"] = businessData[3]
             listData["serving_time"] = businessData[4]
+            listData["key"] = businessData[5]
             listData["logo"] = businessData[9]
         }
         else {
@@ -285,6 +287,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["address"] = finalAddress
             listData["people_in_line"] = self.businessList[index].people_in_line!
             listData["serving_time"] = self.businessList[index].serving_time!
+            listData["key"] = self.businessList[index].key!
             listData["logo"] = self.businessList[index].logo!
         }
         return listData

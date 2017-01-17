@@ -38,7 +38,7 @@ class FQSettingsTableViewController: UITableViewController {
         if section == 1 {
             return 1
         }
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

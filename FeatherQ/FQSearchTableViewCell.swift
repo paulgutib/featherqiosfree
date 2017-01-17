@@ -16,6 +16,7 @@ class FQSearchTableViewCell: UITableViewCell {
     @IBOutlet weak var peopleInLine: UILabel!
     @IBOutlet weak var waitingTIme: UILabel!
     @IBOutlet weak var businessLogo: UIImageView!
+    @IBOutlet weak var keyLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

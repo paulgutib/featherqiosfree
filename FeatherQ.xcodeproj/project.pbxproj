@@ -39,6 +39,7 @@
 		808FE5901DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */; };
 		8099E8291E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */; };
 		8099E82B1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */; };
+		8099E82D1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */; };
 		80C296341DFAA51700444E5A /* FQOnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */; };
@@ -89,6 +90,7 @@
 		808FE58F1DF7EE2C00705D83 /* FQSearchBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSearchBroadcastViewController.swift; sourceTree = "<group>"; };
 		8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingLocationViewController.swift; sourceTree = "<group>"; };
 		8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingGetStartedViewController.swift; sourceTree = "<group>"; };
+		8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTimeEstimatesTableViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				806692A51DF08AB000EA3963 /* FQSettingsDetailsViewController.swift */,
 				806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */,
 				806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */,
+				8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				801004E71DD465FF0070C326 /* FQIssueNumberViewController.swift in Sources */,
 				801A105F1DE578F300373A22 /* Utility.swift in Sources */,
 				806692A61DF08AB000EA3963 /* FQSettingsDetailsViewController.swift in Sources */,
+				8099E82D1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift in Sources */,
 				80C296361DFAA55900444E5A /* FQOnboardingContentViewController.swift in Sources */,
 				801004E11DD400220070C326 /* FQBusinessDetailsViewController.swift in Sources */,
 				80EE0C2A1DEC458D003B9F7E /* FQForgotPasswordViewController.swift in Sources */,
