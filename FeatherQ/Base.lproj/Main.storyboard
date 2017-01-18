@@ -1737,7 +1737,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="144"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZOl-YV-din" id="9aW-9A-1Nq">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="143.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="143"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderLogo" translatesAutoresizingMaskIntoConstraints="NO" id="tXE-Ny-U5Y">
@@ -2168,7 +2168,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="94"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y1F-yD-EL6" id="rrr-xs-ONc">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="93.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GUA-qa-XdI">
@@ -3970,12 +3970,19 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                     <action selector="allowLocating:" destination="joY-XP-Dtd" eventType="touchUpInside" id="VSa-St-Dfj"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to &quot;Settings &gt; FeatherQ &gt; Location&quot; and select &quot;Always&quot;." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqS-qo-g4k">
-                                <rect key="frame" x="16" y="481" width="288" height="31.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XdK-fL-xiR">
+                                <rect key="frame" x="110" y="481.5" width="100" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="d38-3c-bGO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Settings">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToAppSettings:" destination="joY-XP-Dtd" eventType="touchUpInside" id="ts8-NH-R1f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3984,25 +3991,24 @@ FeatherQ is a line-management application that uses your mobile device and inter
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="top" secondItem="w9h-5L-ire" secondAttribute="bottom" constant="16" id="CYX-6R-ozC"/>
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="FoN-dL-7ca"/>
                             <constraint firstItem="M9f-L9-j6q" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="Gzj-YS-94Z"/>
-                            <constraint firstItem="WqS-qo-g4k" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="IEc-TX-odn"/>
                             <constraint firstItem="M9f-L9-j6q" firstAttribute="centerY" secondItem="D6u-Ky-d0S" secondAttribute="centerY" constant="-20" id="SHQ-hu-BtQ"/>
                             <constraint firstItem="nVs-wU-L6t" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="U4i-hG-zqJ"/>
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="X9A-aY-LGN"/>
                             <constraint firstItem="w9h-5L-ire" firstAttribute="top" secondItem="M9f-L9-j6q" secondAttribute="bottom" constant="24" id="aqR-53-RfB"/>
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="ejE-1S-BQ9"/>
+                            <constraint firstItem="XdK-fL-xiR" firstAttribute="top" secondItem="Qx3-xQ-eYm" secondAttribute="bottom" constant="8" id="icC-ny-coh"/>
                             <constraint firstItem="w9h-5L-ire" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="llU-UT-LWh"/>
-                            <constraint firstItem="WqS-qo-g4k" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="vSa-Qx-65m"/>
+                            <constraint firstItem="XdK-fL-xiR" firstAttribute="centerX" secondItem="D6u-Ky-d0S" secondAttribute="centerX" id="lqQ-ky-rs2"/>
                             <constraint firstItem="nVs-wU-L6t" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="vWD-JC-IqV"/>
                             <constraint firstItem="w9h-5L-ire" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="w1m-UE-Mbg"/>
-                            <constraint firstItem="WqS-qo-g4k" firstAttribute="top" secondItem="Qx3-xQ-eYm" secondAttribute="bottom" constant="8" id="wWL-tA-BNt"/>
                             <constraint firstItem="M9f-L9-j6q" firstAttribute="top" secondItem="nVs-wU-L6t" secondAttribute="bottom" constant="16" id="wz3-87-GiX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Location" id="RFV-p1-xB3"/>
                     <connections>
                         <outlet property="grantPermission" destination="w9h-5L-ire" id="NJp-X7-uTM"/>
-                        <outlet property="locationGuide" destination="WqS-qo-g4k" id="UR9-1H-40K"/>
                         <outlet property="locationNotify" destination="Qx3-xQ-eYm" id="fIk-zM-ijf"/>
+                        <outlet property="settingsBtn" destination="XdK-fL-xiR" id="ezL-xj-Xfc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZe-A7-HSp" userLabel="First Responder" sceneMemberID="firstResponder"/>

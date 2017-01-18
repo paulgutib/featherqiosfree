@@ -80,18 +80,18 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         cell.peopleInLine.text = listData["people_in_line"]
         cell.waitingTIme.text = listData["serving_time"]
         cell.keyLabel.text = listData["key"]
-        if !listData["logo"]!.isEmpty {
-            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                DispatchQueue.main.async {
-                    cell.businessLogo.image = UIImage(data: data!)
-                }
-            }
-        }
-        else {
+//        if !listData["logo"]!.isEmpty {
+//            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
+//            DispatchQueue.global().async {
+//                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//                DispatchQueue.main.async {
+//                    cell.businessLogo.image = UIImage(data: data!)
+//                }
+//            }
+//        }
+//        else {
             cell.businessLogo.image = UIImage(named: "PlaceholderLogo")
-        }
+//        }
 
         return cell
     }

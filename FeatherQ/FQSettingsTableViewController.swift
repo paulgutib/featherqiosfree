@@ -63,10 +63,8 @@ class FQSettingsTableViewController: UITableViewController {
             }))
             alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
             if let popoverController = alertBox.popoverPresentationController {
-                let chosenIndexPath = IndexPath(row: 0, section: 1)
-                let chosenCell = self.tableView.cellForRow(at: chosenIndexPath)
-                popoverController.sourceView = chosenCell
-                popoverController.sourceRect = chosenCell!.bounds
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
             }
             self.present(alertBox, animated: true, completion: nil)
             return nil

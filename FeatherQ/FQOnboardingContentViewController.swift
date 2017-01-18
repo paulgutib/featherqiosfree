@@ -87,14 +87,14 @@ class FQOnboardingContentViewController: UIViewController {
     }
     
     @IBAction func startServing(_ sender: UIButton) {
-        if !Session.instance.isLoggedIn {
-            UserDefaults.standard.set(100, forKey: "fqiosappfreeonboard")
-            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
-            self.present(vc, animated: true, completion: nil)
-        }
-        else {
-            self.dismiss(animated: true, completion: nil)
-        }
+        UserDefaults.standard.set(100, forKey: "fqiosappfreeonboard")
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+//        UIApplication.shared.keyWindow?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+//        self.dismiss(animated: true, completion: { () -> Void  in
+//            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+//            self.present(vc, animated: true, completion: nil)
+//        })
     }
 
 }

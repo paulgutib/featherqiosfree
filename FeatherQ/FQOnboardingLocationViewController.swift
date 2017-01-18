@@ -13,7 +13,7 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
     
     @IBOutlet weak var grantPermission: UIButton!
     @IBOutlet weak var locationNotify: UILabel!
-    @IBOutlet weak var locationGuide: UILabel!
+    @IBOutlet weak var settingsBtn: UIButton!
     
     var cllManager = CLLocationManager()
     var latitudeLoc: String?
@@ -33,12 +33,12 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
     override func viewWillAppear(_ animated: Bool) {
         if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
             self.locationNotify.isHidden = false
-            self.locationGuide.isHidden = false
+            self.settingsBtn.isHidden = false
             self.allowLocating(self.grantPermission)
         }
         else {
             self.locationNotify.isHidden = true
-            self.locationGuide.isHidden = true
+            self.settingsBtn.isHidden = true
         }
     }
 
@@ -69,12 +69,12 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
         case .denied:
             UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
             self.locationNotify.isHidden = false
-            self.locationGuide.isHidden = false
+            self.settingsBtn.isHidden = false
             debugPrint("denied must change")
         default:
             UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
             self.locationNotify.isHidden = false
-            self.locationGuide.isHidden = false
+            self.settingsBtn.isHidden = false
             debugPrint("denied must change")
         }
     }
@@ -97,10 +97,14 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
         self.cllManager.startUpdatingLocation()
     }
     
+    @IBAction func goToAppSettings(_ sender: UIButton) {
+        UIApplication.shared.openURL(URL(string:UIApplicationOpenSettingsURLString)!)
+    }
+    
     func locationApprovalCallback() {
         UserDefaults.standard.set("granted", forKey: "fqiosappfreelocation")
         self.locationNotify.isHidden = true
-        self.locationGuide.isHidden = true
+        self.settingsBtn.isHidden = true
         let alertBox = UIAlertController(title: "SUCCESS", message: "Your current location is now being used by the application.", preferredStyle: .alert)
         alertBox.addAction(UIAlertAction(title: "Proceed", style: .default, handler: { action in
             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
