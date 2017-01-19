@@ -31,7 +31,26 @@ class FQBusiness {
         self.time_close = modelAttr["time_close"] as? String
         self.time_open = modelAttr["time_open"] as? String
         self.name = modelAttr["name"] as? String
-        self.serving_time = Utility.instance.anyObjectNilChecker(modelAttr["serving_time"]!, placeholder: "less than 1 minute")
+//        self.serving_time = Utility.instance.anyObjectNilChecker(modelAttr["serving_time"]!, placeholder: "less than 1 minute")
+        self.serving_time = self.convertServingTime(timeArg: modelAttr["serving_time"]!, peopleArg: modelAttr["people_in_line"]!)
+    }
+    
+    func convertServingTime(timeArg: Any, peopleArg: Any) -> String {
+        let timeArgVal = timeArg as! Int
+        let peopleArgVal = peopleArg as! Int
+        let timeVal = timeArgVal * peopleArgVal
+        if timeVal < 180 {
+            return "less than 3 minutes"
+        }
+        let (h, m) = self.secondsToHoursMinutesSeconds(seconds: timeVal)
+        if h > 0 {
+            return "\(h) hours and \(m) minutes"
+        }
+        return "\(m) minutes"
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
     }
     
     func peopleInLineChecker(_ arg0: Any) -> String {

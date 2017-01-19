@@ -10,10 +10,6 @@ import UIKit
 
 class FQOnboardingContainerViewController: UIViewController, UIPageViewControllerDataSource {
     
-    @IBOutlet weak var fqLogo: UIImageView!
-    @IBOutlet weak var whiteLogo: UIImageView!
-    @IBOutlet weak var logoBackground: UIImageView!
-    
     var pageViewController: UIPageViewController!
     var pageTitles: NSArray!
     var pageImages: NSArray!
@@ -35,9 +31,7 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         self.addChildViewController(self.pageViewController)
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMove(toParentViewController: self)
-        self.view.bringSubview(toFront: self.logoBackground)
-        self.view.bringSubview(toFront: self.fqLogo)
-        self.view.bringSubview(toFront: self.whiteLogo)
+        self.navigationItem.title = "Welcome"
     }
 
     override func didReceiveMemoryWarning() {

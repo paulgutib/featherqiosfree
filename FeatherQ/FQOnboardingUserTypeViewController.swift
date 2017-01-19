@@ -1,23 +1,26 @@
 //
-//  FQOnboardingGetStartedViewController.swift
+//  FQOnboardingUserTypeViewController.swift
 //  FeatherQ
 //
-//  Created by Paul Andrew Gutib on 1/17/17.
+//  Created by Paul Andrew Gutib on 1/19/17.
 //  Copyright © 2017 Reminisense. All rights reserved.
 //
 
 import UIKit
 
-class FQOnboardingGetStartedViewController: UIViewController {
-
-    @IBOutlet weak var getStartedBtn: UIButton!
+class FQOnboardingUserTypeViewController: UIViewController {
     
+    @IBOutlet weak var customerBtn: UIButton!
+    @IBOutlet weak var ownerBtn: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getStartedBtn.layer.cornerRadius = 5.0
-        self.getStartedBtn.clipsToBounds = true
+        self.customerBtn.layer.cornerRadius = 5.0
+        self.customerBtn.clipsToBounds = true
+        self.ownerBtn.layer.cornerRadius = 5.0
+        self.ownerBtn.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,6 +32,9 @@ class FQOnboardingGetStartedViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
 
     /*
     // MARK: - Navigation
@@ -39,5 +45,5 @@ class FQOnboardingGetStartedViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+
 }
