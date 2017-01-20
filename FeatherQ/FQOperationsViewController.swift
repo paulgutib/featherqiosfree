@@ -130,11 +130,19 @@ class FQOperationsViewController: UIViewController {
                         Session.instance.serviceId = "\(responseData["service_id"])"
                         Session.instance.key = responseData["raw_code"].stringValue
                         Session.instance.logo = self.logoPath!
+                        let startMainApp = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp") as! UITabBarController
                         let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-                        var rootViewControllers = self.tabBarController?.viewControllers
+                        var rootViewControllers = startMainApp.viewControllers
                         rootViewControllers?[2] = vc
                         vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-                        self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                        startMainApp.setViewControllers(rootViewControllers, animated: false)
+                        startMainApp.selectedIndex = 2
+                        UIApplication.shared.keyWindow?.rootViewController = startMainApp
+//                        let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+//                        var rootViewControllers = self.tabBarController?.viewControllers
+//                        rootViewControllers?[2] = vc
+//                        vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+//                        self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
                     }catch {
                         debugPrint(error)
                     }

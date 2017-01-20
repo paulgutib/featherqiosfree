@@ -53,9 +53,9 @@ class FQLoginViewController: UIViewController {
         self.resignFirstResponder()
     }
     
-    @IBAction func signUpReset(_ sender: UIButton) {
-        self.navigationController!.popToRootViewController(animated: true)
-    }
+//    @IBAction func signUpReset(_ sender: UIButton) {
+//        self.navigationController!.popToRootViewController(animated: true)
+//    }
     
     @IBAction func loginAccount(_ sender: UIButton) {
         if self.emailPasswordValidity() {
@@ -109,11 +109,20 @@ class FQLoginViewController: UIViewController {
                                 Session.instance.peopleInLine = "\(dataObj["people_in_line"]!)"
                                 Session.instance.businessName = dataObj["name"] as? String
                             }
+                            let startMainApp = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp") as! UITabBarController
                             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
-                            var rootViewControllers = self.tabBarController?.viewControllers
+                            var rootViewControllers = startMainApp.viewControllers
                             rootViewControllers?[2] = vc
                             vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
-                            self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                            startMainApp.setViewControllers(rootViewControllers, animated: false)
+                            startMainApp.selectedIndex = 2
+                            UIApplication.shared.keyWindow?.rootViewController = startMainApp
+//                            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+//                            var rootViewControllers = self.tabBarController?.viewControllers
+//                            rootViewControllers?[2] = vc
+//                            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+//                            self.tabBarController?.setViewControllers(rootViewControllers, animated: false)
+                            
                             SwiftSpinner.hide()
                         }
                     }catch {
