@@ -20,6 +20,7 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     @IBOutlet weak var stateProvince: UITextField!
 //    @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
+    @IBOutlet weak var addressHelp: UIView!
     
     var countryEntry = [
         "- Select a Country -",
@@ -238,6 +239,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         // Do any additional setup after loading the view.
         self.next3Btn.layer.cornerRadius = 5.0
         self.next3Btn.clipsToBounds = true
+        self.addressHelp.layer.cornerRadius = 5.0
+        self.addressHelp.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.barangaySublocality.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

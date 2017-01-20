@@ -17,6 +17,7 @@ class FQVerificationCodeViewController: UIViewController {
     @IBOutlet weak var verifyBtn: UIButton!
     @IBOutlet weak var modalContainer: UIView!
     @IBOutlet weak var resendBtn: UIButton!
+    @IBOutlet weak var codeHelp: UIView!
     
     var confirmationCode: String?
     var email: String?
@@ -28,6 +29,8 @@ class FQVerificationCodeViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.verifyBtn.layer.cornerRadius = 5.0
         self.verifyBtn.clipsToBounds = true
+        self.codeHelp.layer.cornerRadius = 5.0
+        self.codeHelp.clipsToBounds = true
         self.resendBtn.layer.cornerRadius = 5.0
         self.resendBtn.clipsToBounds = true
         self.verificationCode.inputAccessoryView = UIView.init()

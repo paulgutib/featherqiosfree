@@ -17,6 +17,7 @@ class FQRegistrationViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var emailHelp: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,8 @@ class FQRegistrationViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.next1Btn.layer.cornerRadius = 5.0
         self.next1Btn.clipsToBounds = true
+        self.emailHelp.layer.cornerRadius = 5.0
+        self.emailHelp.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.confirmPassword.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

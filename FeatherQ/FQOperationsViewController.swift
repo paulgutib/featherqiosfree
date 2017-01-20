@@ -19,6 +19,7 @@ class FQOperationsViewController: UIViewController {
     @IBOutlet weak var lastNumber: UITextField!
     @IBOutlet weak var timeClose: UIDatePicker!
     @IBOutlet weak var timeOpen: UIDatePicker!
+    @IBOutlet weak var numbersHelp: UIView!
     
     var email: String?
     var password: String?
@@ -43,6 +44,8 @@ class FQOperationsViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.submitBtn.layer.cornerRadius = 5.0
         self.submitBtn.clipsToBounds = true
+        self.numbersHelp.layer.cornerRadius = 5.0
+        self.numbersHelp.clipsToBounds = true
         self.firstNumber.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.lastNumber.inputAccessoryView = UIView.init()
         

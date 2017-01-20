@@ -18,6 +18,8 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     @IBOutlet weak var businessName: UITextField!
     @IBOutlet weak var removeLogoBtn: UIButton!
     @IBOutlet weak var chooseLogoBtn: UIButton!
+    @IBOutlet weak var nameHelp: UIView!
+    @IBOutlet weak var categoryHelp: UIView!
     
     var categoryEntry = [
         ["name": "- Select a Category -", "image": ""],
@@ -52,6 +54,10 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         // Do any additional setup after loading the view.
         self.next2Btn.layer.cornerRadius = 5.0
         self.next2Btn.clipsToBounds = true
+        self.nameHelp.layer.cornerRadius = 5.0
+        self.nameHelp.clipsToBounds = true
+        self.categoryHelp.layer.cornerRadius = 5.0
+        self.categoryHelp.clipsToBounds = true
         self.chooseLogoBtn.layer.cornerRadius = 5.0
         self.chooseLogoBtn.clipsToBounds = true
         self.removeLogoBtn.layer.cornerRadius = 5.0
