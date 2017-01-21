@@ -156,7 +156,7 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
                 self.weightMostOptimistic.text = "\(responseData["weight_most_optimistic"].intValue)"
                 self.meanMostPessimistic.text = String(format: "%.2f", responseData["mean_most_pessimistic"].floatValue / 60.0)
                 self.weightMostPessimistic.text = "\(responseData["weight_most_pessimistic"].intValue)"
-                self.finalMean.text = String(format: "%.2f", responseData["final_mean"].floatValue / 60.0)
+                self.finalMean.text = "\(lroundf(responseData["final_mean"].floatValue / 60.0)) minutes"
             }
             self.tableView.reloadData()
             SwiftSpinner.hide();
