@@ -87,7 +87,9 @@ class FQOnboardingContentViewController: UIViewController {
     }
     
     @IBAction func startServing(_ sender: UIButton) {
-        UserDefaults.standard.set(100, forKey: "fqiosappfreeonboard")
+        let preferences = UserDefaults.standard
+        preferences.set(true, forKey: "fqiosappfreeonboard")
+        preferences.synchronize()
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
 //        UIApplication.shared.keyWindow?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")

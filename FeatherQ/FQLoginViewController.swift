@@ -109,6 +109,9 @@ class FQLoginViewController: UIViewController {
                                 Session.instance.peopleInLine = "\(dataObj["people_in_line"]!)"
                                 Session.instance.businessName = dataObj["name"] as? String
                             }
+                            let preferences = UserDefaults.standard
+                            preferences.set(true, forKey: "fqiosappfreeonboard")
+                            preferences.synchronize()
                             let startMainApp = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp") as! UITabBarController
                             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
                             var rootViewControllers = startMainApp.viewControllers

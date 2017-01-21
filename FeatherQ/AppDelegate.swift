@@ -37,19 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
-//        let locationGrant = UserDefaults.standard.string(forKey: "fqiosappfreelocation")
-//        if locationGrant == nil {
-//            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingGetStartedViewController")
-//        }
-//        else if locationGrant == "denied" {
-//            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingLocationViewController")
-//        }
-//        else if UserDefaults.standard.integer(forKey: "fqiosappfreeonboard") != 100 {
-//            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
-//        }
-//        else {
-//            self.selectMyBusinessAsDefault()
-//        }
+        let onboarded = UserDefaults.standard.bool(forKey: "fqiosappfreeonboard")
+        if !onboarded {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "startOnboarding")
+        }
+        else {
+            self.selectMyBusinessAsDefault()
+        }
         
         return true
     }

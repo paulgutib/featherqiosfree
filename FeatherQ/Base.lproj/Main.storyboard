@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oUk-mu-KKb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UQe-C5-ElB">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -3962,13 +3962,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Waste Your Life — Waiting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y50-Tn-RFA">
-                                <rect key="frame" x="16" y="211.5" width="288" height="45.5"/>
+                                <rect key="frame" x="16" y="191.5" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B22-ZD-bMl">
-                                <rect key="frame" x="16" y="273" width="288" height="142.5"/>
+                                <rect key="frame" x="16" y="253" width="288" height="142.5"/>
                                 <string key="text">Reduce the hassle of waiting and turn your waiting time into a better experience.
 FeatherQ is a line-management application that uses your mobile device and internet connection to line up for a business.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -3976,7 +3976,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgY-jH-mde">
-                                <rect key="frame" x="16" y="439.5" width="288" height="44"/>
+                                <rect key="frame" x="16" y="419.5" width="288" height="44"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5gE-Er-cNw"/>
@@ -3990,7 +3990,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderLogo" translatesAutoresizingMaskIntoConstraints="NO" id="PwX-CN-JpC">
-                                <rect key="frame" x="124" y="123.5" width="72" height="72"/>
+                                <rect key="frame" x="124" y="103.5" width="72" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="72" id="AgR-jw-Jc3"/>
                                     <constraint firstAttribute="height" constant="72" id="b1z-MX-UHP"/>
@@ -4025,7 +4025,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                             <constraint firstItem="B22-ZD-bMl" firstAttribute="top" secondItem="Y50-Tn-RFA" secondAttribute="bottom" constant="16" id="Fyf-Ns-g6G"/>
                             <constraint firstItem="dtc-kY-xbh" firstAttribute="top" secondItem="jjm-lz-cXv" secondAttribute="top" id="Kxn-Pc-qel"/>
                             <constraint firstItem="JUY-xx-jKD" firstAttribute="centerX" secondItem="jjm-lz-cXv" secondAttribute="centerX" constant="19" id="RAl-mH-VAR"/>
-                            <constraint firstItem="B22-ZD-bMl" firstAttribute="centerY" secondItem="jjm-lz-cXv" secondAttribute="centerY" constant="60" id="TQj-3q-K3G"/>
+                            <constraint firstItem="B22-ZD-bMl" firstAttribute="centerY" secondItem="jjm-lz-cXv" secondAttribute="centerY" constant="40" id="TQj-3q-K3G"/>
                             <constraint firstItem="w6c-ki-Qir" firstAttribute="top" secondItem="k3T-FC-1YW" secondAttribute="bottom" constant="8" id="Xcf-eT-UpB"/>
                             <constraint firstItem="JUY-xx-jKD" firstAttribute="top" secondItem="k3T-FC-1YW" secondAttribute="bottom" constant="8" id="c7v-1m-hQS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Y50-Tn-RFA" secondAttribute="trailing" id="eh0-Lk-zzf"/>
@@ -4147,7 +4147,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <!--Navigation Controller-->
         <scene sceneID="sZV-4G-M8S">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oUk-mu-KKb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="startOnboarding" automaticallyAdjustsScrollViewInsets="NO" id="oUk-mu-KKb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9f4-lg-2Eh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

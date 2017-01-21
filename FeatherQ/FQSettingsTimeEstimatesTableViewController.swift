@@ -136,27 +136,27 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             if responseData != nil {
-                self.meanToday.text = "\(responseData["mean_today"].floatValue)"
+                self.meanToday.text = String(format: "%.2f", (responseData["mean_today"].floatValue / 60.0))
                 self.weightToday.text = "\(responseData["weight_today"].intValue)"
-                self.meanYesterday.text = "\(responseData["mean_yesterday"].floatValue)"
+                self.meanYesterday.text = String(format: "%.2f", responseData["mean_yesterday"].floatValue / 60.0)
                 self.weightYesterday.text = "\(responseData["weight_yesterday"].intValue)"
-                self.meanThreeDays.text = "\(responseData["mean_three_days"].floatValue)"
+                self.meanThreeDays.text = String(format: "%.2f", responseData["mean_three_days"].floatValue / 60.0)
                 self.weightThreeDays.text = "\(responseData["weight_three_days"].intValue)"
-                self.meanThisWeek.text = "\(responseData["mean_this_week"].floatValue)"
+                self.meanThisWeek.text = String(format: "%.2f", responseData["mean_this_week"].floatValue / 60.0)
                 self.weightThisWeek.text = "\(responseData["weight_this_week"].intValue)"
-                self.meanLastWeek.text = "\(responseData["mean_last_week"].floatValue)"
+                self.meanLastWeek.text = String(format: "%.2f", responseData["mean_last_week"].floatValue / 60.0)
                 self.weightLastWeek.text = "\(responseData["weight_last_week"].intValue)"
-                self.meanThisMonth.text = "\(responseData["mean_this_month"].floatValue)"
+                self.meanThisMonth.text = String(format: "%.2f", responseData["mean_this_month"].floatValue / 60.0)
                 self.weightThisMonth.text = "\(responseData["weight_this_month"].intValue)"
-                self.meanLastMonth.text = "\(responseData["mean_last_month"].floatValue)"
+                self.meanLastMonth.text = String(format: "%.2f", responseData["mean_last_month"].floatValue / 60.0)
                 self.weightLastMonth.text = "\(responseData["weight_last_month"].intValue)"
-                self.meanMostLikely.text = "\(responseData["mean_most_likely"].floatValue)"
+                self.meanMostLikely.text = String(format: "%.2f", responseData["mean_most_likely"].floatValue / 60.0)
                 self.weightMostLikely.text = "\(responseData["weight_most_likely"].intValue)"
-                self.meanMostOptimistic.text = "\(responseData["mean_most_optimistic"].floatValue)"
+                self.meanMostOptimistic.text = String(format: "%.2f", responseData["mean_most_optimistic"].floatValue / 60.0)
                 self.weightMostOptimistic.text = "\(responseData["weight_most_optimistic"].intValue)"
-                self.meanMostPessimistic.text = "\(responseData["mean_most_pessimistic"].floatValue)"
+                self.meanMostPessimistic.text = String(format: "%.2f", responseData["mean_most_pessimistic"].floatValue / 60.0)
                 self.weightMostPessimistic.text = "\(responseData["weight_most_pessimistic"].intValue)"
-                self.finalMean.text = "\(responseData["final_mean"].floatValue)"
+                self.finalMean.text = String(format: "%.2f", responseData["final_mean"].floatValue / 60.0)
             }
             self.tableView.reloadData()
             SwiftSpinner.hide();

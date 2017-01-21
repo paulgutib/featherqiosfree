@@ -107,12 +107,14 @@ class FQDashboardViewController: UIViewController {
     
     
     func setDefaultBusinessView(_ boolVal: Bool, viewType: String) {
+        let preferences = UserDefaults.standard
         if boolVal {
-            UserDefaults.standard.set(viewType, forKey: "defaultView")
+            preferences.set(viewType, forKey: "defaultView")
         }
         else {
-            UserDefaults.standard.removeObject(forKey: "defaultView")
+            preferences.removeObject(forKey: "defaultView")
         }
+        preferences.synchronize()
     }
     
     func autoLoginForRegisteredUser() {
