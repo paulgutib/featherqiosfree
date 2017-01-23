@@ -21,6 +21,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
 //    @IBOutlet weak var zipPostalCode: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var addressHelp: UIView!
+    @IBOutlet weak var locationBtn: UIButton!
+    @IBOutlet weak var grantedLbl: UILabel!
     
     var countryEntry = [
         "- Select a Country -",
@@ -239,6 +241,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         // Do any additional setup after loading the view.
         self.next3Btn.layer.cornerRadius = 5.0
         self.next3Btn.clipsToBounds = true
+        self.locationBtn.layer.cornerRadius = 5.0
+        self.locationBtn.clipsToBounds = true
         self.addressHelp.layer.cornerRadius = 5.0
         self.addressHelp.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -256,10 +260,25 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.cllManager.delegate = self
-        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.cllManager.requestWhenInUseAuthorization()
-        self.cllManager.startUpdatingLocation()
+        if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
+            self.locationBtn.titleLabel?.text = "Tap Here to Enable Location in Settings"
+            self.locationBtn.backgroundColor = UIColor.red
+            self.locationBtn.titleLabel?.textColor = UIColor.white
+        }
+        else if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "granted" {
+            self.locationBtn.titleLabel?.text = "Location is enabled. Please wait for the app to autofill the fields."
+            self.locationBtn.isHidden = true
+            self.grantedLbl.isHidden = false
+            self.cllManager.delegate = self
+            self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.cllManager.requestWhenInUseAuthorization()
+            self.cllManager.startUpdatingLocation()
+        }
+        else {
+            self.locationBtn.titleLabel?.text = "Tap Here to Enable Location"
+            self.locationBtn.titleLabel?.textColor = UIColor.white
+            self.locationBtn.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+        }
     }
     
     @available(iOS 2.0, *)
@@ -310,6 +329,27 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             })
             self.cllManager.stopUpdatingLocation()
             self.isLocationUpdated = true
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse:
+            self.locationApprovalCallback()
+            debugPrint("granted when in use")
+        case .authorizedAlways:
+            self.locationApprovalCallback()
+            debugPrint("granted always")
+        case .denied:
+            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            self.locationBtn.titleLabel?.text = "Go to Settings to Enable"
+            self.locationBtn.backgroundColor = UIColor.red
+            debugPrint("denied must change")
+        default:
+            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            self.locationBtn.titleLabel?.text = "Go to Settings to Enable"
+            self.locationBtn.backgroundColor = UIColor.red
+            debugPrint("denied must change")
         }
     }
 
@@ -370,6 +410,18 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         self.resignFirstResponder()
     }
     
+    @IBAction func enableLocation(_ sender: UIButton) {
+        if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
+            UIApplication.shared.openURL(URL(string:UIApplicationOpenSettingsURLString)!)
+        }
+        else {
+            self.cllManager.delegate = self
+            self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.cllManager.requestWhenInUseAuthorization()
+            self.cllManager.startUpdatingLocation()
+        }
+    }
+    
     func validateAddresses() -> Bool {
         if self.streetBlock.text!.isEmpty {
             let alertBox = UIAlertController(title: "Invalid Street Address", message: "Please provide the correct street on where your business is located.", preferredStyle: .alert)
@@ -425,6 +477,16 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
                 debugPrint(self.longitudeLoc!)
             }
         })
+    }
+    
+    func locationApprovalCallback() {
+        UserDefaults.standard.set("granted", forKey: "fqiosappfreelocation")
+        self.locationBtn.isHidden = true
+        self.grantedLbl.isHidden = false
+        self.cllManager.delegate = self
+        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.cllManager.requestWhenInUseAuthorization()
+        self.cllManager.startUpdatingLocation()
     }
 
 }
