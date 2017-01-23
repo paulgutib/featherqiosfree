@@ -27,6 +27,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     var audioPlayer = AVAudioPlayer()
     let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     var selectedBusiness: FQBusiness?
+    var lastCalledNumber: String?
     
     var priorityNumbers = [String]()
     
@@ -47,18 +48,19 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationItem.title = self.selectedBusiness?.name!
+        self.navigationItem.title = self.selectedBusiness!.name!
         Session.instance.viewedBusinessId = self.selectedBusiness!.business_id!
-        var finalAddress = self.selectedBusiness?.address!
-        let firstChar = self.selectedBusiness?.address!.characters.first
+        self.broadcastNumbers.text = ""
+        var finalAddress = self.selectedBusiness!.address!
+        let firstChar = self.selectedBusiness!.address!.characters.first
         if firstChar == "," {
-            finalAddress = String(finalAddress!.characters.dropFirst()) // drop 2 characters because ", "
-            finalAddress = String(finalAddress!.characters.dropFirst()) // drop 2 characters because ", "
+            finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
+            finalAddress = String(finalAddress.characters.dropFirst()) // drop 2 characters because ", "
         }
         self.businessAddress.text = finalAddress
         self.closingTime.text = self.selectedBusiness!.time_open! + " - " + self.selectedBusiness!.time_close!
-        self.linePeople.text = self.selectedBusiness?.people_in_line!
-        self.waitingTimeTotal.text = self.selectedBusiness?.serving_time!
+        self.linePeople.text = self.peopleInLineChecker(arg0: self.selectedBusiness!.people_in_line!)
+        self.waitingTimeTotal.text = self.convertServingTime(timeArg: self.selectedBusiness!.serving_time!)
         self.readyDingSound()
         self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
@@ -147,6 +149,11 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
                     self.audioPlayer.play()
                     self.generateBroadcastNumbers()
                 }
+                else {
+                    if self.priorityNumbers.isEmpty {
+                        self.broadcastNumbers.text = responseData["broadcast_data"]["last_called"].stringValue
+                    }
+                }
 //                self.calledNumbers.reloadData()
             }
         }
@@ -168,4 +175,26 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
         self.broadcastNumbers.text = self.calledNumbers
     }
 
+    func convertServingTime(timeArg: Int) -> String {
+        let (h, m) = self.secondsToHoursMinutesSeconds(seconds: timeArg)
+        if m < 3 {
+            return "less than 3 minutes"
+        }
+        if h > 0 {
+            return "\(h) hours and \(m) minutes"
+        }
+        return "\(m) minutes"
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
+    }
+    
+    func peopleInLineChecker(arg0: Int) -> String {
+        if arg0 < 5 {
+            return "less than 5"
+        }
+        return "\(arg0)"
+    }
+    
 }

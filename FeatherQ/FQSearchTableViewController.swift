@@ -143,7 +143,10 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     open func updateSearchResults(for searchController: UISearchController) {
         var unwrappedBusinessNames = [String]()
         for business in self.businessList {
-            unwrappedBusinessNames.append(business.name!+"|"+business.category!+"|"+business.address!+"|"+business.people_in_line!+"|"+business.serving_time!+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!+"|"+business.time_open!+"|"+business.logo!)
+            let part1 = business.name!+"|"+business.category!+"|"+business.address!+"|"+"\(business.people_in_line!)"
+            let part2 = "\(business.serving_time!)"+"|"+business.key!+"|"+business.business_id!+"|"+business.time_close!
+            let part3 = business.time_open!+"|"+business.logo!
+            unwrappedBusinessNames.append(part1+"|"+part2+"|"+part3)
         }
         self.filteredBusinesses.removeAll(keepingCapacity: false)
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
@@ -176,19 +179,12 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                 let indexPath = self.tableView.indexPath(for: selectedCell)!
                 if self.filterSearch.isActive {
                     let businessData = self.filteredBusinesses[indexPath.row].components(separatedBy: "|")
-                    var pLine: Int?
-                    if businessData[3] == "less than 5" {
-                        pLine = 4
-                    }
-                    else {
-                        pLine = Int(businessData[3])!
-                    }
                     destView.selectedBusiness = FQBusiness(modelAttr: [
                         "name": businessData[0],
                         "category": businessData[1],
                         "address": businessData[2],
-                        "people_in_line": pLine!,
-                        "serving_time": businessData[4],
+                        "people_in_line": Int(businessData[3])!,
+                        "serving_time": Int(businessData[4])!,
                         "key": businessData[5],
                         "business_id": businessData[6],
                         "time_close": businessData[7],
@@ -270,8 +266,8 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["name"] = businessData[0]
             listData["category"] = businessData[1]
             listData["address"] = finalAddress
-            listData["people_in_line"] = businessData[3]
-            listData["serving_time"] = businessData[4]
+            listData["people_in_line"] = self.peopleInLineChecker(arg0: Int(businessData[3])!)
+            listData["serving_time"] = self.convertServingTime(timeArg: Int(businessData[4])!, peopleArg: Int(businessData[3])!)
             listData["key"] = businessData[5]
             listData["logo"] = businessData[9]
         }
@@ -285,8 +281,8 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             listData["name"] = self.businessList[index].name!
             listData["category"] = self.businessList[index].category!
             listData["address"] = finalAddress
-            listData["people_in_line"] = self.businessList[index].people_in_line!
-            listData["serving_time"] = self.businessList[index].serving_time!
+            listData["people_in_line"] = self.peopleInLineChecker(arg0: self.businessList[index].people_in_line!)
+            listData["serving_time"] = self.convertServingTime(timeArg: businessList[index].serving_time!, peopleArg: self.businessList[index].people_in_line!)
             listData["key"] = self.businessList[index].key!
             listData["logo"] = self.businessList[index].logo!
         }
@@ -320,6 +316,29 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             self.tableView.reloadData()
             refresher.endRefreshing()
         }
+    }
+    
+    func convertServingTime(timeArg: Int, peopleArg: Int) -> String {
+        let timeVal = timeArg * peopleArg
+        if timeVal < 180 {
+            return "less than 3 minutes"
+        }
+        let (h, m) = self.secondsToHoursMinutesSeconds(seconds: timeVal)
+        if h > 0 {
+            return "\(h) hours and \(m) minutes"
+        }
+        return "\(m) minutes"
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
+    }
+    
+    func peopleInLineChecker(arg0: Int) -> String {
+        if arg0 < 5 {
+            return "less than 5"
+        }
+        return "\(arg0)"
     }
     
 }
