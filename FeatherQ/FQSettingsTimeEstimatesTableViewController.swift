@@ -122,6 +122,30 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
     }
     */
     
+    @IBAction func saveMeanWeights(_ sender: UIBarButtonItem) {
+        SwiftSpinner.show("Updating estimates..")
+        Alamofire.request(Router.postUpdateMeanweights(meanToday: self.minsToSecsConversion(minutes: self.meanToday.text!), weightToday: self.weightToday.text!, meanYesterday: self.minsToSecsConversion(minutes: self.meanYesterday.text!), weightYesterday: self.weightYesterday.text!, meanThreeDays: self.minsToSecsConversion(minutes: self.meanThreeDays.text!), weightThreeDays: self.weightThreeDays.text!, meanThisWeek: self.minsToSecsConversion(minutes: self.meanThisWeek.text!), weightThisWeek: self.weightThisWeek.text!, meanLastWeek: self.minsToSecsConversion(minutes: self.meanLastWeek.text!), weightLastWeek: self.weightLastWeek.text!, meanThisMonth: self.minsToSecsConversion(minutes: self.meanThisMonth.text!), weightThisMonth: self.weightThisMonth.text!, meanLastMonth: self.minsToSecsConversion(minutes: self.meanLastMonth.text!), weightLastMonth: self.weightLastMonth.text!, meanMostLikely: self.minsToSecsConversion(minutes: self.meanMostLikely.text!), weightMostLikely: self.weightMostLikely.text!, meanMostOptimistic: self.minsToSecsConversion(minutes: self.meanMostOptimistic.text!), weightMostOptimistic: self.weightMostOptimistic.text!, meanMostPessimistic: self.minsToSecsConversion(minutes: self.meanMostPessimistic.text!), weightMostPessimistic: self.weightMostPessimistic.text!, serviceId: Session.instance.serviceId!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData["status"].intValue == 201 {
+                self.getMeanWeights()
+            }
+            else {
+                SwiftSpinner.show("Something went wrong..", animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                }, subtitle: "We are unable to save your estimates. Kindly try again later.")
+            }
+        }
+    }
+    
     func getMeanWeights() {
         SwiftSpinner.show("Loading calculations..")
         Alamofire.request(Router.getMeanWeights(service_id: Session.instance.serviceId!)).responseJSON { response in
@@ -136,31 +160,40 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             if responseData != nil {
-                self.meanToday.text = String(format: "%.2f", (responseData["mean_today"].floatValue / 60.0))
+                self.meanToday.text = self.secsToMinsConversion(seconds: responseData["mean_today"].floatValue)
                 self.weightToday.text = "\(responseData["weight_today"].intValue)"
-                self.meanYesterday.text = String(format: "%.2f", responseData["mean_yesterday"].floatValue / 60.0)
+                self.meanYesterday.text = self.secsToMinsConversion(seconds: responseData["mean_yesterday"].floatValue)
                 self.weightYesterday.text = "\(responseData["weight_yesterday"].intValue)"
-                self.meanThreeDays.text = String(format: "%.2f", responseData["mean_three_days"].floatValue / 60.0)
+                self.meanThreeDays.text = self.secsToMinsConversion(seconds: responseData["mean_three_days"].floatValue)
                 self.weightThreeDays.text = "\(responseData["weight_three_days"].intValue)"
-                self.meanThisWeek.text = String(format: "%.2f", responseData["mean_this_week"].floatValue / 60.0)
+                self.meanThisWeek.text = self.secsToMinsConversion(seconds: responseData["mean_this_week"].floatValue)
                 self.weightThisWeek.text = "\(responseData["weight_this_week"].intValue)"
-                self.meanLastWeek.text = String(format: "%.2f", responseData["mean_last_week"].floatValue / 60.0)
+                self.meanLastWeek.text = self.secsToMinsConversion(seconds: responseData["mean_last_week"].floatValue)
                 self.weightLastWeek.text = "\(responseData["weight_last_week"].intValue)"
-                self.meanThisMonth.text = String(format: "%.2f", responseData["mean_this_month"].floatValue / 60.0)
+                self.meanThisMonth.text = self.secsToMinsConversion(seconds: responseData["mean_this_month"].floatValue)
                 self.weightThisMonth.text = "\(responseData["weight_this_month"].intValue)"
-                self.meanLastMonth.text = String(format: "%.2f", responseData["mean_last_month"].floatValue / 60.0)
+                self.meanLastMonth.text = self.secsToMinsConversion(seconds: responseData["mean_last_month"].floatValue)
                 self.weightLastMonth.text = "\(responseData["weight_last_month"].intValue)"
-                self.meanMostLikely.text = String(format: "%.2f", responseData["mean_most_likely"].floatValue / 60.0)
+                self.meanMostLikely.text = self.secsToMinsConversion(seconds: responseData["mean_most_likely"].floatValue)
                 self.weightMostLikely.text = "\(responseData["weight_most_likely"].intValue)"
-                self.meanMostOptimistic.text = String(format: "%.2f", responseData["mean_most_optimistic"].floatValue / 60.0)
+                self.meanMostOptimistic.text = self.secsToMinsConversion(seconds: responseData["mean_most_optimistic"].floatValue)
                 self.weightMostOptimistic.text = "\(responseData["weight_most_optimistic"].intValue)"
-                self.meanMostPessimistic.text = String(format: "%.2f", responseData["mean_most_pessimistic"].floatValue / 60.0)
+                self.meanMostPessimistic.text = self.secsToMinsConversion(seconds: responseData["mean_most_pessimistic"].floatValue)
                 self.weightMostPessimistic.text = "\(responseData["weight_most_pessimistic"].intValue)"
                 self.finalMean.text = "\(lroundf(responseData["final_mean"].floatValue / 60.0)) minutes"
             }
             self.tableView.reloadData()
             SwiftSpinner.hide();
         }
+    }
+    
+    func secsToMinsConversion(seconds: Float) -> String {
+        return String(format: "%.2f", seconds / 60.0)
+    }
+    
+    func minsToSecsConversion(minutes: String) -> String {
+        let secs = Float(minutes)! * 60.0
+        return "\(secs)"
     }
 
 }

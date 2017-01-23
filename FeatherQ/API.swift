@@ -37,6 +37,7 @@ enum Router: URLRequestConvertible {
     case putChangePassword(email: String, password: String, password_confirm: String, verification_code: String)
     case putUpdatePassword(email: String, password: String, password_confirm: String)
     case getMeanWeights(service_id: String)
+    case postUpdateMeanweights(meanToday: String, weightToday: String, meanYesterday: String, weightYesterday: String, meanThreeDays: String, weightThreeDays: String, meanThisWeek: String, weightThisWeek: String, meanLastWeek: String, weightLastWeek: String, meanThisMonth: String, weightThisMonth: String, meanLastMonth: String, weightLastMonth: String, meanMostLikely: String, weightMostLikely: String, meanMostOptimistic: String, weightMostOptimistic: String, meanMostPessimistic: String, weightMostPessimistic: String, serviceId: String)
     
     var method: HTTPMethod {
         switch self {
@@ -60,6 +61,8 @@ enum Router: URLRequestConvertible {
             return .put
         case .putUpdatePassword:
             return .put
+        case .postUpdateMeanweights:
+            return .post
         default:
             return .get
         }
@@ -103,6 +106,8 @@ enum Router: URLRequestConvertible {
             return "/api/update-password"
         case .getMeanWeights(let service_id):
             return "/api/mean-weights/" + service_id
+        case .postUpdateMeanweights:
+            return "/api/update-meanweights"
         default:
             return "/api/search-business"
         }
@@ -216,6 +221,32 @@ enum Router: URLRequestConvertible {
                 "email": email,
                 "password": password,
                 "password_confirm": password_confirm
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postUpdateMeanweights(let meanToday, let weightToday, let meanYesterday, let weightYesterday, let meanThreeDays, let weightThreeDays, let meanThisWeek, let weightThisWeek, let meanLastWeek, let weightLastWeek, let meanThisMonth, let weightThisMonth, let meanLastMonth, let weightLastMonth, let meanMostLikely, let weightMostLikely, let meanMostOptimistic, let weightMostOptimistic, let meanMostPessimistic, let weightMostPessimistic, let serviceId):
+            let parameters = [
+                "mean_today": meanToday,
+                "weight_today": weightToday,
+                "mean_yesterday": meanYesterday,
+                "weight_yesterday": weightYesterday,
+                "mean_three_days": meanThreeDays,
+                "weight_three_days": weightThreeDays,
+                "mean_this_week": meanThisWeek,
+                "weight_this_week": weightThisWeek,
+                "mean_last_week": meanLastWeek,
+                "weight_last_week": weightLastWeek,
+                "mean_this_month": meanThisMonth,
+                "weight_this_month": weightThisMonth,
+                "mean_last_month": meanLastMonth,
+                "weight_last_month": weightLastMonth,
+                "mean_most_likely": meanMostLikely,
+                "weight_most_likely": weightMostLikely,
+                "mean_most_optimistic": meanMostOptimistic,
+                "weight_most_optimistic": weightMostOptimistic,
+                "mean_most_pessimistic": meanMostPessimistic,
+                "weight_most_pessimistic": weightMostPessimistic,
+                "last_changed": "\(lround(Date().timeIntervalSince1970))",
+                "service_id": serviceId
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

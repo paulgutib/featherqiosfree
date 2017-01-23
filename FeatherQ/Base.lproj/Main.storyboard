@@ -496,13 +496,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Serving Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0L-53-8ls">
-                                                    <rect key="frame" x="36" y="8" width="178.5" height="20.5"/>
+                                                    <rect key="frame" x="36" y="8" width="179" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weights" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APa-8j-Mxe">
-                                                    <rect key="frame" x="234.5" y="20.5" width="72" height="20.5"/>
+                                                    <rect key="frame" x="235" y="20" width="72" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="72" id="RGI-eS-blG"/>
                                                     </constraints>
@@ -511,7 +511,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(in minutes)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHo-j3-URh">
-                                                    <rect key="frame" x="81.5" y="32.5" width="90" height="21"/>
+                                                    <rect key="frame" x="82" y="33" width="90" height="21"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -949,7 +949,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Most Likely" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7m-Cl-VCX">
-                                                    <rect key="frame" x="23" y="82.5" width="124" height="20"/>
+                                                    <rect key="frame" x="23" y="83" width="124" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="124" id="aS4-67-FGk"/>
                                                     </constraints>
@@ -958,7 +958,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cXH-oI-6LQ">
-                                                    <rect key="frame" x="163" y="75.5" width="64" height="30"/>
+                                                    <rect key="frame" x="163" y="76" width="64" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="64" id="Mc0-xZ-v4U"/>
                                                     </constraints>
@@ -967,7 +967,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ChQ-rA-V1I">
-                                                    <rect key="frame" x="253" y="75.5" width="44" height="30"/>
+                                                    <rect key="frame" x="253" y="76" width="44" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="zkU-Y6-KTO"/>
                                                     </constraints>
@@ -976,7 +976,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I10-l2-o3h">
-                                                    <rect key="frame" x="235" y="77.5" width="10" height="21"/>
+                                                    <rect key="frame" x="235" y="78" width="10" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="10" id="phW-AM-94J"/>
                                                     </constraints>
@@ -985,7 +985,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKu-zc-3aX">
-                                                    <rect key="frame" x="8" y="22.5" width="304" height="44"/>
+                                                    <rect key="frame" x="8" y="23" width="304" height="44"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="II. For this section, you can set values for both weight and average serving times." lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Md5-Ye-3ky">
                                                             <rect key="frame" x="16" y="0.0" width="272" height="44"/>
@@ -1139,7 +1139,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Estimation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjv-wX-eX2">
-                                                    <rect key="frame" x="23" y="45" width="138" height="20"/>
+                                                    <rect key="frame" x="23" y="45" width="138" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="138" id="rPt-p7-73S"/>
                                                     </constraints>
@@ -1154,7 +1154,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="per number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXJ-rX-kit">
-                                                    <rect key="frame" x="177" y="55" width="89.5" height="20.5"/>
+                                                    <rect key="frame" x="177" y="55" width="90" height="21"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1195,7 +1195,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Time Estimations" id="Dca-MB-CQV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="lcj-Mh-Sbz"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="lcj-Mh-Sbz">
+                            <connections>
+                                <action selector="saveMeanWeights:" destination="0pA-MD-0W1" id="Izj-UB-hy3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="finalMean" destination="FfG-fh-2sB" id="TPE-2M-spN"/>
