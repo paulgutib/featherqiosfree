@@ -108,8 +108,8 @@ class FQIssueNumberViewController: UIViewController {
 
     @IBAction func incrementDecrement(_ sender: UIStepper) {
         self.numToIssue.text = "\(self.availableNumbers[Int(sender.value)])"
-        let totalSecs = (sender.value + 1) * Double(Session.instance.estimatedSecs!)
-        self.showEstimatedTimeText(Int(totalSecs))
+//        let totalSecs = (sender.value + 1) * Double(Session.instance.estimatedSecs!)
+//        self.showEstimatedTimeText(Int(totalSecs))
     }
     
     @IBAction func issueNumber(_ sender: Any) {
@@ -179,18 +179,22 @@ class FQIssueNumberViewController: UIViewController {
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
-            Session.instance.estimatedSecs = abs(responseData["estimated_serving_time"].intValue)
-            self.showEstimatedTimeText(Session.instance.estimatedSecs!)
+            let servingTime = responseData["estimated_serving_time"].intValue
+            let peopleInLine = responseData["people_in_line"].intValue
+            let totalSecs = servingTime * peopleInLine
+            self.showEstimatedTimeText(totalSecs: totalSecs)
         }
     }
     
-    func showEstimatedTimeText(_ totalSecs: Int) {
+    func showEstimatedTimeText(totalSecs: Int) {
         let date = Date()
-        let upperBound = date.addingTimeInterval(Double(totalSecs) + (10.0 * 60.0))
-        let lowerBound = date.addingTimeInterval(Double(totalSecs) - (10.0 * 60.0))
+        let upperBound = date.addingTimeInterval(Double(totalSecs))
+//        let lowerBound = date.addingTimeInterval(Double(totalSecs) - (10.0 * 60.0))
         let df = DateFormatter()
         df.locale = Locale(identifier: "en_US")
         df.dateFormat = "h:mm a"
-        self.timeForecast.text = df.string(from: lowerBound) + " ~ " + df.string(from: upperBound)
+//        self.timeForecast.text = df.string(from: lowerBound) + " ~ " + df.string(from: upperBound)
+        self.timeForecast.text = df.string(from: upperBound)
     }
+    
 }
