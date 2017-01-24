@@ -1847,48 +1847,57 @@
         <scene sceneID="tX0-zJ-Xel">
             <objects>
                 <collectionViewController id="Q7W-NZ-cNL" customClass="FQCategoriesCollectionViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pnX-ye-r6A">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="pnX-ye-r6A">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="3" id="E0r-qC-qsW">
-                            <size key="itemSize" width="75" height="77"/>
+                            <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FQCategoriesCollectionViewCell" id="wI5-mM-G9q" customClass="FQCategoriesCollectionViewCell" customModule="FeatherQ" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="75" height="77"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="75" height="77"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Bq-QK-XHh">
-                                            <rect key="frame" x="0.0" y="0.0" width="75" height="77"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qh7-5m-NTP">
-                                            <rect key="frame" x="8" y="16" width="59" height="46"/>
+                                            <rect key="frame" x="8" y="27.5" width="84" height="45.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CategoryChecked" translatesAutoresizingMaskIntoConstraints="NO" id="MHt-rl-JIO">
+                                            <rect key="frame" x="56" y="12" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="1fJ-be-X44"/>
+                                                <constraint firstAttribute="width" constant="32" id="kNb-lw-BlB"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="9Bq-QK-XHh" firstAttribute="top" secondItem="wI5-mM-G9q" secondAttribute="top" id="3IC-42-Fow"/>
                                     <constraint firstItem="Qh7-5m-NTP" firstAttribute="centerY" secondItem="wI5-mM-G9q" secondAttribute="centerY" id="6Qv-GR-jnm"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Qh7-5m-NTP" secondAttribute="trailing" id="6l6-eS-qnJ"/>
+                                    <constraint firstItem="MHt-rl-JIO" firstAttribute="trailing" secondItem="wI5-mM-G9q" secondAttribute="trailingMargin" constant="-4" id="B7Q-YQ-SbO"/>
                                     <constraint firstItem="Qh7-5m-NTP" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leadingMargin" id="FgB-ta-0zP"/>
+                                    <constraint firstItem="MHt-rl-JIO" firstAttribute="top" secondItem="wI5-mM-G9q" secondAttribute="topMargin" constant="4" id="Itr-qc-46a"/>
                                     <constraint firstAttribute="trailing" secondItem="9Bq-QK-XHh" secondAttribute="trailing" id="OUh-fo-YJw"/>
                                     <constraint firstAttribute="bottom" secondItem="9Bq-QK-XHh" secondAttribute="bottom" id="brN-Wu-6O6"/>
                                     <constraint firstItem="9Bq-QK-XHh" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leading" id="fjk-WV-hUk"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="categoryBackground" destination="9Bq-QK-XHh" id="ESg-L5-Ne2"/>
+                                    <outlet property="categoryChecked" destination="MHt-rl-JIO" id="LEA-yW-vTj"/>
                                     <outlet property="categoryTitle" destination="Qh7-5m-NTP" id="5x6-FF-YCx"/>
-                                    <segue destination="yne-Ag-zof" kind="show" identifier="filterByCategory" id="Exl-Xz-Ukl"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -1903,7 +1912,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gB-5r-oOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1868" y="580"/>
+            <point key="canvasLocation" x="1867.5" y="579.92957746478874"/>
         </scene>
         <!--Search-->
         <scene sceneID="dek-UX-Jrb">
@@ -2689,7 +2698,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do you plan to use FeatherQ?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LFA-PB-DDJ">
-                                <rect key="frame" x="16" y="78" width="288" height="46"/>
+                                <rect key="frame" x="16" y="78.5" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2973,7 +2982,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be In Control With Your Lines — Anywhere, Anytime" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sV-0J-vov">
-                                <rect key="frame" x="16" y="111" width="288" height="46"/>
+                                <rect key="frame" x="16" y="111.5" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2986,7 +2995,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dug-sx-2xX">
-                                <rect key="frame" x="16" y="398" width="288" height="44"/>
+                                <rect key="frame" x="16" y="397.5" width="288" height="44"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="7n4-T5-wrF"/>
@@ -3010,7 +3019,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kg-io-hfc">
-                                <rect key="frame" x="16" y="319" width="288" height="63"/>
+                                <rect key="frame" x="16" y="319" width="288" height="62.5"/>
                                 <string key="text">By signing up, you agree that your business address and contact information are considered public and that FeatherQ has the right to use it for verification purposes.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
@@ -3245,7 +3254,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-IB-dfR">
-                                        <rect key="frame" x="16" y="6" width="288" height="102"/>
+                                        <rect key="frame" x="16" y="6.5" width="288" height="101.5"/>
                                         <string key="text">An email containing the verification code has been sent to your email. Enter the code in the field below to proceed with the registration process.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -4159,13 +4168,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Waste Your Life — Waiting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y50-Tn-RFA">
-                                <rect key="frame" x="16" y="191" width="288" height="46"/>
+                                <rect key="frame" x="16" y="192" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B22-ZD-bMl">
-                                <rect key="frame" x="16" y="253" width="288" height="143"/>
+                                <rect key="frame" x="16" y="253.5" width="288" height="142.5"/>
                                 <string key="text">Reduce the hassle of waiting and turn your waiting time into a better experience.
 FeatherQ is a line-management application that uses your mobile device and internet connection to line up for a business.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -4187,7 +4196,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderLogo" translatesAutoresizingMaskIntoConstraints="NO" id="PwX-CN-JpC">
-                                <rect key="frame" x="124" y="103" width="72" height="72"/>
+                                <rect key="frame" x="124" y="104" width="72" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="72" id="AgR-jw-Jc3"/>
                                     <constraint firstAttribute="height" constant="72" id="b1z-MX-UHP"/>
@@ -4364,6 +4373,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <image name="BurgerMenu" width="32" height="32"/>
         <image name="BusinessOwnerRole" width="37" height="37"/>
         <image name="Categories" width="32" height="32"/>
+        <image name="CategoryChecked" width="37" height="37"/>
         <image name="CheckboxEmpty" width="64" height="64"/>
         <image name="CustomerRole" width="37" height="37"/>
         <image name="Help" width="29" height="29"/>
@@ -4376,7 +4386,6 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <image name="WhiteLogo" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Exl-Xz-Ukl"/>
         <segue reference="18a-Vq-Bg6"/>
     </inferredMetricsTieBreakers>
 </document>

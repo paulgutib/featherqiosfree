@@ -12,6 +12,7 @@ class FQCategoriesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var categoryTitle: UILabel!
     @IBOutlet weak var categoryBackground: UIImageView!
+    @IBOutlet weak var categoryChecked: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

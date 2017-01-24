@@ -17,7 +17,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     var filterSearch = UISearchController()
     var businessList = [FQBusiness]()
     var filteredBusinesses = [String]()
-    var chosenCategory = "All"
     var cllManager = CLLocationManager()
     var latitudeLoc: String?
     var longitudeLoc: String?
@@ -235,16 +234,18 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             self.businessList.removeAll()
             for business in responseData {
                 let dataObj = business.1.dictionaryObject!
-                if self.chosenCategory != "All" {
-                    if dataObj["category"] as! String == self.chosenCategory {
-                        self.businessList.append(FQBusiness(modelAttr: dataObj))
+                if !Session.instance.selectedCategories.isEmpty {
+                    for chosenCategory in Session.instance.selectedCategories {
+                        if dataObj["category"] as! String == chosenCategory {
+                            self.businessList.append(FQBusiness(modelAttr: dataObj))
+                        }
                     }
                 }
                 else {
                     self.businessList.append(FQBusiness(modelAttr: dataObj))
                 }
             }
-            if self.businessList.isEmpty && self.chosenCategory == "All" {
+            if self.businessList.isEmpty {
                 self.recurseIfEmpty = true
                 self.postDisplayBusinesses()
             }
@@ -304,9 +305,11 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             self.businessList.removeAll()
             for business in responseData {
                 let dataObj = business.1.dictionaryObject!
-                if self.chosenCategory != "All" {
-                    if dataObj["category"] as! String == self.chosenCategory {
-                        self.businessList.append(FQBusiness(modelAttr: dataObj))
+                if !Session.instance.selectedCategories.isEmpty {
+                    for chosenCategory in Session.instance.selectedCategories {
+                        if dataObj["category"] as! String == chosenCategory {
+                            self.businessList.append(FQBusiness(modelAttr: dataObj))
+                        }
                     }
                 }
                 else {

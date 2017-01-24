@@ -34,5 +34,6 @@ class Session {
     var processQueue = [[String:String]]()
     var estimatedSecs: Int?
     var lastCalled: String?
+    var selectedCategories = [String]()
     
 }
