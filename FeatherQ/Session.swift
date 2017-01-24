@@ -33,5 +33,6 @@ class Session {
     var transactionNums = [String]()
     var processQueue = [[String:String]]()
     var estimatedSecs: Int?
+    var lastCalled: String?
     
 }

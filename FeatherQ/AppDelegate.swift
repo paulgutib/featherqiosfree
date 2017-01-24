@@ -124,6 +124,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 let dataObj = callNums.1.dictionaryObject!
                                 let pNum = dataObj["priority_number"] as! String
                                 Session.instance.broadcastNumbers.append(pNum)
+                                Session.instance.peopleInLine = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
+                                Session.instance.servingTime = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
+                                Session.instance.lastCalled = responseData["broadcast_data"]["last_called"].stringValue
                             }
                         }
                     }
@@ -172,6 +175,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabBarController.setViewControllers(rootViewControllers, animated: false)
             tabBarController.selectedIndex = 2
         }
+    }
+    
+    func convertServingTime(timeArg: Int) -> String {
+        let (h, m) = self.secondsToHoursMinutesSeconds(seconds: timeArg)
+        if m < 3 {
+            return "less than 3 minutes"
+        }
+        if h > 0 {
+            return "\(h) hours and \(m) minutes"
+        }
+        return "\(m) minutes"
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
+    }
+    
+    func peopleInLineChecker(arg0: Int) -> String {
+        if arg0 < 5 {
+            return "less than 5"
+        }
+        return "\(arg0)"
     }
 }
 

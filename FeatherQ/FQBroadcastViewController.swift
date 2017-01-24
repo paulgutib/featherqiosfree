@@ -18,6 +18,8 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     @IBOutlet weak var businessCode: UILabel!
 //    @IBOutlet weak var calledNumbers: iCarousel!
     @IBOutlet weak var broadcastNumbers: UILabel!
+    @IBOutlet weak var peopleInLine: UILabel!
+    @IBOutlet weak var waitingTime: UILabel!
     
     var calledNumbers = ""
     var timerCounter: Timer?
@@ -43,7 +45,14 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.broadcastNumbers.font = UIFont.systemFont(ofSize: 700.0)
+        }
         self.navigationItem.title = Session.instance.businessName!
+        self.businessCode.text = ""
+        self.broadcastNumbers.text = ""
+        self.peopleInLine.text = ""
+        self.waitingTime.text = ""
         self.businessCode.text = Session.instance.key!.uppercased()
         Session.instance.viewedBusinessId = Session.instance.businessId
         self.readyDingSound()
@@ -60,6 +69,8 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             if responseData != nil {
+                self.peopleInLine.text = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
+                self.waitingTime.text = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
                 self.priorityNumbers.removeAll()
                 for callNums in responseData["broadcast_data"]["called_numbers"] {
                     let dataObj = callNums.1.dictionaryObject!
@@ -70,6 +81,9 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                 self.audioPlayer.play()
 //                self.calledNumbers.reloadData()
                 self.generateBroadcastNumbers()
+                if self.priorityNumbers.isEmpty {
+                    self.broadcastNumbers.text = responseData["broadcast_data"]["last_called"].stringValue
+                }
             }
         }
         self.timerCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
@@ -143,6 +157,11 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
             self.priorityNumbers = Session.instance.broadcastNumbers
 //            self.calledNumbers.reloadData()
             self.generateBroadcastNumbers()
+            self.peopleInLine.text = Session.instance.peopleInLine!
+            self.waitingTime.text = Session.instance.servingTime!
+            if Session.instance.broadcastNumbers.isEmpty {
+                self.broadcastNumbers.text = Session.instance.lastCalled!
+            }
         }
     }
     
@@ -157,10 +176,33 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     
     
     func generateBroadcastNumbers() {
+        self.calledNumbers = ""
         for pNum in self.priorityNumbers {
             self.calledNumbers += pNum + "   "
         }
         self.broadcastNumbers.text = self.calledNumbers
+    }
+    
+    func convertServingTime(timeArg: Int) -> String {
+        let (h, m) = self.secondsToHoursMinutesSeconds(seconds: timeArg)
+        if m < 3 {
+            return "less than 3 minutes"
+        }
+        if h > 0 {
+            return "\(h) hours and \(m) minutes"
+        }
+        return "\(m) minutes"
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60)
+    }
+    
+    func peopleInLineChecker(arg0: Int) -> String {
+        if arg0 < 5 {
+            return "less than 5"
+        }
+        return "\(arg0)"
     }
 
 }

@@ -48,8 +48,13 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.broadcastNumbers.font = UIFont.systemFont(ofSize: 700.0)
+        }
         self.navigationItem.title = self.selectedBusiness!.name!
         Session.instance.viewedBusinessId = self.selectedBusiness!.business_id!
+        self.linePeople.text = ""
+        self.waitingTimeTotal.text = ""
         self.broadcastNumbers.text = ""
         var finalAddress = self.selectedBusiness!.address!
         let firstChar = self.selectedBusiness!.address!.characters.first
@@ -59,8 +64,6 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
         }
         self.businessAddress.text = finalAddress
         self.closingTime.text = self.selectedBusiness!.time_open! + " - " + self.selectedBusiness!.time_close!
-        self.linePeople.text = self.peopleInLineChecker(arg0: self.selectedBusiness!.people_in_line!)
-        self.waitingTimeTotal.text = self.convertServingTime(timeArg: self.selectedBusiness!.serving_time!)
         self.readyDingSound()
         self.timerCounter = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
     }
@@ -138,6 +141,8 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
             if responseData != nil {
+                self.linePeople.text = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
+                self.waitingTimeTotal.text = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
                 let oldNums = self.priorityNumbers
                 self.priorityNumbers.removeAll()
                 for callNums in responseData["broadcast_data"]["called_numbers"] {
@@ -169,6 +174,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     }
     
     func generateBroadcastNumbers() {
+        self.calledNumbers = ""
         for pNum in self.priorityNumbers {
             self.calledNumbers += pNum + "   "
         }
