@@ -12,4 +12,14 @@ class FQCategoriesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var categoryTitle: UILabel!
     @IBOutlet weak var categoryBackground: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.categoryTitle.font = UIFont.boldSystemFont(ofSize: 50.0)
+        }
+    }
+    
 }
