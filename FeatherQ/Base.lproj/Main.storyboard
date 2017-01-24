@@ -2045,11 +2045,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="0NQ-7e-YCb">
                         <barButtonItem key="backBarButtonItem" title=" " id="Dba-Ca-ZIN"/>
+                        <barButtonItem key="rightBarButtonItem" image="LocationGlobe" id="QJg-aq-STX">
+                            <connections>
+                                <segue destination="joY-XP-Dtd" kind="show" id="xZe-zx-4r2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="uRv-6j-t35">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <outlet property="enableLocationBtn" destination="QJg-aq-STX" id="EbK-pg-Z46"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cgT-iU-MA1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4269,30 +4277,20 @@ FeatherQ is a line-management application that uses your mobile device and inter
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Importance of Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nVs-wU-L6t">
-                                <rect key="frame" x="16" y="127" width="288" height="30"/>
+                                <rect key="frame" x="16" y="136.5" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9f-L9-j6q">
-                                <rect key="frame" x="16" y="173" width="288" height="183"/>
+                                <rect key="frame" x="16" y="182.5" width="288" height="183"/>
                                 <string key="text">Location plays a key role in FeatherQ. As a user, it may not be of your interest to see businesses which are very far away from your vicinity. By letting the app know your current location, it will be able to sort out businesses by listing ones that are nearest to you first before showing it to the screen.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to grant the app the location permission in order to use it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qx3-xQ-eYm">
-                                <rect key="frame" x="16" y="440" width="288" height="34"/>
-                                <color key="backgroundColor" red="0.97104853391647339" green="0.29743725061416626" blue="0.017074324190616608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Gw2-t6-di4"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9h-5L-ire">
-                                <rect key="frame" x="16" y="380" width="288" height="44"/>
+                                <rect key="frame" x="16" y="389.5" width="288" height="44"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Td9-h2-YWE"/>
@@ -4306,7 +4304,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XdK-fL-xiR">
-                                <rect key="frame" x="110" y="482" width="100" height="33"/>
+                                <rect key="frame" x="110" y="441" width="100" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="d38-3c-bGO"/>
                                 </constraints>
@@ -4318,19 +4316,27 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                     <action selector="goToAppSettings:" destination="joY-XP-Dtd" eventType="touchUpInside" id="ts8-NH-R1f"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to grant the app the location permission in order to use it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qx3-xQ-eYm">
+                                <rect key="frame" x="16" y="389" width="288" height="44"/>
+                                <color key="backgroundColor" red="0.97104853391647339" green="0.29743725061416626" blue="0.017074324190616608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Gw2-t6-di4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Qx3-xQ-eYm" firstAttribute="top" secondItem="M9f-L9-j6q" secondAttribute="bottom" constant="24" id="376-Ks-vhl"/>
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="5t2-d4-tG6"/>
                             <constraint firstItem="M9f-L9-j6q" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="9fu-g1-w3F"/>
-                            <constraint firstItem="Qx3-xQ-eYm" firstAttribute="top" secondItem="w9h-5L-ire" secondAttribute="bottom" constant="16" id="CYX-6R-ozC"/>
                             <constraint firstItem="Qx3-xQ-eYm" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="FoN-dL-7ca"/>
                             <constraint firstItem="M9f-L9-j6q" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="Gzj-YS-94Z"/>
-                            <constraint firstItem="M9f-L9-j6q" firstAttribute="centerY" secondItem="D6u-Ky-d0S" secondAttribute="centerY" constant="-20" id="SHQ-hu-BtQ"/>
+                            <constraint firstItem="M9f-L9-j6q" firstAttribute="centerY" secondItem="D6u-Ky-d0S" secondAttribute="centerY" constant="-10" id="SHQ-hu-BtQ"/>
                             <constraint firstItem="nVs-wU-L6t" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="U4i-hG-zqJ"/>
-                            <constraint firstItem="Qx3-xQ-eYm" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="X9A-aY-LGN"/>
                             <constraint firstItem="w9h-5L-ire" firstAttribute="top" secondItem="M9f-L9-j6q" secondAttribute="bottom" constant="24" id="aqR-53-RfB"/>
-                            <constraint firstItem="Qx3-xQ-eYm" firstAttribute="trailing" secondItem="D6u-Ky-d0S" secondAttribute="trailingMargin" id="ejE-1S-BQ9"/>
                             <constraint firstItem="XdK-fL-xiR" firstAttribute="top" secondItem="Qx3-xQ-eYm" secondAttribute="bottom" constant="8" id="icC-ny-coh"/>
                             <constraint firstItem="w9h-5L-ire" firstAttribute="leading" secondItem="D6u-Ky-d0S" secondAttribute="leadingMargin" id="llU-UT-LWh"/>
                             <constraint firstItem="XdK-fL-xiR" firstAttribute="centerX" secondItem="D6u-Ky-d0S" secondAttribute="centerX" id="lqQ-ky-rs2"/>
@@ -4348,7 +4354,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZe-A7-HSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3767" y="-1033"/>
+            <point key="canvasLocation" x="3766.875" y="-213.38028169014083"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sZV-4G-M8S">
@@ -4378,6 +4384,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <image name="CustomerRole" width="37" height="37"/>
         <image name="Help" width="29" height="29"/>
         <image name="LaunchScreenBackground" width="966" height="354"/>
+        <image name="LocationGlobe" width="29" height="29"/>
         <image name="LogoName" width="143" height="32"/>
         <image name="My Business" width="32" height="32"/>
         <image name="PlaceholderLogo" width="64" height="64"/>

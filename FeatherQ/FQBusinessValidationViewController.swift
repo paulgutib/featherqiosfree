@@ -341,12 +341,16 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             self.locationApprovalCallback()
             debugPrint("granted always")
         case .denied:
-            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
             self.locationBtn.titleLabel?.text = "Go to Settings to Enable"
             self.locationBtn.backgroundColor = UIColor.red
             debugPrint("denied must change")
         default:
-            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
             self.locationBtn.titleLabel?.text = "Go to Settings to Enable"
             self.locationBtn.backgroundColor = UIColor.red
             debugPrint("denied must change")
@@ -480,7 +484,9 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     }
     
     func locationApprovalCallback() {
-        UserDefaults.standard.set("granted", forKey: "fqiosappfreelocation")
+        let preferences = UserDefaults.standard
+        preferences.set("granted", forKey: "fqiosappfreelocation")
+        preferences.synchronize()
         self.locationBtn.isHidden = true
         self.grantedLbl.isHidden = false
         self.cllManager.delegate = self

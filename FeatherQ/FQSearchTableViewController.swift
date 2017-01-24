@@ -14,13 +14,14 @@ import CoreLocation
 
 class FQSearchTableViewController: UITableViewController, UISearchResultsUpdating, CLLocationManagerDelegate {
     
+    @IBOutlet weak var enableLocationBtn: UIBarButtonItem!
+    
     var filterSearch = UISearchController()
     var businessList = [FQBusiness]()
     var filteredBusinesses = [String]()
     var cllManager = CLLocationManager()
     var latitudeLoc: String?
     var longitudeLoc: String?
-//    var isLocationUpdated = false
     var recurseIfEmpty = false
 
     override func viewDidLoad() {
@@ -39,6 +40,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
         self.filterSearch.searchBar.sizeToFit()
+        self.filterSearch.searchBar.placeholder = "Name, address, category, business code.."
         self.refreshControl?.addTarget(self, action: #selector(FQSearchTableViewController.refresherOrb(_:)), for: .valueChanged)
         self.tableView.tableHeaderView = self.filterSearch.searchBar
         self.tableView.reloadData()
@@ -50,7 +52,16 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.getCurrentLocation()
+        if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "granted" {
+            self.navigationItem.rightBarButtonItem = nil
+            self.cllManager.delegate = self
+            self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.cllManager.requestWhenInUseAuthorization()
+            self.cllManager.startUpdatingLocation()
+        }
+        else {
+            self.postDisplayBusinesses()
+        }
     }
 
     // MARK: - Table view data source
@@ -155,15 +166,34 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        debugPrint(self.isLocationUpdated)
-//        if !self.isLocationUpdated {
-            let userLocation = locations[0]
-            self.latitudeLoc = "\(userLocation.coordinate.latitude)"
-            self.longitudeLoc = "\(userLocation.coordinate.longitude)"
-            self.cllManager.stopUpdatingLocation()
-            self.postDisplayBusinesses()
-//            self.isLocationUpdated = true
-//        }
+        let userLocation = locations[0]
+        self.latitudeLoc = "\(userLocation.coordinate.latitude)"
+        self.longitudeLoc = "\(userLocation.coordinate.longitude)"
+        CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
+            self.postSearchBusiness()
+        })
+        self.cllManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse:
+            self.locationApprovalCallback()
+            debugPrint("granted when in use")
+        case .authorizedAlways:
+            self.locationApprovalCallback()
+            debugPrint("granted always")
+        case .denied:
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
+            debugPrint("denied must change")
+        default:
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
+            debugPrint("denied must change")
+        }
     }
 
     // MARK: - Navigation
@@ -199,28 +229,8 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         }
     }
     
-//    @IBAction func locateMe(_ sender: UIBarButtonItem) {
-//        self.recurseIfEmpty = false
-////        self.isLocationUpdated = false
-//        self.getCurrentLocation()
-//    }
-    
-    func getCurrentLocation() {
-        self.cllManager.delegate = self
-        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.cllManager.requestWhenInUseAuthorization()
-        self.cllManager.startUpdatingLocation()
-    }
-    
     func postDisplayBusinesses() {
-        var urlVal: URLRequestConvertible?
-        if (self.latitudeLoc != nil) && !self.recurseIfEmpty {
-            urlVal = Router.postSearchBusiness(latitude: self.latitudeLoc!, longitude: self.longitudeLoc!)
-        }
-        else {
-            urlVal = Router.postDisplayBusinesses
-        }
-        Alamofire.request(urlVal!).responseJSON { response in
+        Alamofire.request(Router.postDisplayBusinesses).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -245,9 +255,38 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                     self.businessList.append(FQBusiness(modelAttr: dataObj))
                 }
             }
-            if self.businessList.isEmpty {
-                self.recurseIfEmpty = true
-                self.postDisplayBusinesses()
+            self.tableView.reloadData()
+            SwiftSpinner.hide()
+        }
+    }
+    
+    func postSearchBusiness() {
+        Alamofire.request(Router.postSearchBusiness(latitude: self.latitudeLoc!, longitude: self.longitudeLoc!)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData != nil {
+                self.businessList.removeAll()
+                for business in responseData {
+                    let dataObj = business.1.dictionaryObject!
+                    if !Session.instance.selectedCategories.isEmpty {
+                        for chosenCategory in Session.instance.selectedCategories {
+                            if dataObj["category"] as! String == chosenCategory {
+                                self.businessList.append(FQBusiness(modelAttr: dataObj))
+                            }
+                        }
+                    }
+                    else {
+                        self.businessList.append(FQBusiness(modelAttr: dataObj))
+                    }
+                }
             }
             self.tableView.reloadData()
             SwiftSpinner.hide()
@@ -342,6 +381,16 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             return "less than 5"
         }
         return "\(arg0)"
+    }
+    
+    func locationApprovalCallback() {
+        let preferences = UserDefaults.standard
+        preferences.set("granted", forKey: "fqiosappfreelocation")
+        preferences.synchronize()
+        self.cllManager.delegate = self
+        self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.cllManager.requestWhenInUseAuthorization()
+        self.cllManager.startUpdatingLocation()
     }
     
 }

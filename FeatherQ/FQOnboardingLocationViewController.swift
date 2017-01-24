@@ -67,12 +67,16 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
             self.locationApprovalCallback()
             debugPrint("granted always")
         case .denied:
-            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
             self.locationNotify.isHidden = false
             self.settingsBtn.isHidden = false
             debugPrint("denied must change")
         default:
-            UserDefaults.standard.set("denied", forKey: "fqiosappfreelocation")
+            let preferences = UserDefaults.standard
+            preferences.set("denied", forKey: "fqiosappfreelocation")
+            preferences.synchronize()
             self.locationNotify.isHidden = false
             self.settingsBtn.isHidden = false
             debugPrint("denied must change")
@@ -102,13 +106,14 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
     }
     
     func locationApprovalCallback() {
-        UserDefaults.standard.set("granted", forKey: "fqiosappfreelocation")
+        let preferences = UserDefaults.standard
+        preferences.set("granted", forKey: "fqiosappfreelocation")
+        preferences.synchronize()
         self.locationNotify.isHidden = true
         self.settingsBtn.isHidden = true
         let alertBox = UIAlertController(title: "SUCCESS", message: "Your current location is now being used by the application.", preferredStyle: .alert)
         alertBox.addAction(UIAlertAction(title: "Proceed", style: .default, handler: { action in
-            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
-            self.present(vc, animated: true, completion: nil)
+            self.navigationController!.popToRootViewController(animated: true)
         }))
         self.present(alertBox, animated: true, completion: nil)
     }
