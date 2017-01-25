@@ -18,20 +18,20 @@ class FQOnboardingLayerViewController: UIViewController {
     
     var onboardingSections = [
         [
-            "title": "Nearby",
-            "content": "FeatherQ will give a list of businesses depending on your location. Tap on the globe above to allow the app to access your location through your device’s GPS."
-        ],
-        [
             "title": "Search",
-            "content": "Enter a business' name, address, or its unique 4-character code to preview its current line progress."
+            "content": "Entering the business' name, address, or its unique 4-character code enables you to preview its current line progress."
         ],
         [
-            "title": "Business Listing",
-            "content": "Tapping on the rows above enables you to see the numbers currently being processed by the business including the last number called."
+            "title": "Business List",
+            "content": "You will be able to know the number of people lining up and the estimated time they will be served without even visiting the establishment."
         ],
         [
             "title": "Categories",
-            "content": "Tap categories below if you want to show only businesses belonging to specific industry."
+            "content": "You can filter the Business List to show only businesses belonging to specific industry."
+        ],
+        [
+            "title": "Nearby",
+            "content": "FeatherQ is capable of listing businesses that are near you. The globe above will ask permission to allow the app to access your current location."
         ]
     ]
     var sectionCounter = 0
@@ -42,8 +42,8 @@ class FQOnboardingLayerViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.sectionTitle.text = onboardingSections[0]["title"]
         self.sectionContent.text = onboardingSections[0]["content"]
-        self.locationMask.isHidden = true
-        self.searchMask.isHidden = false
+        self.locationMask.isHidden = false
+        self.searchMask.isHidden = true
         self.businessMask.isHidden = false
     }
 
@@ -67,16 +67,16 @@ class FQOnboardingLayerViewController: UIViewController {
         self.sectionCounter += 1
         if self.sectionCounter == 1 {
             self.locationMask.isHidden = false
-            self.searchMask.isHidden = true
-            self.businessMask.isHidden = false
+            self.searchMask.isHidden = false
+            self.businessMask.isHidden = true
         }
         else if self.sectionCounter == 2 {
             self.locationMask.isHidden = false
             self.searchMask.isHidden = false
-            self.businessMask.isHidden = true
+            self.businessMask.isHidden = false
         }
         else if self.sectionCounter == 3 {
-            self.locationMask.isHidden = false
+            self.locationMask.isHidden = true
             self.searchMask.isHidden = false
             self.businessMask.isHidden = false
         }

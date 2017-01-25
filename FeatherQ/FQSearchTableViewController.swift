@@ -393,7 +393,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     func showOnboardingIfNew() {
-//        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
             let onboardingTopLayer = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 100.0))
         onboardingTopLayer.tag = 1111
             let onboardingBottomLayer = UIView(frame: CGRect(x: 0.0, y: UIScreen.main.bounds.height-100.0, width: UIScreen.main.bounds.width, height: 100.0))
@@ -403,7 +403,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
             let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingLayerViewController")
             modalViewController.modalPresentationStyle = .overCurrentContext
             self.present(modalViewController, animated: false, completion: nil)
-//        }
+        }
     }
     
 }
