@@ -33,9 +33,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        SwiftSpinner.show("Fetching..").addTapHandler({
-            SwiftSpinner.hide()
-        }, subtitle: "Tap to put the current process in the background.")
+        SwiftSpinner.show("Preparing..")
         self.filterSearch = UISearchController(searchResultsController: nil)
         self.filterSearch.searchResultsUpdater = self
         self.filterSearch.dimsBackgroundDuringPresentation = false
@@ -256,6 +254,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                 }
             }
             self.tableView.reloadData()
+            self.showOnboardingIfNew()
             SwiftSpinner.hide()
         }
     }
@@ -391,6 +390,20 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
         self.cllManager.requestWhenInUseAuthorization()
         self.cllManager.startUpdatingLocation()
+    }
+    
+    func showOnboardingIfNew() {
+//        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
+            let onboardingTopLayer = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 100.0))
+        onboardingTopLayer.tag = 1111
+            let onboardingBottomLayer = UIView(frame: CGRect(x: 0.0, y: UIScreen.main.bounds.height-100.0, width: UIScreen.main.bounds.width, height: 100.0))
+        onboardingBottomLayer.tag = 2222
+            UIApplication.shared.keyWindow?.addSubview(onboardingTopLayer)
+            UIApplication.shared.keyWindow?.addSubview(onboardingBottomLayer)
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingLayerViewController")
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: false, completion: nil)
+//        }
     }
     
 }
