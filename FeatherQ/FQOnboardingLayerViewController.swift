@@ -10,41 +10,25 @@ import UIKit
 
 class FQOnboardingLayerViewController: UIViewController {
 
-    @IBOutlet weak var sectionTitle: UILabel!
-    @IBOutlet weak var sectionContent: UILabel!
     @IBOutlet weak var searchMask: UIView!
     @IBOutlet weak var locationMask: UIView!
     @IBOutlet weak var businessMask: UIView!
-    
-    var onboardingSections = [
-        [
-            "title": "Search",
-            "content": "Entering the business' name, address, or its unique 4-character code enables you to preview its current line progress."
-        ],
-        [
-            "title": "Business List",
-            "content": "You will be able to know the number of people lining up and the estimated time they will be served without even visiting the establishment."
-        ],
-        [
-            "title": "Categories",
-            "content": "You can filter the Business List to show only businesses belonging to specific industry."
-        ],
-        [
-            "title": "Nearby",
-            "content": "FeatherQ is capable of listing businesses that are near you. The globe above will ask permission to allow the app to access your current location."
-        ]
-    ]
-    var sectionCounter = 0
+    @IBOutlet weak var locationHelper: UIView!
+    @IBOutlet weak var searchHelper: UIView!
+    @IBOutlet weak var listHelper: UIView!
+    @IBOutlet weak var menuHelper: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.sectionTitle.text = onboardingSections[0]["title"]
-        self.sectionContent.text = onboardingSections[0]["content"]
         self.locationMask.isHidden = false
         self.searchMask.isHidden = true
         self.businessMask.isHidden = false
+        self.locationHelper.isHidden = false
+        self.searchHelper.isHidden = true
+        self.listHelper.isHidden = true
+        self.menuHelper.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {

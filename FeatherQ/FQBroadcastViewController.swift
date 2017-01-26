@@ -178,7 +178,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     func generateBroadcastNumbers() {
         self.calledNumbers = ""
         for pNum in self.priorityNumbers {
-            self.calledNumbers += pNum + "   "
+            self.calledNumbers += pNum + "      "
         }
         self.broadcastNumbers.text = self.calledNumbers
     }

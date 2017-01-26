@@ -28,14 +28,14 @@ class FQOnboardingContentViewController: UIViewController {
         self.startQueue.layer.cornerRadius = 5.0
         self.startQueue.clipsToBounds = true
         self.view.bringSubview(toFront: self.startQueue)
-        if self.pageIndex == 1 {
+        if self.pageIndex == 3 {
 //        if self.pageIndex == 4 {
             self.startQueue.isHidden = false
         }
         else {
             self.startQueue.isHidden = true
         }
-        self.indexMarker.text = "(\(self.pageIndex+1)/2)"
+        self.indexMarker.text = "(\(self.pageIndex+1)/4)"
 //        self.indexMarker.text = "(\(self.pageIndex+1)/5)"
     }
 
@@ -59,14 +59,14 @@ class FQOnboardingContentViewController: UIViewController {
         if self.pageIndex == 0 {
 //            self.headerTitle.text = "Dashboard Display"
 //            self.subtitle.text = "Queuing options are available in the dashboard. Checking an option makes it the default screen to show the next time the app starts."
-            self.headerTitle.text = "Easy Business Search"
-            self.subtitle.text = "Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
+//            self.headerTitle.text = "Easy Business Search"
+//            self.subtitle.text = "Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
         }
         else if self.pageIndex == 1 {
 //            self.headerTitle.text = "Issuing a Number"
 //            self.subtitle.text = "Choose a number you want to issue and put in notes if necessary."
-            self.headerTitle.text = "Line Status Monitoring"
-            self.subtitle.text = "Keep updated with the business' progress by checking out its broadcast screen."
+//            self.headerTitle.text = "Line Status Monitoring"
+//            self.subtitle.text = "Keep updated with the business' progress by checking out its broadcast screen."
         }
 //        else if self.pageIndex == 2 {
 //            self.headerTitle.text = "Calling a Number"
@@ -87,9 +87,9 @@ class FQOnboardingContentViewController: UIViewController {
     }
     
     @IBAction func startServing(_ sender: UIButton) {
-        let preferences = UserDefaults.standard
-        preferences.set(true, forKey: "fqiosappfreeonboard")
-        preferences.synchronize()
+//        let preferences = UserDefaults.standard
+//        preferences.set(true, forKey: "fqiosappfreeonboard")
+//        preferences.synchronize()
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
 //        UIApplication.shared.keyWindow?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")

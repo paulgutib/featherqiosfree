@@ -31,10 +31,6 @@ class FQOnboardingUserTypeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-    }
 
     /*
     // MARK: - Navigation
@@ -47,8 +43,8 @@ class FQOnboardingUserTypeViewController: UIViewController {
     */
     
     @IBAction func goToMainApp(_ sender: UIButton) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
     }
 
 }
