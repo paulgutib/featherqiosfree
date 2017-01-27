@@ -21,6 +21,16 @@ class FQDashboardViewController: UIViewController {
     @IBOutlet weak var processDefault: UIButton!
     @IBOutlet weak var broadcastDefault: UIButton!
     
+    @IBOutlet weak var dboardLayer1: UIView!
+    @IBOutlet weak var dboardLayer2: UIView!
+    @IBOutlet weak var dboardLayer3: UIView!
+    @IBOutlet weak var issueLayer: UIView!
+    @IBOutlet weak var processLayer: UIView!
+    @IBOutlet weak var broadcastLayer: UIView!
+    @IBOutlet weak var step1: UIView!
+    @IBOutlet weak var step6: UIView!
+    @IBOutlet weak var step8: UIView!
+    
     var issueBool = false
     var processBool = false
     var broadcastBool = false
@@ -38,6 +48,18 @@ class FQDashboardViewController: UIViewController {
         self.issueNumberBtn.clipsToBounds = true
         self.broadcastBtn.layer.cornerRadius = 5.0
         self.broadcastBtn.clipsToBounds = true
+        self.step1.layer.cornerRadius = 5.0
+        self.step1.clipsToBounds = true
+        self.step1.layer.borderColor = UIColor.black.cgColor
+        self.step1.layer.borderWidth = 2.0
+        self.step6.layer.cornerRadius = 5.0
+        self.step6.clipsToBounds = true
+        self.step6.layer.borderColor = UIColor.black.cgColor
+        self.step6.layer.borderWidth = 2.0
+        self.step8.layer.cornerRadius = 5.0
+        self.step8.clipsToBounds = true
+        self.step8.layer.borderColor = UIColor.black.cgColor
+        self.step8.layer.borderWidth = 2.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,6 +69,33 @@ class FQDashboardViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.autoLoginForRegisteredUser()
+        
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
+            if !Session.instance.step4 {
+                self.issueLayer.isHidden = true
+                self.processLayer.isHidden = false
+                self.broadcastLayer.isHidden = false
+                self.step1.isHidden = false
+                self.step6.isHidden = true
+                self.step8.isHidden = true
+            }
+            else if !Session.instance.step7 {
+                self.issueLayer.isHidden = false
+                self.processLayer.isHidden = true
+                self.broadcastLayer.isHidden = false
+                self.step1.isHidden = true
+                self.step6.isHidden = false
+                self.step8.isHidden = true
+            }
+            else {
+                self.issueLayer.isHidden = false
+                self.processLayer.isHidden = false
+                self.broadcastLayer.isHidden = true
+                self.step1.isHidden = true
+                self.step6.isHidden = true
+                self.step8.isHidden = false
+            }
+        }
     }
     
 

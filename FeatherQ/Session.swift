@@ -36,4 +36,13 @@ class Session {
     var lastCalled: String?
     var selectedCategories = [String]()
     
+    var step1 = false
+    var step2 = false
+    var step3 = false
+    var step4 = false
+    var step5 = false
+    var step6 = false
+    var step7 = false
+    var step8 = false
+    
 }

@@ -16,6 +16,8 @@ class FQReceiptViewController: UIViewController {
     @IBOutlet weak var okBtn: UIButton!
     @IBOutlet weak var modalContainer: UIView!
     
+    @IBOutlet weak var step4: UIView!
+    
     var confirmCode: String?
     var issuedNum: String?
     var timeEstimate: String?
@@ -32,6 +34,11 @@ class FQReceiptViewController: UIViewController {
         self.priorityNumber.text = self.issuedNum!
         self.confirmationCode.text = self.confirmCode!
         self.estimatedCallTime.text = self.timeEstimate!
+        
+        self.step4.layer.cornerRadius = 5.0
+        self.step4.clipsToBounds = true
+        self.step4.layer.borderWidth = 2.0
+        self.step4.layer.borderColor = UIColor.black.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,6 +46,9 @@ class FQReceiptViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.step4.isHidden = false
+    }
 
     /*
     // MARK: - Navigation

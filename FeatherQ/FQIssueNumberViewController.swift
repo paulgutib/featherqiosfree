@@ -20,6 +20,15 @@ class FQIssueNumberViewController: UIViewController {
     @IBOutlet weak var notes: UITextField!
     @IBOutlet weak var noAvailableNum: UILabel!
     
+    @IBOutlet weak var step5: UIView!
+    @IBOutlet weak var step2: UIView!
+    @IBOutlet weak var step3: UIView!
+    @IBOutlet weak var numberLayer: UIView!
+    @IBOutlet weak var dboardLayer1: UIView!
+    @IBOutlet weak var dboardLayer2: UIView!
+    @IBOutlet weak var dboardLayer3: UIView!
+    @IBOutlet weak var buttonLayer: UIView!
+    
     var takenNumbers = [String]()
     var availableNumbers = [Int]()
     
@@ -32,6 +41,19 @@ class FQIssueNumberViewController: UIViewController {
         self.issueBtn.clipsToBounds = true
         self.noAvailableNum.layer.cornerRadius = 5.0
         self.noAvailableNum.clipsToBounds = true
+        
+        self.step5.layer.cornerRadius = 5.0
+        self.step5.clipsToBounds = true
+        self.step5.layer.borderWidth = 2.0
+        self.step5.layer.borderColor = UIColor.black.cgColor
+        self.step2.layer.cornerRadius = 5.0
+        self.step2.clipsToBounds = true
+        self.step2.layer.borderWidth = 2.0
+        self.step2.layer.borderColor = UIColor.black.cgColor
+        self.step3.layer.cornerRadius = 5.0
+        self.step3.clipsToBounds = true
+        self.step3.layer.borderWidth = 2.0
+        self.step3.layer.borderColor = UIColor.black.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,6 +113,12 @@ class FQIssueNumberViewController: UIViewController {
             }
             SwiftSpinner.hide()
         }
+        
+        self.step5.isHidden = true
+        self.step2.isHidden = false
+        self.step3.isHidden = false
+        self.numberLayer.isHidden = true
+        self.buttonLayer.isHidden = true
     }
 
     /*
@@ -156,6 +184,14 @@ class FQIssueNumberViewController: UIViewController {
                 }
                 self.issueSpecific.value = 0.0
                 self.notes.text = ""
+                
+                Session.instance.step4 = true
+                self.step5.isHidden = false
+                self.step2.isHidden = true
+                self.step3.isHidden = true
+                self.numberLayer.isHidden = false
+                self.buttonLayer.isHidden = false
+                
                 self.present(modalViewController, animated: true, completion: nil)
             }
             else {
@@ -198,3 +234,4 @@ class FQIssueNumberViewController: UIViewController {
     }
     
 }
+

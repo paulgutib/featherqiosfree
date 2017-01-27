@@ -21,6 +21,13 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     @IBOutlet weak var peopleInLine: UILabel!
     @IBOutlet weak var waitingTime: UILabel!
     
+    @IBOutlet weak var codeLayer: UIView!
+    @IBOutlet weak var numberLayer: UIView!
+    @IBOutlet weak var trafficLayer: UIView!
+    @IBOutlet weak var codeHelp: UIView!
+    @IBOutlet weak var trafficHelp: UIView!
+    @IBOutlet weak var numberHelp: UIView!
+    
     var calledNumbers = ""
     var timerCounter: Timer?
     var audioPlayer = AVAudioPlayer()
@@ -33,6 +40,19 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
 
         // Do any additional setup after loading the view.
 //        self.calledNumbers.type = .coverFlow2
+        
+        self.codeHelp.layer.cornerRadius = 5.0
+        self.codeHelp.clipsToBounds = true
+        self.codeHelp.layer.borderWidth = 2.0
+        self.codeHelp.layer.borderColor = UIColor.black.cgColor
+        self.trafficHelp.layer.cornerRadius = 5.0
+        self.trafficHelp.clipsToBounds = true
+        self.trafficHelp.layer.borderWidth = 2.0
+        self.trafficHelp.layer.borderColor = UIColor.black.cgColor
+        self.numberHelp.layer.cornerRadius = 5.0
+        self.numberHelp.clipsToBounds = true
+        self.numberHelp.layer.borderWidth = 2.0
+        self.numberHelp.layer.borderColor = UIColor.black.cgColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +65,13 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.codeHelp.isHidden = false
+        self.codeLayer.isHidden = true
+        self.trafficHelp.isHidden = true
+        self.trafficLayer.isHidden = false
+        self.numberHelp.isHidden = true
+        self.numberLayer.isHidden = false
+        
         if UIDevice.current.userInterfaceIdiom == .pad {
             self.broadcastNumbers.font = UIFont.systemFont(ofSize: 700.0)
         }
@@ -148,6 +175,32 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func codeTap(_ sender: UITapGestureRecognizer) {
+        self.codeHelp.isHidden = true
+        self.codeLayer.isHidden = false
+        self.trafficHelp.isHidden = false
+        self.trafficLayer.isHidden = true
+        self.numberHelp.isHidden = true
+        self.numberLayer.isHidden = false
+    }
+    
+    @IBAction func trafficTap(_ sender: UITapGestureRecognizer) {
+        self.codeHelp.isHidden = true
+        self.codeLayer.isHidden = false
+        self.trafficHelp.isHidden = true
+        self.trafficLayer.isHidden = false
+        self.numberHelp.isHidden = false
+        self.numberLayer.isHidden = true
+    }
+    
+    @IBAction func numberTap(_ sender: UITapGestureRecognizer) {
+        let preferences = UserDefaults.standard
+        preferences.set(true, forKey: "fqiosappfreeonboardbusiness")
+        preferences.synchronize()
+        self.navigationController!.popToRootViewController(animated: true)
+    }
+    
     
     func timerCallbacks() {
         if Session.instance.broadcastNumbers != self.priorityNumbers {

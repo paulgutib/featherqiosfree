@@ -27,11 +27,22 @@ class FQProcessQueueTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.tableView.tableHeaderView = self.howToCallServed()
+        
+        let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
+        queueLayer.tag = 3333
+        queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        UIApplication.shared.keyWindow?.addSubview(queueLayer)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.keyWindow?.viewWithTag(3333)?.removeFromSuperview()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -187,6 +198,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     */
     
     @IBAction func callNumNow(_ sender: UIButton) {
+        Session.instance.step7 = true
         let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
         let indexPath = self.tableView.indexPath(for: cell)
         self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
@@ -318,4 +330,23 @@ class FQProcessQueueTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    func howToCallServed() -> UIView {
+        let wrapper = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 120.0))
+        wrapper.backgroundColor = UIColor(red: 1, green: 1, blue: 0.7373, alpha: 1.0) /* #ffffbc */
+        wrapper.layer.borderWidth = 2.0
+        wrapper.layer.borderColor = UIColor.black.cgColor
+        let howToTitle = UILabel(frame: CGRect(x: 0.0, y: 8.0, width: UIScreen.main.bounds.width, height: 18.0))
+        howToTitle.text = "Step 7"
+        howToTitle.textAlignment = .center
+        howToTitle.font = UIFont.boldSystemFont(ofSize: 17.0)
+        let howToContent = UILabel(frame: CGRect(x: 8.0, y: 34.0, width: UIScreen.main.bounds.width-8.0, height: 72.0))
+        howToContent.text = "1. To call an issued number, tap \"Call\"\n2. To serve a called number, tap \"Serve\"\n3. After serving, go back to Dashboard."
+        howToContent.font = UIFont.systemFont(ofSize: 15.0)
+        howToContent.numberOfLines = 4
+        wrapper.addSubview(howToTitle)
+        wrapper.addSubview(howToContent)
+        return wrapper
+    }
+    
 }
