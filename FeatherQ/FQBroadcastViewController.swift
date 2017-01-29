@@ -65,13 +65,14 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.codeHelp.isHidden = false
-        self.codeLayer.isHidden = true
-        self.trafficHelp.isHidden = true
-        self.trafficLayer.isHidden = false
-        self.numberHelp.isHidden = true
-        self.numberLayer.isHidden = false
-        
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+            self.codeHelp.isHidden = false
+            self.codeLayer.isHidden = true
+            self.trafficHelp.isHidden = true
+            self.trafficLayer.isHidden = false
+            self.numberHelp.isHidden = true
+            self.numberLayer.isHidden = false
+        }
         if UIDevice.current.userInterfaceIdiom == .pad {
             self.broadcastNumbers.font = UIFont.systemFont(ofSize: 700.0)
         }
@@ -195,10 +196,20 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     @IBAction func numberTap(_ sender: UITapGestureRecognizer) {
-        let preferences = UserDefaults.standard
-        preferences.set(true, forKey: "fqiosappfreeonboardbusiness")
-        preferences.synchronize()
-        self.navigationController!.popToRootViewController(animated: true)
+        let alertBox = UIAlertController(title: "COMPLETE", message: "You will now be redirected back to your dashboard.", preferredStyle: .alert)
+        alertBox.addAction(UIAlertAction(title: "Proceed", style: .default, handler: { action in
+            let preferences = UserDefaults.standard
+            preferences.set(true, forKey: "fqiosappfreeonboardbusiness")
+            preferences.synchronize()
+            let tabBarController = self.view.window?.rootViewController as! UITabBarController
+            let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
+            var rootViewControllers = tabBarController.viewControllers
+            rootViewControllers?[2] = vc
+            vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
+            tabBarController.setViewControllers(rootViewControllers, animated: false)
+            tabBarController.selectedIndex = 2
+        }))
+        self.present(alertBox, animated: true, completion: nil)
     }
     
     

@@ -110,7 +110,7 @@ class FQLoginViewController: UIViewController {
                                 Session.instance.businessName = dataObj["name"] as? String
                             }
                             let preferences = UserDefaults.standard
-                            preferences.set(true, forKey: "fqiosappfreeonboard")
+                            preferences.set(true, forKey: "fqiosappfreeloggedin")
                             preferences.synchronize()
                             let startMainApp = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp") as! UITabBarController
                             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")

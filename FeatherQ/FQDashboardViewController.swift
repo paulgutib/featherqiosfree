@@ -69,8 +69,14 @@ class FQDashboardViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.autoLoginForRegisteredUser()
-        
-        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+//            let onboardingBottomLayer = UIView(frame: CGRect(x: 0.0, y: UIScreen.main.bounds.height-54.0, width: UIScreen.main.bounds.width, height: 54.0))
+//            onboardingBottomLayer.tag = 4444
+//            onboardingBottomLayer.backgroundColor = UIColor.blue
+//            UIApplication.shared.keyWindow?.addSubview(onboardingBottomLayer)
+            self.dboardLayer1.isHidden = false
+            self.dboardLayer2.isHidden = false
+            self.dboardLayer3.isHidden = false
             if !Session.instance.step4 {
                 self.issueLayer.isHidden = true
                 self.processLayer.isHidden = false
@@ -96,6 +102,17 @@ class FQDashboardViewController: UIViewController {
                 self.step8.isHidden = false
             }
         }
+//        else {
+//            self.dboardLayer1.isHidden = true
+//            self.dboardLayer2.isHidden = true
+//            self.dboardLayer3.isHidden = true
+//            self.issueLayer.isHidden = true
+//            self.processLayer.isHidden = true
+//            self.broadcastLayer.isHidden = true
+//            self.step1.isHidden = true
+//            self.step6.isHidden = true
+//            self.step8.isHidden = true
+//        }
     }
     
 

@@ -47,7 +47,9 @@ class FQReceiptViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.step4.isHidden = false
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+            self.step4.isHidden = false
+        }
     }
 
     /*

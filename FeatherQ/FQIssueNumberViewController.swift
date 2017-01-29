@@ -113,12 +113,16 @@ class FQIssueNumberViewController: UIViewController {
             }
             SwiftSpinner.hide()
         }
-        
-        self.step5.isHidden = true
-        self.step2.isHidden = false
-        self.step3.isHidden = false
-        self.numberLayer.isHidden = true
-        self.buttonLayer.isHidden = true
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+            self.dboardLayer1.isHidden = false
+            self.dboardLayer2.isHidden = false
+            self.dboardLayer3.isHidden = false
+            self.step5.isHidden = true
+            self.step2.isHidden = false
+            self.step3.isHidden = false
+            self.numberLayer.isHidden = true
+            self.buttonLayer.isHidden = true
+        }
     }
 
     /*
@@ -184,14 +188,14 @@ class FQIssueNumberViewController: UIViewController {
                 }
                 self.issueSpecific.value = 0.0
                 self.notes.text = ""
-                
-                Session.instance.step4 = true
-                self.step5.isHidden = false
-                self.step2.isHidden = true
-                self.step3.isHidden = true
-                self.numberLayer.isHidden = false
-                self.buttonLayer.isHidden = false
-                
+                if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+                    Session.instance.step4 = true
+                    self.step5.isHidden = false
+                    self.step2.isHidden = true
+                    self.step3.isHidden = true
+                    self.numberLayer.isHidden = false
+                    self.buttonLayer.isHidden = false
+                }
                 self.present(modalViewController, animated: true, completion: nil)
             }
             else {

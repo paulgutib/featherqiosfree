@@ -131,7 +131,7 @@ class FQOperationsViewController: UIViewController {
                         Session.instance.key = responseData["raw_code"].stringValue
                         Session.instance.logo = self.logoPath!
                         let preferences = UserDefaults.standard
-                        preferences.set(true, forKey: "fqiosappfreeonboard")
+                        preferences.set(true, forKey: "fqiosappfreeloggedin")
                         preferences.synchronize()
                         let startMainApp = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp") as! UITabBarController
                         let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")

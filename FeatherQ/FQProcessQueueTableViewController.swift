@@ -28,12 +28,17 @@ class FQProcessQueueTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.tableView.tableHeaderView = self.howToCallServed()
-        
-        let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
-        queueLayer.tag = 3333
-        queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        UIApplication.shared.keyWindow?.addSubview(queueLayer)
+        if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+            self.tableView.tableHeaderView = self.howToCallServed()
+            let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
+            queueLayer.tag = 3333
+            queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-72.0, y: 64.0, width: 72.0, height: 214.0))
+            dropLayer.tag = 4444
+            dropLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+            UIApplication.shared.keyWindow?.addSubview(queueLayer)
+            UIApplication.shared.keyWindow?.addSubview(dropLayer)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +48,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         UIApplication.shared.keyWindow?.viewWithTag(3333)?.removeFromSuperview()
+        UIApplication.shared.keyWindow?.viewWithTag(4444)?.removeFromSuperview()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

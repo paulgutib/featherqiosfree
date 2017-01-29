@@ -37,13 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
-        let onboarded = UserDefaults.standard.bool(forKey: "fqiosappfreeonboard")
-        if !onboarded {
-            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "startOnboarding")
-        }
-        else {
-            self.selectMyBusinessAsDefault()
-        }
+        self.selectMyBusinessAsDefault()
         
         return true
     }
@@ -165,8 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func selectMyBusinessAsDefault() {
-        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
-        if dictionary != nil {
+        if UserDefaults.standard.bool(forKey: "fqiosappfreeloggedin") {
             let tabBarController = self.window?.rootViewController as! UITabBarController
             let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "myBusinessDashboard")
             var rootViewControllers = tabBarController.viewControllers
@@ -174,6 +167,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
             tabBarController.setViewControllers(rootViewControllers, animated: false)
             tabBarController.selectedIndex = 2
+        }
+        else if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
+            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "startOnboarding")
         }
     }
     
