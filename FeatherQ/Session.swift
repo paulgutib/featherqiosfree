@@ -12,7 +12,7 @@ class Session {
     
     static let instance = Session()
     
-    var deviceToken: String?
+    var deviceToken = ""
     var isLoggedIn = false
     var businessId = "209"
     var viewedBusinessId = "209"

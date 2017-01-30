@@ -26,14 +26,17 @@ class FQGetStartedViewController: UIViewController {
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
+//            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: true, completion: nil)
+        }
     }
-    */
 
 }

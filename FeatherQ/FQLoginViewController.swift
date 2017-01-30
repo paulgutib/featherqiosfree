@@ -60,7 +60,7 @@ class FQLoginViewController: UIViewController {
     @IBAction func loginAccount(_ sender: UIButton) {
         if self.emailPasswordValidity() {
             SwiftSpinner.show("Logging in..")
-            Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!, deviceToken: Session.instance.deviceToken!)).responseJSON { response in
+            Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!, deviceToken: Session.instance.deviceToken)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -79,7 +79,7 @@ class FQLoginViewController: UIViewController {
                             "access_token": access_token,
                             "email": self.email.text!,
                             "password": self.password.text!,
-                            "device_token": Session.instance.deviceToken!
+                            "device_token": Session.instance.deviceToken
                         ], forUserAccount: "fqiosappfree")
                         Session.instance.isLoggedIn = true
                         Session.instance.businessId = "\(responseData["business_id"])"

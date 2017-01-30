@@ -97,7 +97,7 @@ class FQOperationsViewController: UIViewController {
             let timeOpenVal = timeFormatter.string(from: self.timeOpen.date)
             let timeCloseVal = timeFormatter.string(from: self.timeClose.date)
             let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
-            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken!, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
+            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -116,7 +116,7 @@ class FQOperationsViewController: UIViewController {
                             "access_token": access_token,
                             "email": self.email!,
                             "password": self.password!,
-                            "device_token": Session.instance.deviceToken!
+                            "device_token": Session.instance.deviceToken
                         ], forUserAccount: "fqiosappfree")
                         Session.instance.isLoggedIn = true
                         Session.instance.category = self.selectedCategory!
