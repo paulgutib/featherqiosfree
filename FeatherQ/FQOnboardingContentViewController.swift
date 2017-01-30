@@ -27,7 +27,7 @@ class FQOnboardingContentViewController: UIViewController {
         self.startQueue.layer.cornerRadius = 5.0
         self.startQueue.clipsToBounds = true
         self.view.bringSubview(toFront: self.startQueue)
-        if self.pageIndex == 3 {
+        if self.pageIndex == 2 {
 //        if self.pageIndex == 4 {
             self.startQueue.isHidden = false
         }
@@ -57,20 +57,20 @@ class FQOnboardingContentViewController: UIViewController {
         if self.pageIndex == 0 {
 //            self.headerTitle.text = "Dashboard Display"
 //            self.subtitle.text = "Queuing options are available in the dashboard. Checking an option makes it the default screen to show the next time the app starts."
-//            self.headerTitle.text = "Easy Business Search"
-//            self.subtitle.text = "Find the business you are looking for by typing its name or its 4-digit unqiue code on the search bar."
+            self.headerTitle.text = "Hate getting stuck while you wait?"
+            self.subtitle.text = "FeatherQ lets you stay in line without standing in line!"
         }
         else if self.pageIndex == 1 {
 //            self.headerTitle.text = "Issuing a Number"
 //            self.subtitle.text = "Choose a number you want to issue and put in notes if necessary."
-//            self.headerTitle.text = "Line Status Monitoring"
-//            self.subtitle.text = "Keep updated with the business' progress by checking out its broadcast screen."
+            self.headerTitle.text = "Location and Line Status"
+            self.subtitle.text = "Find businesses near you and see what numbers are being called."
         }
-//        else if self.pageIndex == 2 {
-//            self.headerTitle.text = "Calling a Number"
-//            self.subtitle.text = "You can call a single or multiple numbers in the line in any order you want."
-//
-//        }
+        else if self.pageIndex == 2 {
+            self.headerTitle.text = "Wait Comfortably"
+            self.subtitle.text = "FeatherQ lets you shop, dine and explore while waiting for your turn."
+
+        }
 //        else if self.pageIndex == 3 {
 //            self.headerTitle.text = "Serve or Drop"
 //            self.subtitle.text = "Serving or dropping a number is enabled once it has been called. Swiping from left to right serves the current number and calls the next one."

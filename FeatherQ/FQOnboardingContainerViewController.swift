@@ -23,8 +23,8 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         // Do any additional setup after loading the view.
 //        self.pageTitles = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
 //        self.pageImages = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
-        self.pageTitles = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3", "EndUserOnboarding4")
-        self.pageImages = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3", "EndUserOnboarding4")
+        self.pageTitles = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")
+        self.pageImages = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "FQOnboardingPageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
         self.pageViewController.delegate = self
