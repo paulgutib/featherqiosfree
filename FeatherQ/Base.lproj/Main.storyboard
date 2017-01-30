@@ -1847,7 +1847,7 @@
         <scene sceneID="tX0-zJ-Xel">
             <objects>
                 <collectionViewController id="Q7W-NZ-cNL" customClass="FQCategoriesCollectionViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pnX-ye-r6A">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="pnX-ye-r6A">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1869,7 +1869,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category 1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qh7-5m-NTP">
-                                            <rect key="frame" x="8" y="27" width="84" height="46"/>
+                                            <rect key="frame" x="8" y="27.5" width="84" height="45.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -2087,7 +2087,7 @@
                                 <rect key="frame" x="0.0" y="368" width="320" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjt-UH-KeJ">
-                                        <rect key="frame" x="8" y="33" width="304" height="89"/>
+                                        <rect key="frame" x="8" y="33" width="304" height="105"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -2102,7 +2102,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ipG-mA-lCh">
-                                        <rect key="frame" x="90" y="126" width="140" height="34"/>
+                                        <rect key="frame" x="90" y="142" width="140" height="34"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="FhM-pR-pZS"/>
@@ -2116,22 +2116,14 @@
                                             <action selector="startServing:" destination="shE-ut-DVW" eventType="touchUpInside" id="Slg-mO-lB3"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8um-SQ-7If">
-                                        <rect key="frame" x="142" y="168" width="36" height="16"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="FqB-Qg-Z1W"/>
-                                    <constraint firstAttribute="bottom" secondItem="ipG-mA-lCh" secondAttribute="bottom" constant="40" id="G0p-nc-1aU"/>
+                                    <constraint firstAttribute="bottom" secondItem="ipG-mA-lCh" secondAttribute="bottom" constant="24" id="G0p-nc-1aU"/>
                                     <constraint firstAttribute="trailing" secondItem="JSq-8W-DCf" secondAttribute="trailing" constant="8" id="HiN-BN-655"/>
                                     <constraint firstItem="bjt-UH-KeJ" firstAttribute="top" secondItem="JSq-8W-DCf" secondAttribute="bottom" constant="4" id="O4V-aj-qjv"/>
-                                    <constraint firstItem="8um-SQ-7If" firstAttribute="centerX" secondItem="S5c-IB-39c" secondAttribute="centerX" id="P0J-yS-a6n"/>
                                     <constraint firstItem="JSq-8W-DCf" firstAttribute="leading" secondItem="S5c-IB-39c" secondAttribute="leading" constant="8" id="QQl-mR-p1t"/>
-                                    <constraint firstAttribute="bottom" secondItem="8um-SQ-7If" secondAttribute="bottom" constant="16" id="SgS-Ze-axa"/>
                                     <constraint firstAttribute="trailing" secondItem="bjt-UH-KeJ" secondAttribute="trailing" constant="8" id="f1T-d4-iE2"/>
                                     <constraint firstItem="JSq-8W-DCf" firstAttribute="top" secondItem="S5c-IB-39c" secondAttribute="top" constant="8" id="fbw-IW-nYB"/>
                                     <constraint firstItem="ipG-mA-lCh" firstAttribute="top" secondItem="bjt-UH-KeJ" secondAttribute="bottom" constant="4" id="rdn-It-c3k"/>
@@ -2146,7 +2138,6 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Bna-T8-0AX" firstAttribute="top" secondItem="S5c-IB-39c" secondAttribute="bottom" id="Fur-w6-AEI"/>
                             <constraint firstItem="4j3-dV-1Yy" firstAttribute="centerX" secondItem="g41-3t-K7i" secondAttribute="centerX" id="HDh-VS-fLV"/>
@@ -2159,7 +2150,6 @@
                     <connections>
                         <outlet property="headerTitle" destination="JSq-8W-DCf" id="4JW-K5-20b"/>
                         <outlet property="imageView" destination="4j3-dV-1Yy" id="9qF-ks-C8R"/>
-                        <outlet property="indexMarker" destination="8um-SQ-7If" id="5Fx-kU-CR0"/>
                         <outlet property="startQueue" destination="ipG-mA-lCh" id="dzo-vg-3KC"/>
                         <outlet property="subtitle" destination="bjt-UH-KeJ" id="Y8w-72-f6N"/>
                     </connections>
@@ -3046,7 +3036,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do you plan to use FeatherQ?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LFA-PB-DDJ">
-                                <rect key="frame" x="16" y="78" width="288" height="46"/>
+                                <rect key="frame" x="16" y="78.5" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3330,7 +3320,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Be In Control With Your Lines — Anywhere, Anytime" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sV-0J-vov">
-                                <rect key="frame" x="16" y="111" width="288" height="46"/>
+                                <rect key="frame" x="16" y="111.5" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3343,7 +3333,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dug-sx-2xX">
-                                <rect key="frame" x="16" y="398" width="288" height="44"/>
+                                <rect key="frame" x="16" y="397.5" width="288" height="44"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="7n4-T5-wrF"/>
@@ -3367,7 +3357,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kg-io-hfc">
-                                <rect key="frame" x="16" y="319" width="288" height="63"/>
+                                <rect key="frame" x="16" y="319" width="288" height="62.5"/>
                                 <string key="text">By signing up, you agree that your business address and contact information are considered public and that FeatherQ has the right to use it for verification purposes.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
@@ -3821,7 +3811,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-IB-dfR">
-                                        <rect key="frame" x="16" y="6" width="288" height="102"/>
+                                        <rect key="frame" x="16" y="6.5" width="288" height="101.5"/>
                                         <string key="text">An email containing the verification code has been sent to your email. Enter the code in the field below to proceed with the registration process.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -4758,8 +4748,20 @@
                     <view key="view" contentMode="scaleToFill" id="weH-1p-4ut">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="lAA-TN-20E">
+                                <rect key="frame" x="141" y="473" width="39" height="37"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZDp-UI-5jU" firstAttribute="top" secondItem="lAA-TN-20E" secondAttribute="bottom" constant="58" id="L8f-qD-nHu"/>
+                            <constraint firstItem="lAA-TN-20E" firstAttribute="centerX" secondItem="weH-1p-4ut" secondAttribute="centerX" id="NnB-Zw-vsP"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pageCtrl" destination="lAA-TN-20E" id="18n-j4-Lqt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gea-0G-d6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4778,13 +4780,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't Waste Your Life — Waiting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y50-Tn-RFA">
-                                <rect key="frame" x="16" y="191" width="288" height="46"/>
+                                <rect key="frame" x="16" y="192" width="288" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                 <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B22-ZD-bMl">
-                                <rect key="frame" x="16" y="253" width="288" height="143"/>
+                                <rect key="frame" x="16" y="253.5" width="288" height="142.5"/>
                                 <string key="text">Reduce the hassle of waiting and turn your waiting time into a better experience.
 FeatherQ is a line-management application that uses your mobile device and internet connection to line up for a business.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -4806,7 +4808,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderLogo" translatesAutoresizingMaskIntoConstraints="NO" id="PwX-CN-JpC">
-                                <rect key="frame" x="124" y="103" width="72" height="72"/>
+                                <rect key="frame" x="124" y="104" width="72" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="72" id="AgR-jw-Jc3"/>
                                     <constraint firstAttribute="height" constant="72" id="b1z-MX-UHP"/>

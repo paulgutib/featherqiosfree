@@ -14,7 +14,6 @@ class FQOnboardingContentViewController: UIViewController {
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var startQueue: UIButton!
-    @IBOutlet weak var indexMarker: UILabel!
     
     var imageFile: String!
     var pageIndex: Int!
@@ -35,7 +34,6 @@ class FQOnboardingContentViewController: UIViewController {
         else {
             self.startQueue.isHidden = true
         }
-        self.indexMarker.text = "(\(self.pageIndex+1)/4)"
 //        self.indexMarker.text = "(\(self.pageIndex+1)/5)"
     }
 

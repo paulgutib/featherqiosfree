@@ -8,11 +8,14 @@
 
 import UIKit
 
-class FQOnboardingContainerViewController: UIViewController, UIPageViewControllerDataSource {
+class FQOnboardingContainerViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
+    @IBOutlet weak var pageCtrl: UIPageControl!
     
     var pageViewController: UIPageViewController!
     var pageTitles: NSArray!
     var pageImages: NSArray!
+    var pageCtrlCount = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +27,7 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         self.pageImages = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3", "EndUserOnboarding4")
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "FQOnboardingPageViewController") as! UIPageViewController
         self.pageViewController.dataSource = self
+        self.pageViewController.delegate = self
         let startVC = self.viewControllerAtIndex(0) as FQOnboardingContentViewController
         let viewControllers = NSArray(object: startVC)
         self.pageViewController.setViewControllers(viewControllers as! [FQOnboardingContentViewController], direction: .forward, animated: true, completion: nil)
@@ -32,6 +36,8 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         self.view.addSubview(self.pageViewController.view)
         self.pageViewController.didMove(toParentViewController: self)
         self.navigationItem.title = "Welcome"
+        self.pageCtrl.numberOfPages = self.pageImages.count
+        self.view.bringSubview(toFront: self.pageCtrl)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,6 +66,17 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
             return nil
         }
         return self.viewControllerAtIndex(index)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        let vc = pendingViewControllers[0] as! FQOnboardingContentViewController
+        self.pageCtrlCount = vc.pageIndex as Int
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            self.pageCtrl.currentPage = self.pageCtrlCount
+        }
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
