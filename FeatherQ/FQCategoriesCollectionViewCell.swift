@@ -14,6 +14,7 @@ class FQCategoriesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var categoryBackground: UIImageView!
     @IBOutlet weak var categoryChecked: UIImageView!
     @IBOutlet weak var selectionLayer: UIView!
+    @IBOutlet weak var zoomBtn: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +23,8 @@ class FQCategoriesCollectionViewCell: UICollectionViewCell {
         if UIDevice.current.userInterfaceIdiom == .pad {
             self.categoryTitle.font = UIFont.boldSystemFont(ofSize: 50.0)
         }
+        self.zoomBtn.layer.cornerRadius = 15.0
+        self.zoomBtn.clipsToBounds = true
     }
     
 }

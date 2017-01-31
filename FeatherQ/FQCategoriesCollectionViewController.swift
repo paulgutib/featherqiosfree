@@ -180,6 +180,17 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
     }
     */
     
+    @IBAction func zoomCategory(_ sender: UIButton) {
+        let baseView = sender.superview!
+        let cell = baseView.superview! as! FQCategoriesCollectionViewCell
+        let indexPath = self.collectionView?.indexPath(for: cell)
+        let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQCategoryZoomViewController") as! FQCategoryZoomViewController
+        modalViewController.categoryName = self.categoryList[indexPath!.row]["name"]
+        modalViewController.imageFile = self.categoryList[indexPath!.row]["image"]
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        self.present(modalViewController, animated: true, completion: nil)
+    }
+    
     func markSelectedCategoryBorder(rowCount: Int) -> CGFloat {
         if Session.instance.selectedCategoriesIndexes.contains(rowCount) {
             return 8.0

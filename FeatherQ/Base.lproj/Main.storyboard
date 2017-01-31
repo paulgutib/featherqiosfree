@@ -1885,6 +1885,19 @@
                                                 <constraint firstAttribute="width" constant="32" id="kNb-lw-BlB"/>
                                             </constraints>
                                         </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-kA-wIK">
+                                            <rect key="frame" x="12" y="56" width="32" height="32"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="fYk-DE-eEP"/>
+                                                <constraint firstAttribute="width" constant="32" id="h3s-eX-JvZ"/>
+                                            </constraints>
+                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <state key="normal" image="CatZoom"/>
+                                            <connections>
+                                                <action selector="zoomCategory:" destination="Q7W-NZ-cNL" eventType="touchUpInside" id="bgq-71-5LA"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -1897,8 +1910,10 @@
                                     <constraint firstItem="Qh7-5m-NTP" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leadingMargin" id="FgB-ta-0zP"/>
                                     <constraint firstItem="MHt-rl-JIO" firstAttribute="top" secondItem="wI5-mM-G9q" secondAttribute="topMargin" constant="4" id="Itr-qc-46a"/>
                                     <constraint firstAttribute="bottom" secondItem="KFl-NT-VSI" secondAttribute="bottom" id="Jbh-eu-N4C"/>
+                                    <constraint firstItem="x0a-kA-wIK" firstAttribute="bottom" secondItem="wI5-mM-G9q" secondAttribute="bottomMargin" constant="-4" id="LHz-d6-ecv"/>
                                     <constraint firstItem="KFl-NT-VSI" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leading" id="N8h-kQ-YmF"/>
                                     <constraint firstAttribute="trailing" secondItem="9Bq-QK-XHh" secondAttribute="trailing" id="OUh-fo-YJw"/>
+                                    <constraint firstItem="x0a-kA-wIK" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leadingMargin" constant="4" id="Wwv-Sz-awq"/>
                                     <constraint firstAttribute="bottom" secondItem="9Bq-QK-XHh" secondAttribute="bottom" id="brN-Wu-6O6"/>
                                     <constraint firstItem="9Bq-QK-XHh" firstAttribute="leading" secondItem="wI5-mM-G9q" secondAttribute="leading" id="fjk-WV-hUk"/>
                                 </constraints>
@@ -1907,6 +1922,7 @@
                                     <outlet property="categoryChecked" destination="MHt-rl-JIO" id="LEA-yW-vTj"/>
                                     <outlet property="categoryTitle" destination="Qh7-5m-NTP" id="5x6-FF-YCx"/>
                                     <outlet property="selectionLayer" destination="KFl-NT-VSI" id="ZSE-W0-MMK"/>
+                                    <outlet property="zoomBtn" destination="x0a-kA-wIK" id="CF8-va-N1F"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -1922,6 +1938,75 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gB-5r-oOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1867.5" y="579.92957746478874"/>
+        </scene>
+        <!--Category Zoom View Controller-->
+        <scene sceneID="Z3y-qZ-EDA">
+            <objects>
+                <viewController storyboardIdentifier="FQCategoryZoomViewController" id="Ihr-Jd-CWf" customClass="FQCategoryZoomViewController" customModule="FeatherQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mbf-52-7Ye"/>
+                        <viewControllerLayoutGuide type="bottom" id="cFx-uU-ZKb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tpp-hh-Gka">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hv5-CI-jxh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yNa-zR-bLb">
+                                <rect key="frame" x="24" y="148" width="272" height="272"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yNa-zR-bLb" secondAttribute="height" multiplier="1:1" id="NzZ-2K-PUn"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category 1" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="PxX-eW-1WU">
+                                <rect key="frame" x="40" y="265" width="240" height="39.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="33"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PXA-y4-Hno">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="dYF-Xi-98K" appends="YES" id="Zu8-BU-jAC"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="yNa-zR-bLb" secondAttribute="trailing" constant="8" id="05h-no-A7k"/>
+                            <constraint firstAttribute="trailing" secondItem="hv5-CI-jxh" secondAttribute="trailing" id="1Lw-MT-Nxi"/>
+                            <constraint firstItem="yNa-zR-bLb" firstAttribute="leading" secondItem="Tpp-hh-Gka" secondAttribute="leadingMargin" constant="8" id="4oI-5t-g3h"/>
+                            <constraint firstItem="yNa-zR-bLb" firstAttribute="centerY" secondItem="Tpp-hh-Gka" secondAttribute="centerY" id="B32-Va-4Sl"/>
+                            <constraint firstItem="PxX-eW-1WU" firstAttribute="centerY" secondItem="Tpp-hh-Gka" secondAttribute="centerY" id="Kap-Dt-5nE"/>
+                            <constraint firstItem="PXA-y4-Hno" firstAttribute="top" secondItem="Tpp-hh-Gka" secondAttribute="top" id="MWr-Id-wJv"/>
+                            <constraint firstItem="PXA-y4-Hno" firstAttribute="leading" secondItem="Tpp-hh-Gka" secondAttribute="leading" id="TpE-je-gBG"/>
+                            <constraint firstAttribute="trailing" secondItem="PXA-y4-Hno" secondAttribute="trailing" id="We2-3A-jfP"/>
+                            <constraint firstItem="PxX-eW-1WU" firstAttribute="leading" secondItem="Tpp-hh-Gka" secondAttribute="leadingMargin" constant="24" id="dq7-cj-Sr9"/>
+                            <constraint firstItem="hv5-CI-jxh" firstAttribute="leading" secondItem="Tpp-hh-Gka" secondAttribute="leading" id="ghA-ZN-S5S"/>
+                            <constraint firstItem="cFx-uU-ZKb" firstAttribute="top" secondItem="hv5-CI-jxh" secondAttribute="bottom" id="iLy-Fq-gVz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PxX-eW-1WU" secondAttribute="trailing" constant="24" id="ky9-ma-IKY"/>
+                            <constraint firstItem="cFx-uU-ZKb" firstAttribute="top" secondItem="PXA-y4-Hno" secondAttribute="bottom" id="p0p-hD-xhK"/>
+                            <constraint firstItem="hv5-CI-jxh" firstAttribute="top" secondItem="Tpp-hh-Gka" secondAttribute="top" id="zYd-Az-2ZA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="C1k-V3-TjC"/>
+                    <connections>
+                        <outlet property="catName" destination="PxX-eW-1WU" id="laZ-jv-DvN"/>
+                        <outlet property="zoomedImage" destination="yNa-zR-bLb" id="Thu-Kn-QPW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zZa-BM-aQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dYF-Xi-98K">
+                    <connections>
+                        <action selector="closeZoom:" destination="Ihr-Jd-CWf" id="cm8-gN-edQ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2850" y="579.92957746478874"/>
         </scene>
         <!--Search-->
         <scene sceneID="dek-UX-Jrb">
@@ -4027,7 +4112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jwR-8x-elD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2850" y="580"/>
+            <point key="canvasLocation" x="3767" y="580"/>
         </scene>
         <!--Business Details-->
         <scene sceneID="v9z-AI-mjA">
@@ -4157,7 +4242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="clG-ob-K58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3766.875" y="579.92957746478874"/>
+            <point key="canvasLocation" x="4772" y="580"/>
         </scene>
         <!--Business Address-->
         <scene sceneID="eR1-0F-bXL">
@@ -4291,7 +4376,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5SZ-ea-HeX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4756.875" y="579.92957746478874"/>
+            <point key="canvasLocation" x="4748" y="1402"/>
         </scene>
         <!--Business Operations-->
         <scene sceneID="OCO-uv-OqO">
@@ -4418,7 +4503,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJ6-oh-6am" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5747" y="580"/>
+            <point key="canvasLocation" x="5753" y="1402"/>
         </scene>
         <!--Receipt View Controller-->
         <scene sceneID="wX9-7U-gkm">
@@ -4615,7 +4700,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh1-o2-Efw">
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vh1-o2-Efw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -5448,6 +5533,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
     <resources>
         <image name="BurgerMenu" width="32" height="32"/>
         <image name="BusinessOwnerRole" width="37" height="37"/>
+        <image name="CatZoom" width="37" height="37"/>
         <image name="Categories" width="32" height="32"/>
         <image name="CategoryChecked" width="37" height="37"/>
         <image name="CheckboxEmpty" width="64" height="64"/>
@@ -5463,6 +5549,6 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <image name="WhiteLogo" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="18a-Vq-Bg6"/>
+        <segue reference="Eeh-wf-rgu"/>
     </inferredMetricsTieBreakers>
 </document>
