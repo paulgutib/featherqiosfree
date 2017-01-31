@@ -35,6 +35,7 @@ class Session {
     var estimatedSecs: Int?
     var lastCalled: String?
     var selectedCategories = [String]()
+    var selectedCategoriesIndexes = [Int]()
     
     var step1 = false
     var step2 = false

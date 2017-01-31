@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
+        self.loadLastChosenCategories()
         self.selectMyBusinessAsDefault()
         
         return true
@@ -167,6 +168,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboard") {
             self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "startOnboarding")
+        }
+    }
+    
+    func loadLastChosenCategories() {
+        if UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories") != nil {
+            Session.instance.selectedCategories = UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories")!
+        }
+        if UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") != nil {
+            Session.instance.selectedCategoriesIndexes = UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") as! [Int]
         }
     }
     
