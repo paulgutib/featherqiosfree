@@ -41,9 +41,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>The app will provide you a list of businesses near your current location.</string>
+	<string>Location plays a key role in FeatherQ. As a user, it may not be of your interest to see businesses which are very far away from your vicinity. By letting the app know your current location, it will be able to sort out businesses by listing ones that are nearest to you first before showing it to the screen.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The app will provide you a list of businesses near your current location.</string>
+	<string>Location plays a key role in FeatherQ. As a user, it may not be of your interest to see businesses which are very far away from your vicinity. By letting the app know your current location, it will be able to sort out businesses by listing ones that are nearest to you first before showing it to the screen.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>UILaunchStoryboardName</key>
