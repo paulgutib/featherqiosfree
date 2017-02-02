@@ -33,7 +33,7 @@ class FQProcessQueueTableViewController: UITableViewController {
             let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
             queueLayer.tag = 3333
             queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-72.0, y: 64.0, width: 72.0, height: 214.0))
+            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-72.0, y: 184.0, width: 72.0, height: 94.0))
             dropLayer.tag = 4444
             dropLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
             UIApplication.shared.keyWindow?.addSubview(queueLayer)
