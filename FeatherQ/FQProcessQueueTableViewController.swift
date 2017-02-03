@@ -15,9 +15,13 @@ import SwiftSpinner
 
 class FQProcessQueueTableViewController: UITableViewController {
     
+    @IBOutlet weak var pauseResumeBtn: UIBarButtonItem!
+    @IBOutlet weak var stopIssueBtn: UIBarButtonItem!
+    
     var processQueue = [[String:String]]()
     var timerCounter: Timer?
     var transactionNums = [String]()
+    var isPaused = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,6 +252,48 @@ class FQProcessQueueTableViewController: UITableViewController {
 //        dropNum.addTarget(self, action: #selector(self.dropNumNow(sender:)), for: .touchUpInside)
 //        return dropNum
 //    }
+    
+    @IBAction func pauseResumeQueue(_ sender: UIBarButtonItem) {
+        var breakResumeMessage: String?
+        if self.isPaused {
+            breakResumeMessage = "Do you want to start processing numbers?"
+        }
+        else {
+            breakResumeMessage = "Do you want to take a break?"
+        }
+        let alertBox = UIAlertController(title: breakResumeMessage, message: "The line status will be updated on the broadcast screen.", preferredStyle: .actionSheet)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            self.stopIssueBtn.isEnabled = true
+            self.isPaused = !self.isPaused
+            if self.isPaused {
+                self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+            }
+            else {
+                self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+            }
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+        if let popoverController = alertBox.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+        }
+        self.present(alertBox, animated: true, completion: nil)
+    }
+    
+    @IBAction func stopIssuingNumbers(_ sender: UIBarButtonItem) {
+        let alertBox = UIAlertController(title: "Do you want to stop issuing more numbers?", message: "Once done, the issuing of numbers will be disabled but you must still process the numbers in the line.", preferredStyle: .actionSheet)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            self.isPaused = true
+            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+            self.stopIssueBtn.isEnabled = false
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+        if let popoverController = alertBox.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+        }
+        self.present(alertBox, animated: true, completion: nil)
+    }
     
     @IBAction func dropNumNow(_ sender: UIButton) {
         let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)

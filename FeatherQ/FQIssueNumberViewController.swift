@@ -31,6 +31,7 @@ class FQIssueNumberViewController: UIViewController {
     
     var takenNumbers = [String]()
     var availableNumbers = [Int]()
+    var isLineOpen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,11 @@ class FQIssueNumberViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if !self.isLineOpen {
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQIssueNumberClosedViewController")
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: true, completion: nil)
+        }
         SwiftSpinner.show("Preparing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
