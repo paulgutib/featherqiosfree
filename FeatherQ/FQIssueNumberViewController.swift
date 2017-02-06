@@ -31,7 +31,7 @@ class FQIssueNumberViewController: UIViewController {
     
     var takenNumbers = [String]()
     var availableNumbers = [Int]()
-    var isLineOpen = false
+    var isLineOpen = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
