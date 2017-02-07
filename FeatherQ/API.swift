@@ -38,6 +38,7 @@ enum Router: URLRequestConvertible {
     case putUpdatePassword(email: String, password: String, password_confirm: String)
     case getMeanWeights(service_id: String)
     case postUpdateMeanweights(meanToday: String, weightToday: String, meanYesterday: String, weightYesterday: String, meanThreeDays: String, weightThreeDays: String, meanThisWeek: String, weightThisWeek: String, meanLastWeek: String, weightLastWeek: String, meanThisMonth: String, weightThisMonth: String, meanLastMonth: String, weightLastMonth: String, meanMostLikely: String, weightMostLikely: String, meanMostOptimistic: String, weightMostOptimistic: String, meanMostPessimistic: String, weightMostPessimistic: String, serviceId: String)
+    case postPunchQueuestatus(service_id: String, punch_type: String)
     
     var method: HTTPMethod {
         switch self {
@@ -62,6 +63,8 @@ enum Router: URLRequestConvertible {
         case .putUpdatePassword:
             return .put
         case .postUpdateMeanweights:
+            return .post
+        case .postPunchQueuestatus:
             return .post
         default:
             return .get
@@ -108,6 +111,8 @@ enum Router: URLRequestConvertible {
             return "/api/mean-weights/" + service_id
         case .postUpdateMeanweights:
             return "/api/update-meanweights"
+        case .postPunchQueuestatus:
+            return "/api/punch-queuestatus"
         default:
             return "/api/search-business"
         }
@@ -247,6 +252,13 @@ enum Router: URLRequestConvertible {
                 "weight_most_pessimistic": weightMostPessimistic,
                 "last_changed": "\(lround(Date().timeIntervalSince1970))",
                 "service_id": serviceId
+            ]
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        case .postPunchQueuestatus(let service_id, let punch_type):
+            let parameters = [
+                "service_id": service_id,
+                "punch_type": punch_type,
+                "punch_time": "\(lround(Date().timeIntervalSince1970))"
             ]
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:

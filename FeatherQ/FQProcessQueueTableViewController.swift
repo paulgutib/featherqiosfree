@@ -263,13 +263,31 @@ class FQProcessQueueTableViewController: UITableViewController {
         }
         let alertBox = UIAlertController(title: breakResumeMessage, message: "The line status will be updated on the broadcast screen.", preferredStyle: .actionSheet)
         alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            var punchType: String?
             self.stopIssueBtn.isEnabled = true
             self.isPaused = !self.isPaused
             if self.isPaused {
+                SwiftSpinner.show("Taking a break..")
                 self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+                punchType = "Pause"
             }
             else {
+                SwiftSpinner.show("Getting ready to resume..")
                 self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+                punchType = "Play"
+            }
+            Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: punchType!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                SwiftSpinner.hide();
             }
         }))
         alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
@@ -283,9 +301,23 @@ class FQProcessQueueTableViewController: UITableViewController {
     @IBAction func stopIssuingNumbers(_ sender: UIBarButtonItem) {
         let alertBox = UIAlertController(title: "Do you want to stop issuing more numbers?", message: "Once done, the issuing of numbers will be disabled but you must still process the numbers in the line.", preferredStyle: .actionSheet)
         alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            SwiftSpinner.show("Closing the line..")
             self.isPaused = true
             self.pauseResumeBtn.image = UIImage(named: "PlayButton")
             self.stopIssueBtn.isEnabled = false
+            Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: "Stop")).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                SwiftSpinner.hide();
+            }
         }))
         alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
         if let popoverController = alertBox.popoverPresentationController {
