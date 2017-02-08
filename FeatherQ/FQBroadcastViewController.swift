@@ -107,8 +107,8 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                     let pNum = dataObj["priority_number"] as! String
                     self.priorityNumbers.append(pNum)
                 }
-                self.punchType = responseData["broadcast_data"]["punch_type"].stringValue
                 Session.instance.broadcastNumbers = self.priorityNumbers
+                self.punchType = responseData["broadcast_data"]["punch_type"].stringValue
                 Session.instance.punchType = self.punchType!
                 self.audioPlayer.play()
 //                self.calledNumbers.reloadData()

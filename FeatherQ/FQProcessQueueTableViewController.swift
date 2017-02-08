@@ -413,8 +413,6 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     func timerCallbacks() {
-        debugPrint(Session.instance.punchType)
-        debugPrint(self.punchType)
         if Session.instance.transactionNums != self.transactionNums {
             self.transactionNums = Session.instance.transactionNums
             self.processQueue = Session.instance.processQueue
