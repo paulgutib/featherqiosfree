@@ -22,6 +22,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     var timerCounter: Timer?
     var transactionNums = [String]()
     var isPaused = false
+    var punchType = "Play"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +74,9 @@ class FQProcessQueueTableViewController: UITableViewController {
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
+            if responseData != nil {
+                Session.instance.punchType = responseData["punch_type"].stringValue
+            }
             if responseData["numbers"] != nil {
                 self.processQueue.removeAll()
                 for numberList in responseData["numbers"]["unprocessed_numbers"] {
@@ -88,6 +92,7 @@ class FQProcessQueueTableViewController: UITableViewController {
                     ])
                 }
                 Session.instance.transactionNums = self.transactionNums
+                debugPrint(self.processQueue)
                 Session.instance.processQueue = self.processQueue
                 self.tableView.reloadData()
             }
@@ -408,10 +413,16 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     func timerCallbacks() {
+        debugPrint(Session.instance.punchType)
+        debugPrint(self.punchType)
         if Session.instance.transactionNums != self.transactionNums {
             self.transactionNums = Session.instance.transactionNums
             self.processQueue = Session.instance.processQueue
             self.tableView.reloadData()
+        }
+        if Session.instance.punchType != self.punchType {
+            self.punchType = Session.instance.punchType
+            self.setLineStatusButtonStates(punchType: self.punchType)
         }
     }
     
@@ -431,6 +442,24 @@ class FQProcessQueueTableViewController: UITableViewController {
         wrapper.addSubview(howToTitle)
         wrapper.addSubview(howToContent)
         return wrapper
+    }
+    
+    func setLineStatusButtonStates(punchType: String) {
+        if punchType == "Play" {
+            self.stopIssueBtn.isEnabled = true
+            self.isPaused = false
+            self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+        }
+        else if punchType == "Pause" {
+            self.stopIssueBtn.isEnabled = true
+            self.isPaused = true
+            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+        }
+        else {
+            self.isPaused = true
+            self.stopIssueBtn.isEnabled = false
+            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+        }
     }
     
 }
