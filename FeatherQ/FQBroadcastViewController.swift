@@ -35,7 +35,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     
     var priorityNumbers = [String]()
-    var punchType: String?
+    var punchType = "Play"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +109,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                 }
                 Session.instance.broadcastNumbers = self.priorityNumbers
                 self.punchType = responseData["broadcast_data"]["punch_type"].stringValue
-                Session.instance.punchType = self.punchType!
+                Session.instance.punchType = self.punchType
                 self.audioPlayer.play()
 //                self.calledNumbers.reloadData()
                 self.generateBroadcastNumbers()
@@ -230,7 +230,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                 self.broadcastNumbers.text = Session.instance.lastCalled!
             }
         }
-        if Session.instance.punchType != self.punchType! {
+        if Session.instance.punchType != self.punchType {
             self.audioPlayer.play()
             self.punchType = Session.instance.punchType
             self.generateLineStatusDisplay()
@@ -247,15 +247,15 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     func generateLineStatusDisplay() {
-        self.lineStatus.text = self.setLineStatusText(punchType: self.punchType!)
-        self.lineStatus.backgroundColor = self.setLineStatusColor(punchType: self.punchType!)
-        self.lineStatus.textColor = self.setLineStatusTextColor(punchType: self.punchType!)
+        self.lineStatus.text = self.setLineStatusText(punchType: self.punchType)
+        self.lineStatus.backgroundColor = self.setLineStatusColor(punchType: self.punchType)
+        self.lineStatus.textColor = self.setLineStatusTextColor(punchType: self.punchType)
     }
     
     func generateBroadcastNumbers() {
         self.calledNumbers = ""
         for pNum in self.priorityNumbers {
-            self.calledNumbers += pNum + "      "
+            self.calledNumbers += pNum + "  "
         }
         self.broadcastNumbers.text = self.calledNumbers
     }

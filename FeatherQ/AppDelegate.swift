@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
+        self.loadDeviceToken()
         self.loadLastChosenCategories()
         self.selectMyBusinessAsDefault()
         
@@ -90,18 +91,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print("Device Token (string):", deviceTokenString)
         print("Device Token (raw):", deviceToken)
+        let preferences = UserDefaults.standard
+        preferences.set(deviceTokenString, forKey: "fqiosappfreedevicetoken")
+        preferences.synchronize()
         Session.instance.deviceToken = deviceTokenString
-
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        Session.instance.deviceToken = "F5AF8369B371F5CA8AF1AFAA6062FE3C60223C26EE2FA22066CB4BAAD6B5E1EA"
-        debugPrint(Session.instance.deviceToken)
         print("Failed to register:", error)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return UCClient.default().handle(url)
+    }
+    
+    func loadDeviceToken() {
+        let deviceTokenString = UserDefaults.standard.string(forKey: "fqiosappfreedevicetoken")
+        if deviceTokenString != nil {
+            Session.instance.deviceToken = deviceTokenString!
+        }
     }
     
     func selectMyBusinessAsDefault() {
@@ -120,11 +128,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadLastChosenCategories() {
-        if UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories") != nil {
-            Session.instance.selectedCategories = UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories")!
+        let selectedCategories = UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories")
+        let selectedCatIndexes = UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes")
+        if selectedCategories != nil {
+            Session.instance.selectedCategories = selectedCategories!
         }
-        if UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") != nil {
-            Session.instance.selectedCategoriesIndexes = UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") as! [Int]
+        if selectedCatIndexes != nil {
+            Session.instance.selectedCategoriesIndexes = selectedCatIndexes as! [Int]
         }
     }
     
