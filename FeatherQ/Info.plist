@@ -40,8 +40,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location plays a key role in FeatherQ. As a user, it may not be of your interest to see businesses which are very far away from your vicinity. By letting the app know your current location, it will be able to sort out businesses by listing ones that are nearest to you first before showing it to the screen.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location plays a key role in FeatherQ. As a user, it may not be of your interest to see businesses which are very far away from your vicinity. By letting the app know your current location, it will be able to sort out businesses by listing ones that are nearest to you first before showing it to the screen.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

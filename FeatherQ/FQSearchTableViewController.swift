@@ -178,9 +178,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         case .authorizedWhenInUse:
             self.locationApprovalCallback()
             debugPrint("granted when in use")
-        case .authorizedAlways:
-            self.locationApprovalCallback()
-            debugPrint("granted always")
         case .denied:
             let preferences = UserDefaults.standard
             preferences.set("denied", forKey: "fqiosappfreelocation")
@@ -224,6 +221,18 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                     destView.selectedBusiness = self.businessList[indexPath.row]
                 }
             }
+        }
+    }
+    
+    @IBAction func allowLocating(_ sender: UIBarButtonItem) {
+        if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
+            UIApplication.shared.openURL(URL(string:UIApplicationOpenSettingsURLString)!)
+        }
+        else {
+            self.cllManager.delegate = self
+            self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.cllManager.requestWhenInUseAuthorization()
+            self.cllManager.startUpdatingLocation()
         }
     }
     
@@ -386,6 +395,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         let preferences = UserDefaults.standard
         preferences.set("granted", forKey: "fqiosappfreelocation")
         preferences.synchronize()
+        self.navigationItem.rightBarButtonItem = nil
         self.cllManager.delegate = self
         self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
         self.cllManager.requestWhenInUseAuthorization()

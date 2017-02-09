@@ -2142,7 +2142,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="Dba-Ca-ZIN"/>
                         <barButtonItem key="rightBarButtonItem" image="LocationGlobe" id="QJg-aq-STX">
                             <connections>
-                                <segue destination="joY-XP-Dtd" kind="show" id="xZe-zx-4r2"/>
+                                <action selector="allowLocating:" destination="yne-Ag-zof" id="sDN-Xo-Dau"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
