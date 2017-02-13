@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 import SwiftSpinner
 import CoreLocation
@@ -89,24 +90,26 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         cell.peopleInLine.text = listData["people_in_line"]
         cell.waitingTIme.text = listData["serving_time"]
         cell.keyLabel.text = listData["key"]
-//        if !listData["logo"]!.isEmpty {
-//            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
+        if !listData["logo"]!.isEmpty {
+            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
 //            DispatchQueue.global().async {
 //                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
 //                DispatchQueue.main.async {
 //                    cell.businessLogo.image = UIImage(data: data!)
 //                }
 //            }
-//        }
-//        else {
+            cell.businessLogo.af_setImage(withURL: url!, placeholderImage: UIImage(named: "PlaceholderLogo"))
+//            cell.businessLogo.image = cell.businessLogo.image!.af_imageRounded(withCornerRadius: 10.0)
+        }
+        else {
             cell.businessLogo.image = UIImage(named: "PlaceholderLogo")
-//        }
+        }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230.0
+        return 245.0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
