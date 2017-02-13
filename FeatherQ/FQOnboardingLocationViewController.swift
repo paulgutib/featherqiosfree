@@ -23,9 +23,9 @@ class FQOnboardingLocationViewController: UIViewController, CLLocationManagerDel
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.grantPermission.layer.cornerRadius = 5.0
+        self.grantPermission.layer.cornerRadius = 10.0
         self.grantPermission.clipsToBounds = true
-        self.locationNotify.layer.cornerRadius = 5.0
+        self.locationNotify.layer.cornerRadius = 10.0
         self.locationNotify.clipsToBounds = true
         self.navigationItem.title = ""
     }

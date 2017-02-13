@@ -23,7 +23,7 @@ class FQLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.loginBtn.layer.cornerRadius = 5.0
+        self.loginBtn.layer.cornerRadius = 10.0
         self.loginBtn.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -35,11 +35,11 @@ class FQLoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
-            modalViewController.modalPresentationStyle = .overCurrentContext
-            self.present(modalViewController, animated: false, completion: nil)
-        }
+//        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+//            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
+//            modalViewController.modalPresentationStyle = .overCurrentContext
+//            self.present(modalViewController, animated: false, completion: nil)
+//        }
     }
     
 

@@ -20,7 +20,7 @@ class FQForgotPasswordViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.sendBtn.layer.cornerRadius = 5.0
+        self.sendBtn.layer.cornerRadius = 10.0
         self.sendBtn.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init()
     }

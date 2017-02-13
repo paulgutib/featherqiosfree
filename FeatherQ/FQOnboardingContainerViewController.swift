@@ -24,7 +24,7 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         // Do any additional setup after loading the view.
 //        self.pageTitles = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
 //        self.pageImages = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
-        self.startQueuingBtn.layer.cornerRadius = 5.0
+        self.startQueuingBtn.layer.cornerRadius = 10.0
         self.startQueuingBtn.clipsToBounds = true
         self.pageTitles = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")
         self.pageImages = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")

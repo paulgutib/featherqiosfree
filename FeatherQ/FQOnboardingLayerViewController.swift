@@ -31,19 +31,19 @@ class FQOnboardingLayerViewController: UIViewController {
         self.menuHelper.isHidden = true
         self.locationHelper.layer.borderColor = UIColor.black.cgColor
         self.locationHelper.layer.borderWidth = 2.0
-        self.locationHelper.layer.cornerRadius = 5.0
+        self.locationHelper.layer.cornerRadius = 10.0
         self.locationHelper.clipsToBounds = true
         self.searchHelper.layer.borderColor = UIColor.black.cgColor
         self.searchHelper.layer.borderWidth = 2.0
-        self.searchHelper.layer.cornerRadius = 5.0
+        self.searchHelper.layer.cornerRadius = 10.0
         self.searchHelper.clipsToBounds = true
         self.listHelper.layer.borderColor = UIColor.black.cgColor
         self.listHelper.layer.borderWidth = 2.0
-        self.listHelper.layer.cornerRadius = 5.0
+        self.listHelper.layer.cornerRadius = 10.0
         self.listHelper.clipsToBounds = true
         self.menuHelper.layer.borderColor = UIColor.black.cgColor
         self.menuHelper.layer.borderWidth = 2.0
-        self.menuHelper.layer.cornerRadius = 5.0
+        self.menuHelper.layer.cornerRadius = 10.0
         self.menuHelper.clipsToBounds = true
     }
 

@@ -42,21 +42,21 @@ class FQDashboardViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.processQueueBtn.layer.cornerRadius = 5.0
+        self.processQueueBtn.layer.cornerRadius = 10.0
         self.processQueueBtn.clipsToBounds = true
-        self.issueNumberBtn.layer.cornerRadius = 5.0
+        self.issueNumberBtn.layer.cornerRadius = 10.0
         self.issueNumberBtn.clipsToBounds = true
-        self.broadcastBtn.layer.cornerRadius = 5.0
+        self.broadcastBtn.layer.cornerRadius = 10.0
         self.broadcastBtn.clipsToBounds = true
-        self.step1.layer.cornerRadius = 5.0
+        self.step1.layer.cornerRadius = 10.0
         self.step1.clipsToBounds = true
         self.step1.layer.borderColor = UIColor.black.cgColor
         self.step1.layer.borderWidth = 2.0
-        self.step6.layer.cornerRadius = 5.0
+        self.step6.layer.cornerRadius = 10.0
         self.step6.clipsToBounds = true
         self.step6.layer.borderColor = UIColor.black.cgColor
         self.step6.layer.borderWidth = 2.0
-        self.step8.layer.cornerRadius = 5.0
+        self.step8.layer.cornerRadius = 10.0
         self.step8.clipsToBounds = true
         self.step8.layer.borderColor = UIColor.black.cgColor
         self.step8.layer.borderWidth = 2.0

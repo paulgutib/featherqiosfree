@@ -20,7 +20,7 @@ class FQCategoryZoomViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.zoomedImage.layer.cornerRadius = 5.0
+        self.zoomedImage.layer.cornerRadius = 10.0
         self.zoomedImage.clipsToBounds = true
         if UIDevice.current.userInterfaceIdiom == .pad {
             self.catName.font = UIFont.boldSystemFont(ofSize: 70.0)

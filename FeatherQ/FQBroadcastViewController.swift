@@ -43,15 +43,15 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         // Do any additional setup after loading the view.
 //        self.calledNumbers.type = .coverFlow2
         
-        self.codeHelp.layer.cornerRadius = 5.0
+        self.codeHelp.layer.cornerRadius = 10.0
         self.codeHelp.clipsToBounds = true
         self.codeHelp.layer.borderWidth = 2.0
         self.codeHelp.layer.borderColor = UIColor.black.cgColor
-        self.trafficHelp.layer.cornerRadius = 5.0
+        self.trafficHelp.layer.cornerRadius = 10.0
         self.trafficHelp.clipsToBounds = true
         self.trafficHelp.layer.borderWidth = 2.0
         self.trafficHelp.layer.borderColor = UIColor.black.cgColor
-        self.numberHelp.layer.cornerRadius = 5.0
+        self.numberHelp.layer.cornerRadius = 10.0
         self.numberHelp.clipsToBounds = true
         self.numberHelp.layer.borderWidth = 2.0
         self.numberHelp.layer.borderColor = UIColor.black.cgColor

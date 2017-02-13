@@ -57,11 +57,11 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.updateBtn.layer.cornerRadius = 5.0
+        self.updateBtn.layer.cornerRadius = 10.0
         self.updateBtn.clipsToBounds = true
-        self.chooseLogoBtn.layer.cornerRadius = 5.0
+        self.chooseLogoBtn.layer.cornerRadius = 10.0
         self.chooseLogoBtn.clipsToBounds = true
-        self.removeLogoBtn.layer.cornerRadius = 5.0
+        self.removeLogoBtn.layer.cornerRadius = 10.0
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
         self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

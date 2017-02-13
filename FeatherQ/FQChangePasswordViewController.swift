@@ -27,11 +27,11 @@ class FQChangePasswordViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.modalContainer.layer.cornerRadius = 5.0
+        self.modalContainer.layer.cornerRadius = 10.0
         self.modalContainer.clipsToBounds = true
-        self.submitBtn.layer.cornerRadius = 5.0
+        self.submitBtn.layer.cornerRadius = 10.0
         self.submitBtn.clipsToBounds = true
-        self.cancelBtn.layer.cornerRadius = 5.0
+        self.cancelBtn.layer.cornerRadius = 10.0
         self.cancelBtn.clipsToBounds = true
         self.newPass.inputAccessoryView = UIView.init()
         self.confirmNewPass.inputAccessoryView = UIView.init()

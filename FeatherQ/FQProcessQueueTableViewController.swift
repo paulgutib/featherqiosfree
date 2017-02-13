@@ -234,7 +234,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     
 //    func renderServeButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
 //        let serveNum = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
-//        serveNum.layer.cornerRadius = 5.0
+//        serveNum.layer.cornerRadius = 10.0
 //        serveNum.clipsToBounds = true
 //        serveNum.setTitle("Serve", for: .normal)
 //        serveNum.setTitleColor(UIColor.white, for: .normal)
@@ -247,7 +247,7 @@ class FQProcessQueueTableViewController: UITableViewController {
 //    
 //    func renderDropButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
 //        let dropNum = UIButton(frame: CGRect(x: (cell.buttonContainer.frame.width / 2.0) + 5.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
-//        dropNum.layer.cornerRadius = 5.0
+//        dropNum.layer.cornerRadius = 10.0
 //        dropNum.clipsToBounds = true
 //        dropNum.setTitle("Drop", for: .normal)
 //        dropNum.setTitleColor(UIColor.white, for: .normal)

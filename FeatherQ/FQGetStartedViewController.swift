@@ -16,7 +16,7 @@ class FQGetStartedViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.startUsing.layer.cornerRadius = 5.0
+        self.startUsing.layer.cornerRadius = 10.0
         self.startUsing.clipsToBounds = true
     }
 

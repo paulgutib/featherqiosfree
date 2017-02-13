@@ -40,6 +40,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.filterSearch.searchBar.sizeToFit()
         self.filterSearch.searchBar.placeholder = "Name, address, category, business code.."
         self.refreshControl?.addTarget(self, action: #selector(FQSearchTableViewController.refresherOrb(_:)), for: .valueChanged)
+        self.tableView.separatorStyle = .none
         self.tableView.tableHeaderView = self.filterSearch.searchBar
         self.tableView.reloadData()
     }
@@ -105,7 +106,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 144.0
+        return 230.0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

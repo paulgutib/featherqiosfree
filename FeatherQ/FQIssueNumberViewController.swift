@@ -38,20 +38,20 @@ class FQIssueNumberViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.notes.inputAccessoryView = UIView.init()
-        self.issueBtn.layer.cornerRadius = 5.0
+        self.issueBtn.layer.cornerRadius = 10.0
         self.issueBtn.clipsToBounds = true
-        self.noAvailableNum.layer.cornerRadius = 5.0
+        self.noAvailableNum.layer.cornerRadius = 10.0
         self.noAvailableNum.clipsToBounds = true
         
-        self.step5.layer.cornerRadius = 5.0
+        self.step5.layer.cornerRadius = 10.0
         self.step5.clipsToBounds = true
         self.step5.layer.borderWidth = 2.0
         self.step5.layer.borderColor = UIColor.black.cgColor
-        self.step2.layer.cornerRadius = 5.0
+        self.step2.layer.cornerRadius = 10.0
         self.step2.clipsToBounds = true
         self.step2.layer.borderWidth = 2.0
         self.step2.layer.borderColor = UIColor.black.cgColor
-        self.step3.layer.cornerRadius = 5.0
+        self.step3.layer.cornerRadius = 10.0
         self.step3.clipsToBounds = true
         self.step3.layer.borderWidth = 2.0
         self.step3.layer.borderColor = UIColor.black.cgColor

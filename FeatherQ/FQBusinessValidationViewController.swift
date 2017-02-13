@@ -239,11 +239,11 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.next3Btn.layer.cornerRadius = 5.0
+        self.next3Btn.layer.cornerRadius = 10.0
         self.next3Btn.clipsToBounds = true
-        self.locationBtn.layer.cornerRadius = 5.0
+        self.locationBtn.layer.cornerRadius = 10.0
         self.locationBtn.clipsToBounds = true
-        self.addressHelp.layer.cornerRadius = 5.0
+        self.addressHelp.layer.cornerRadius = 10.0
         self.addressHelp.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

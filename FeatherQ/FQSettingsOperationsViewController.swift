@@ -40,7 +40,7 @@ class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDel
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.submitBtn.layer.cornerRadius = 5.0
+        self.submitBtn.layer.cornerRadius = 10.0
         self.submitBtn.clipsToBounds = true
         self.firstNumber.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.lastNumber.inputAccessoryView = UIView.init()

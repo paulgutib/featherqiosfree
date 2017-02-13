@@ -24,11 +24,11 @@ class FQProcessQueueTableViewCell: MGSwipeTableCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.callNum.layer.cornerRadius = 5.0
+        self.callNum.layer.cornerRadius = 10.0
         self.callNum.clipsToBounds = true
-        self.serveNum.layer.cornerRadius = 5.0
+        self.serveNum.layer.cornerRadius = 10.0
         self.serveNum.clipsToBounds = true
-        self.dropNum.layer.cornerRadius = 5.0
+        self.dropNum.layer.cornerRadius = 10.0
         self.dropNum.clipsToBounds = true
     }
 
