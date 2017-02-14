@@ -311,11 +311,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="About" id="Mby-OF-0mB">
                         <barButtonItem key="backBarButtonItem" title=" " id="9g9-nJ-6C1"/>
-                        <barButtonItem key="leftBarButtonItem" image="Help" id="bJM-0h-Krv">
-                            <connections>
-                                <action selector="viewGuide:" destination="tdx-Ey-eko" id="vNS-rf-6ix"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Settings" id="sJQ-AU-lv3">
                             <connections>
                                 <segue destination="fQf-wh-uBu" kind="show" id="JIJ-ou-rvq"/>
@@ -5761,7 +5756,6 @@ FeatherQ is a line-management application that uses your mobile device and inter
         <image name="CustomerRole" width="37" height="37"/>
         <image name="DropIcon" width="20" height="20"/>
         <image name="GobackDashboard" width="15" height="15"/>
-        <image name="Help" width="29" height="29"/>
         <image name="LaunchScreenBackground" width="966" height="354"/>
         <image name="LocationGlobe" width="29" height="29"/>
         <image name="LocationIconLabel" width="33" height="33"/>
