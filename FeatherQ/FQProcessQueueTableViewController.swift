@@ -17,7 +17,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     
     @IBOutlet weak var pauseResumeBtn: UIBarButtonItem!
     @IBOutlet weak var stopIssueBtn: UIBarButtonItem!
-    
+
     var processQueue = [[String:String]]()
     var timerCounter: Timer?
     var transactionNums = [String]()
@@ -35,15 +35,16 @@ class FQProcessQueueTableViewController: UITableViewController {
         
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.tableView.tableHeaderView = self.howToCallServed()
-            let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
+            let queueLayer = UIView(frame: CGRect(x: 0.0, y: 360.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-360.0))
             queueLayer.tag = 3333
             queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-72.0, y: 184.0, width: 72.0, height: 94.0))
+            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-120.0, y: 184.0, width: 120.0, height: 176.0))
             dropLayer.tag = 4444
             dropLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
             UIApplication.shared.keyWindow?.addSubview(queueLayer)
             UIApplication.shared.keyWindow?.addSubview(dropLayer)
         }
+        self.tableView.separatorStyle = .none
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,7 +115,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 94.0
+        return 176.0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
