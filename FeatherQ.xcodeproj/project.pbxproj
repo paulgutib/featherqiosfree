@@ -42,6 +42,8 @@
 		8099E8291E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */; };
 		8099E82B1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */; };
 		8099E82D1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */; };
+		809F53C11E532D07007F40FF /* FQGuidesDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F53C01E532D07007F40FF /* FQGuidesDocumentViewController.swift */; };
+		809F53C31E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F53C21E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
 		80C17A5F1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C17A5E1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift */; };
 		80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */; };
@@ -98,6 +100,8 @@
 		8099E8281E2E0AD000F39C82 /* FQOnboardingLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingLocationViewController.swift; sourceTree = "<group>"; };
 		8099E82A1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingGetStartedViewController.swift; sourceTree = "<group>"; };
 		8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTimeEstimatesTableViewController.swift; sourceTree = "<group>"; };
+		809F53C01E532D07007F40FF /* FQGuidesDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGuidesDocumentViewController.swift; sourceTree = "<group>"; };
+		809F53C21E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGuidesUserTypeTableViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		80C17A5E1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQIssueNumberClosedViewController.swift; sourceTree = "<group>"; };
 		80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingContainerViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +207,15 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
+		809F53BF1E532CE3007F40FF /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				809F53C01E532D07007F40FF /* FQGuidesDocumentViewController.swift */,
+				809F53C21E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift */,
+			);
+			name = Guides;
+			sourceTree = "<group>";
+		};
 		80C2962E1DFAA48E00444E5A /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +253,7 @@
 		80C2C1211DDD78C100D067C1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				809F53BF1E532CE3007F40FF /* Guides */,
 				80C2962E1DFAA48E00444E5A /* Onboarding */,
 				808FE58E1DF7EE0B00705D83 /* Search */,
 				806692A21DF0822000EA3963 /* Settings */,
@@ -424,8 +438,10 @@
 				80EE0C2A1DEC458D003B9F7E /* FQForgotPasswordViewController.swift in Sources */,
 				80EE0C2C1DED4A26003B9F7E /* FQAboutViewController.swift in Sources */,
 				801004C61DD31B850070C326 /* ViewController.swift in Sources */,
+				809F53C31E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift in Sources */,
 				804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */,
 				801A10591DE5517300373A22 /* FQSearchTableViewController.swift in Sources */,
+				809F53C11E532D07007F40FF /* FQGuidesDocumentViewController.swift in Sources */,
 				8099E82B1E2E174600F39C82 /* FQOnboardingGetStartedViewController.swift in Sources */,
 				806ABBE61E3883B3009ADDD4 /* FQOnboardingLayerViewController.swift in Sources */,
 				80CE42711DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift in Sources */,
