@@ -55,6 +55,8 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         self.numberHelp.clipsToBounds = true
         self.numberHelp.layer.borderWidth = 2.0
         self.numberHelp.layer.borderColor = UIColor.black.cgColor
+        self.businessCode.layer.cornerRadius = 10.0
+        self.businessCode.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {

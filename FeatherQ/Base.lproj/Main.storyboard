@@ -3583,12 +3583,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gi9-mP-Z55">
-                                <rect key="frame" x="16" y="64" width="288" height="48"/>
+                                <rect key="frame" x="16" y="72" width="288" height="48"/>
+                                <color key="backgroundColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="9a5-18-kmq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="44"/>
-                                <color key="textColor" red="0.85098039219999999" green="0.44705882349999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenBackground" translatesAutoresizingMaskIntoConstraints="NO" id="u9P-ia-OzB">
@@ -3612,7 +3613,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9q7-6m-WbI" customClass="MarqueeLabel">
-                                <rect key="frame" x="0.0" y="120" width="320" height="254"/>
+                                <rect key="frame" x="0.0" y="128" width="320" height="246"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="250"/>
                                 <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3700,14 +3701,14 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MV4-xh-e2S">
-                                        <rect key="frame" x="0.0" y="322" width="320" height="118"/>
+                                        <rect key="frame" x="0.0" y="314" width="320" height="126"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="118" id="u7X-CH-Zpc"/>
+                                            <constraint firstAttribute="height" constant="126" id="u7X-CH-Zpc"/>
                                         </constraints>
                                     </view>
                                     <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EzA-Jm-bxL">
-                                        <rect key="frame" x="0.0" y="48" width="320" height="274"/>
+                                        <rect key="frame" x="0.0" y="48" width="320" height="266"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xj8-5Y-Yfl">
@@ -3762,7 +3763,7 @@
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v2O-9Y-NTK">
-                                        <rect key="frame" x="60" y="212" width="200" height="110"/>
+                                        <rect key="frame" x="60" y="204" width="200" height="110"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Traffic Count" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ly-Vn-gN5">
                                                 <rect key="frame" x="8" y="8" width="184" height="18"/>
@@ -3898,7 +3899,6 @@
                             <constraint firstItem="anV-Hy-eUV" firstAttribute="top" secondItem="u9P-ia-OzB" secondAttribute="bottom" id="JKW-NJ-d5o"/>
                             <constraint firstItem="lbz-r1-ZRt" firstAttribute="centerX" secondItem="1kB-Xz-i05" secondAttribute="centerX" constant="-60" id="KXg-DW-QOg"/>
                             <constraint firstItem="IlH-90-gbH" firstAttribute="leading" secondItem="lbz-r1-ZRt" secondAttribute="trailing" constant="16" id="MnZ-wq-m5K"/>
-                            <constraint firstItem="gi9-mP-Z55" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leadingMargin" id="ONv-MA-36A"/>
                             <constraint firstItem="Epl-IT-1B2" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leadingMargin" id="OU2-FJ-wu9"/>
                             <constraint firstItem="jtO-YW-Usm" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leading" id="OcQ-fj-a6h"/>
                             <constraint firstAttribute="trailing" secondItem="u9P-ia-OzB" secondAttribute="trailing" id="PMG-i0-25d"/>
@@ -3907,7 +3907,7 @@
                             <constraint firstItem="gi9-mP-Z55" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leadingMargin" id="YDz-cn-Jae"/>
                             <constraint firstItem="YgJ-Yi-Pbt" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leadingMargin" id="aed-jX-XxM"/>
                             <constraint firstItem="u9P-ia-OzB" firstAttribute="top" secondItem="SaO-sp-srw" secondAttribute="bottom" id="asT-ro-gC4"/>
-                            <constraint firstItem="gi9-mP-Z55" firstAttribute="top" secondItem="WFW-Da-JTT" secondAttribute="bottom" id="d1u-Ch-p3P"/>
+                            <constraint firstItem="gi9-mP-Z55" firstAttribute="top" secondItem="WFW-Da-JTT" secondAttribute="bottom" constant="8" id="d1u-Ch-p3P"/>
                             <constraint firstItem="SaO-sp-srw" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leading" id="dun-ur-EnM"/>
                             <constraint firstItem="jtO-YW-Usm" firstAttribute="top" secondItem="WFW-Da-JTT" secondAttribute="bottom" id="gqy-gm-xAB"/>
                             <constraint firstItem="YgJ-Yi-Pbt" firstAttribute="trailing" secondItem="1kB-Xz-i05" secondAttribute="trailingMargin" id="l0T-5P-72G"/>
@@ -3917,7 +3917,6 @@
                             <constraint firstItem="u9P-ia-OzB" firstAttribute="leading" secondItem="1kB-Xz-i05" secondAttribute="leading" id="qyQ-sJ-RhO"/>
                             <constraint firstItem="Epl-IT-1B2" firstAttribute="trailing" secondItem="1kB-Xz-i05" secondAttribute="trailingMargin" id="sR6-qM-sHO"/>
                             <constraint firstItem="Epl-IT-1B2" firstAttribute="top" secondItem="lbz-r1-ZRt" secondAttribute="bottom" constant="8" id="uuE-ke-fdr"/>
-                            <constraint firstItem="gi9-mP-Z55" firstAttribute="trailing" secondItem="1kB-Xz-i05" secondAttribute="trailingMargin" id="yk5-us-SKI"/>
                             <constraint firstItem="9q7-6m-WbI" firstAttribute="top" secondItem="gi9-mP-Z55" secondAttribute="bottom" constant="8" id="zJ0-SS-YTf"/>
                         </constraints>
                     </view>

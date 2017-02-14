@@ -38,11 +38,11 @@ class FQRegistrationViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        if !UIApplication.shared.isRegisteredForRemoteNotifications {
-//            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
-//            modalViewController.modalPresentationStyle = .overCurrentContext
-//            self.present(modalViewController, animated: false, completion: nil)
-//        }
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: false, completion: nil)
+        }
     }
 
     // MARK: - Navigation
