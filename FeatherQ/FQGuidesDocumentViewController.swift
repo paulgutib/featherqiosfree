@@ -28,7 +28,7 @@ class FQGuidesDocumentViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.webPage.loadRequest(URLRequest(url: URL(string: Router.baseURL + "/guides/" + self.urlStringRequest!)!))
+        self.webPage.loadRequest(URLRequest(url: URL(string: Router.baseURL + "/docs/" + self.urlStringRequest!)!))
     }
 
     /*
