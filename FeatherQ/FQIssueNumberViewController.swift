@@ -31,7 +31,8 @@ class FQIssueNumberViewController: UIViewController {
     
     var takenNumbers = [String]()
     var availableNumbers = [Int]()
-    var isLineOpen = true
+    var punchType = "Play"
+    var timerCounter: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,11 +64,6 @@ class FQIssueNumberViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if !self.isLineOpen {
-            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQIssueNumberClosedViewController")
-            modalViewController.modalPresentationStyle = .overCurrentContext
-            self.present(modalViewController, animated: true, completion: nil)
-        }
         SwiftSpinner.show("Preparing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
@@ -117,6 +113,15 @@ class FQIssueNumberViewController: UIViewController {
                 }
                 self.issueSpecific.minimumValue = 0.0
             }
+            if responseData != nil {
+                self.punchType = responseData["punch_type"].stringValue
+                Session.instance.punchType = self.punchType
+                if self.punchType == "Stop" {
+                    let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQIssueNumberClosedViewController")
+                    modalViewController.modalPresentationStyle = .overCurrentContext
+                    self.present(modalViewController, animated: true, completion: nil)
+                }
+            }
             SwiftSpinner.hide()
         }
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
@@ -129,6 +134,11 @@ class FQIssueNumberViewController: UIViewController {
             self.numberLayer.isHidden = true
             self.buttonLayer.isHidden = true
         }
+        self.timerCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.timerCounter?.invalidate()
     }
 
     /*
@@ -241,6 +251,17 @@ class FQIssueNumberViewController: UIViewController {
         df.dateFormat = "h:mm a"
 //        self.timeForecast.text = df.string(from: lowerBound) + " ~ " + df.string(from: upperBound)
         self.timeForecast.text = df.string(from: upperBound)
+    }
+    
+    func timerCallbacks() {
+        if Session.instance.punchType != self.punchType {
+            if Session.instance.punchType == "Stop" {
+                let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQIssueNumberClosedViewController")
+                modalViewController.modalPresentationStyle = .overCurrentContext
+                self.present(modalViewController, animated: true, completion: nil)
+            }
+            self.punchType = Session.instance.punchType
+        }
     }
     
 }

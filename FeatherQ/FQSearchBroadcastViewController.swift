@@ -44,7 +44,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     

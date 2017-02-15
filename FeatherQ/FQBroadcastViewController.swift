@@ -64,7 +64,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     
@@ -86,7 +86,6 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         self.peopleInLine.text = ""
         self.waitingTime.text = ""
         self.businessCode.text = Session.instance.key!.uppercased()
-        Session.instance.viewedBusinessId = Session.instance.businessId
         self.readyDingSound()
         Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {

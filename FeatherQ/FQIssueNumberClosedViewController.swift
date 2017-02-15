@@ -9,6 +9,8 @@
 import UIKit
 
 class FQIssueNumberClosedViewController: UIViewController {
+    
+    var timerCounter: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +21,14 @@ class FQIssueNumberClosedViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.timerCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCallbacks), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.timerCounter?.invalidate()
     }
     
 
@@ -40,6 +50,12 @@ class FQIssueNumberClosedViewController: UIViewController {
         vc.tabBarItem = UITabBarItem(title: "My Business", image: UIImage(named: "My Business"), tag: 2)
         tabBarController.setViewControllers(rootViewControllers, animated: false)
         tabBarController.selectedIndex = 2
+    }
+    
+    func timerCallbacks() {
+        if Session.instance.punchType == "Play" {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
 }

@@ -55,9 +55,6 @@ class FQProcessQueueTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         UIApplication.shared.keyWindow?.viewWithTag(3333)?.removeFromSuperview()
         UIApplication.shared.keyWindow?.viewWithTag(4444)?.removeFromSuperview()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     

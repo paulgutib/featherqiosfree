@@ -195,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getBusinessBroadcast() {
-        Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
+        Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
                 debugPrint(response.result.error!)
                 let errorMessage = (response.result.error?.localizedDescription)! as String
