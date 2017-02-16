@@ -12,7 +12,7 @@ import SwiftyJSON
 import Locksmith
 
 enum Router: URLRequestConvertible {
-    static let baseURL = "http://demo.featherq.com"
+    static let baseURL = "http://featherq.com"
 //    static let baseURL = "http://new-featherq.local"
     //static let clientId = "fqiosapp" //use in OAuth
     //static let clientSecret = "fqiosapp" //use in OAuth
