@@ -3606,7 +3606,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsa-gm-sdS">
                                 <rect key="frame" x="16" y="173" width="288" height="122"/>
-                                <string key="text">FeatherQ is a cloud-based queuing platform. We make it easy for businesses to manage their lines better by real-time processing and broadcasting numbers anywhere and on any Android or iOS device.</string>
+                                <string key="text">FeatherQ is a cloud-based queuing platform. We make it easy for businesses to manage their lines better by real-time processing and broadcasting numbers anywhere and on any supported mobile devices.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -5740,7 +5740,7 @@ FeatherQ is a line-management application that uses your mobile device and inter
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbC-0Z-e5h">
                                 <rect key="frame" x="16" y="255" width="288" height="142.5"/>
-                                <string key="text">Push notifications must be enabled to use FeatherQ's My Business feature. By granting the app that permission, it will keep the priority numbers in sync across all iOS and Android devices currently logged in to your business.</string>
+                                <string key="text">Push notifications must be enabled to use FeatherQ's My Business feature. By granting the app that permission, it will keep the priority numbers in sync across all supported mobile  devices currently logged in to your business.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
