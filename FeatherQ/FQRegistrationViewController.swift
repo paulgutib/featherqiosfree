@@ -69,11 +69,19 @@ class FQRegistrationViewController: UIViewController {
                 }
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)
-                let destView = segue.destination as! FQVerificationCodeViewController
-                destView.email = self.email.text!
-                destView.password = self.password.text!
-                destView.confirmationCode = responseData["code"].stringValue
-                SwiftSpinner.hide()
+                if responseData["success"].intValue == 0 {
+                    SwiftSpinner.show("Email is already taken.", animated: false).addTapHandler({
+                        self.navigationController!.popViewController(animated: true)
+                        SwiftSpinner.hide()
+                    }, subtitle: "The email address you entered is already registered and is no longer available. Please choose another one or login using that account.")
+                }
+                else {
+                    let destView = segue.destination as! FQVerificationCodeViewController
+                    destView.email = self.email.text!
+                    destView.password = self.password.text!
+                    destView.confirmationCode = responseData["code"].stringValue
+                    SwiftSpinner.hide()
+                }
             }
         }
     }
