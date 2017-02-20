@@ -211,23 +211,25 @@ class FQProcessQueueTableViewController: UITableViewController {
     */
     
     @IBAction func callNumNow(_ sender: UIButton) {
-        Session.instance.step7 = true
-        let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
-        let indexPath = self.tableView.indexPath(for: cell)
-        self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
-        Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+        if Reachability.instance.checkNetwork() {
+            Session.instance.step7 = true
+            let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
+            let indexPath = self.tableView.indexPath(for: cell)
+            self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
+            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
             }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
+            self.tableView.reloadData()
         }
-        self.tableView.reloadData()
     }
     
 //    func renderServeButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
@@ -257,85 +259,117 @@ class FQProcessQueueTableViewController: UITableViewController {
 //    }
     
     @IBAction func pauseResumeQueue(_ sender: UIBarButtonItem) {
-        var breakResumeMessage: String?
-        if self.isPaused {
-            breakResumeMessage = "Do you want to start processing numbers?"
-        }
-        else {
-            breakResumeMessage = "Do you want to take a break?"
-        }
-        let alertBox = UIAlertController(title: breakResumeMessage, message: "The line status will be updated on the broadcast screen.", preferredStyle: .actionSheet)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            var punchType: String?
-            self.stopIssueBtn.isEnabled = true
-            self.isPaused = !self.isPaused
+        if Reachability.instance.checkNetwork() {
+            var breakResumeMessage: String?
             if self.isPaused {
-                SwiftSpinner.show("Taking a break..")
-                self.pauseResumeBtn.image = UIImage(named: "PlayButton")
-                punchType = "Pause"
+                breakResumeMessage = "Do you want to start processing numbers?"
             }
             else {
-                SwiftSpinner.show("Getting ready to resume..")
-                self.pauseResumeBtn.image = UIImage(named: "PauseButton")
-                punchType = "Play"
+                breakResumeMessage = "Do you want to take a break?"
             }
-            Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: punchType!)).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+            let alertBox = UIAlertController(title: breakResumeMessage, message: "The line status will be updated on the broadcast screen.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                var punchType: String?
+                self.stopIssueBtn.isEnabled = true
+                self.isPaused = !self.isPaused
+                if self.isPaused {
+                    SwiftSpinner.show("Taking a break..")
+                    self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+                    punchType = "Pause"
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
-                SwiftSpinner.hide();
+                else {
+                    SwiftSpinner.show("Getting ready to resume..")
+                    self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+                    punchType = "Play"
+                }
+                Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: punchType!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    SwiftSpinner.hide();
+                }
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
             }
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
-        if let popoverController = alertBox.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            self.present(alertBox, animated: true, completion: nil)
         }
-        self.present(alertBox, animated: true, completion: nil)
     }
     
     @IBAction func stopIssuingNumbers(_ sender: UIBarButtonItem) {
-        let alertBox = UIAlertController(title: "Do you want to stop issuing more numbers?", message: "Once done, the issuing of numbers will be disabled but you must still process the numbers in the line.", preferredStyle: .actionSheet)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            SwiftSpinner.show("Closing the line..")
-            self.isPaused = true
-            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
-            self.stopIssueBtn.isEnabled = false
-            Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: "Stop")).responseJSON { response in
-                if response.result.isFailure {
-                    debugPrint(response.result.error!)
-                    let errorMessage = (response.result.error?.localizedDescription)! as String
-                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                    })
-                    return
+        if Reachability.instance.checkNetwork() {
+            let alertBox = UIAlertController(title: "Do you want to stop issuing more numbers?", message: "Once done, the issuing of numbers will be disabled but you must still process the numbers in the line.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                SwiftSpinner.show("Closing the line..")
+                self.isPaused = true
+                self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+                self.stopIssueBtn.isEnabled = false
+                Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: "Stop")).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    SwiftSpinner.hide();
                 }
-                let responseData = JSON(data: response.data!)
-                debugPrint(responseData)
-                SwiftSpinner.hide();
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
             }
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
-        if let popoverController = alertBox.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            self.present(alertBox, animated: true, completion: nil)
         }
-        self.present(alertBox, animated: true, completion: nil)
     }
     
     @IBAction func dropNumNow(_ sender: UIButton) {
-        let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            debugPrint("dropped tagged \(sender.tag)")
+        if Reachability.instance.checkNetwork() {
+            let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                debugPrint("dropped tagged \(sender.tag)")
+                let indexPath = IndexPath(row: sender.tag, section: 0)
+                Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                }
+                self.removeRowsAndReload(indexPath)
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+            self.present(alertBox, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func serveNumNow(_ sender: UIButton) {
+        if Reachability.instance.checkNetwork() {
+            debugPrint("served tagged \(sender.tag)")
             let indexPath = IndexPath(row: sender.tag, section: 0)
-            Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+            Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -348,47 +382,13 @@ class FQProcessQueueTableViewController: UITableViewController {
                 debugPrint(responseData)
             }
             self.removeRowsAndReload(indexPath)
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
-        if let popoverController = alertBox.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
         }
-        self.present(alertBox, animated: true, completion: nil)
-    }
-    
-    @IBAction func serveNumNow(_ sender: UIButton) {
-        debugPrint("served tagged \(sender.tag)")
-        let indexPath = IndexPath(row: sender.tag, section: 0)
-        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-        }
-        self.removeRowsAndReload(indexPath)
     }
     
     func serveCallNext(_ indexPath: IndexPath) {
-        self.processQueue[indexPath.row+1]["time_called"] = "\(Date().timeIntervalSince1970)"
-        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+        if Reachability.instance.checkNetwork() {
+            self.processQueue[indexPath.row+1]["time_called"] = "\(Date().timeIntervalSince1970)"
+            Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -399,9 +399,21 @@ class FQProcessQueueTableViewController: UITableViewController {
                 }
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)
+                Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                }
             }
+            self.removeRowsAndReload(indexPath)
         }
-        self.removeRowsAndReload(indexPath)
     }
     
     func removeRowsAndReload(_ indexPath: IndexPath) {

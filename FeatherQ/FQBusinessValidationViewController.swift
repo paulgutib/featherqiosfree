@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SwiftSpinner
 
 class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate {
 
@@ -230,8 +231,6 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     var selectedCategory: String?
     var selectedCountry = "- Select a Country -"
     var cllManager = CLLocationManager()
-    var latitudeLoc: String?
-    var longitudeLoc: String?
     var isLocationUpdated = false
     var logoPath: String?
     
@@ -302,8 +301,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !self.isLocationUpdated {
             let userLocation = locations[0]
-            self.latitudeLoc = "\(userLocation.coordinate.latitude)"
-            self.longitudeLoc = "\(userLocation.coordinate.longitude)"
+            Session.instance.latitudeLoc = "\(userLocation.coordinate.latitude)"
+            Session.instance.longitudeLoc = "\(userLocation.coordinate.longitude)"
             CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
                 if (error != nil) {
                     debugPrint("Reverse geocoder failed with error" + error!.localizedDescription)
@@ -356,6 +355,10 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             debugPrint("denied must change")
         }
     }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork() && self.validateAddresses()
+    }
 
     // MARK: - Navigation
 
@@ -364,25 +367,21 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "toBusinessOperations" {
-            if self.validateAddresses() {
-                self.generateCoordinatesFromAddress()
-                let destView = segue.destination as! FQOperationsViewController
-                destView.email = self.email!
-                destView.password = self.password!
-                destView.logoPath = self.logoPath!
-                destView.businessName = self.businessName!
-                destView.selectedCategory = self.selectedCategory!
-                destView.selectedCountry = self.selectedCountry
-                destView.buildingOffice = self.buildingOffice.text!
-                destView.streetBlock = self.streetBlock.text!
-                destView.townCity = self.townCity.text!
-                destView.stateProvince = self.stateProvince.text!
-                destView.zipPostalCode = "" //self.zipPostalCode.text!
-                destView.phone = self.phone.text!
-                destView.barangaySublocality = self.barangaySublocality.text!
-                destView.longitudeVal = self.longitudeLoc!
-                destView.latitudeVal = self.latitudeLoc!
-            }
+            self.generateCoordinatesFromAddress()
+            let destView = segue.destination as! FQOperationsViewController
+            destView.email = self.email!
+            destView.password = self.password!
+            destView.logoPath = self.logoPath!
+            destView.businessName = self.businessName!
+            destView.selectedCategory = self.selectedCategory!
+            destView.selectedCountry = self.selectedCountry
+            destView.buildingOffice = self.buildingOffice.text!
+            destView.streetBlock = self.streetBlock.text!
+            destView.townCity = self.townCity.text!
+            destView.stateProvince = self.stateProvince.text!
+            destView.zipPostalCode = "" //self.zipPostalCode.text!
+            destView.phone = self.phone.text!
+            destView.barangaySublocality = self.barangaySublocality.text!
         }
     }
     
@@ -475,11 +474,15 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
             }
             if let placemark = placemarks?.first {
                 let coordinates:CLLocationCoordinate2D = placemark.location!.coordinate
-                self.latitudeLoc = "\(coordinates.latitude)"
-                self.longitudeLoc = "\(coordinates.longitude)"
-                debugPrint(self.latitudeLoc!)
-                debugPrint(self.longitudeLoc!)
+                Session.instance.latitudeLoc = "\(coordinates.latitude)"
+                Session.instance.longitudeLoc = "\(coordinates.longitude)"
             }
+            else {
+                Session.instance.latitudeLoc = "0.0000000"
+                Session.instance.longitudeLoc = "0.0000000"
+            }
+            debugPrint(Session.instance.latitudeLoc)
+            debugPrint(Session.instance.longitudeLoc)
         })
     }
     

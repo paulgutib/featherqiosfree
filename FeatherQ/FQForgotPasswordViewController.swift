@@ -46,7 +46,7 @@ class FQForgotPasswordViewController: UIViewController {
     }
 
     @IBAction func sendRequest(_ sender: UIButton) {
-        if self.emailValidity() {
+        if self.emailValidity() && Reachability.instance.checkNetwork() {
             SwiftSpinner.show("Requesting..")
             Alamofire.request(Router.postResetPassword(email: self.email.text!)).responseJSON { response in
                 if response.result.isFailure {

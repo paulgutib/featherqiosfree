@@ -66,7 +66,7 @@ class FQLoginViewController: UIViewController {
 //    }
     
     @IBAction func loginAccount(_ sender: UIButton) {
-        if self.emailPasswordValidity() {
+        if self.emailPasswordValidity() && Reachability.instance.checkNetwork() {
             SwiftSpinner.show("Logging in..")
             Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!, deviceToken: Session.instance.deviceToken)).responseJSON { response in
                 if response.result.isFailure {

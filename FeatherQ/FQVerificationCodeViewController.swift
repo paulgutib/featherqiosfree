@@ -41,7 +41,9 @@ class FQVerificationCodeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork()
+    }
     
     // MARK: - Navigation
 

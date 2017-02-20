@@ -115,6 +115,10 @@ class FQDashboardViewController: UIViewController {
 //        }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork()
+    }
+    
     /*
     // MARK: - Navigation
 

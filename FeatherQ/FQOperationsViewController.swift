@@ -35,8 +35,6 @@ class FQOperationsViewController: UIViewController {
     var phone: String?
     var deviceToken: String?
     var barangaySublocality: String?
-    var longitudeVal: String?
-    var latitudeVal: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +87,7 @@ class FQOperationsViewController: UIViewController {
     }
 
     @IBAction func registerAccount(_ sender: UIButton) {
-        if self.filledUpRequiredFields() {
+        if self.filledUpRequiredFields() && Reachability.instance.checkNetwork() {
             SwiftSpinner.show("Please wait..")
             let timeFormatter = DateFormatter()
             timeFormatter.timeStyle = .short
@@ -97,7 +95,7 @@ class FQOperationsViewController: UIViewController {
             let timeOpenVal = timeFormatter.string(from: self.timeOpen.date)
             let timeCloseVal = timeFormatter.string(from: self.timeClose.date)
             let completeAddress = self.buildingOffice! + ", " + self.streetBlock! + ", " + self.barangaySublocality! + ", " + self.townCity! + ", " + /*self.zipPostalCode! + ", " +*/ self.stateProvince! + ", " + self.selectedCountry!
-            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken, longitudeVal: self.longitudeVal!, latitudeVal: self.latitudeVal!)).responseJSON { response in
+            Alamofire.request(Router.postRegister(email: self.email!, password: self.password!, name: self.businessName!, address: completeAddress, logo: self.logoPath!, category: self.selectedCategory!, time_open: timeOpenVal, time_close: timeCloseVal, number_start: self.firstNumber.text!, number_limit: self.lastNumber.text!, deviceToken: Session.instance.deviceToken, longitudeVal: Session.instance.longitudeLoc, latitudeVal: Session.instance.latitudeLoc)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String

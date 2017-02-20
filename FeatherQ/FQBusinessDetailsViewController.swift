@@ -113,6 +113,10 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedCategory = self.categoryEntry[row]["name"]!
     }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork()
+    }
 
     // MARK: - Navigation
 

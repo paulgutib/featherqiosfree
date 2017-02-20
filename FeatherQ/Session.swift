@@ -36,6 +36,8 @@ class Session {
     var selectedCategories = [String]()
     var selectedCategoriesIndexes = [Int]()
     var punchType = "Play"
+    var latitudeLoc = "0.0000000"
+    var longitudeLoc = "0.0000000"
     
     var step1 = false
     var step2 = false

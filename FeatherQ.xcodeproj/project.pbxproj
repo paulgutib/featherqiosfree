@@ -45,6 +45,7 @@
 		809F53C11E532D07007F40FF /* FQGuidesDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F53C01E532D07007F40FF /* FQGuidesDocumentViewController.swift */; };
 		809F53C31E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F53C21E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift */; };
 		80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B9C7C61DF02D65000A3B7A /* Session.swift */; };
+		80BDBFF81E5A885700BA5B11 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BDBFF71E5A885700BA5B11 /* Reachability.swift */; };
 		80C17A5F1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C17A5E1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift */; };
 		80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */; };
 		80C296341DFAA51700444E5A /* FQOnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */; };
@@ -103,6 +104,7 @@
 		809F53C01E532D07007F40FF /* FQGuidesDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGuidesDocumentViewController.swift; sourceTree = "<group>"; };
 		809F53C21E5331BD007F40FF /* FQGuidesUserTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQGuidesUserTypeTableViewController.swift; sourceTree = "<group>"; };
 		80B9C7C61DF02D65000A3B7A /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		80BDBFF71E5A885700BA5B11 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		80C17A5E1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQIssueNumberClosedViewController.swift; sourceTree = "<group>"; };
 		80C296311DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		80C296331DFAA51700444E5A /* FQOnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				808433EC1DF6D2910053C4DB /* doorbell_x.wav */,
 				801D4C051DDD90DD00BE555F /* API.swift */,
 				801A105E1DE578F300373A22 /* Utility.swift */,
+				80BDBFF71E5A885700BA5B11 /* Reachability.swift */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				801004DF1DD3FE5B0070C326 /* FQRegistrationViewController.swift in Sources */,
 				801004DD1DD3FE320070C326 /* FQLoginViewController.swift in Sources */,
 				801004E31DD400410070C326 /* FQOperationsViewController.swift in Sources */,
+				80BDBFF81E5A885700BA5B11 /* Reachability.swift in Sources */,
 				806692A81DF08AC800EA3963 /* FQSettingsAddressViewController.swift in Sources */,
 				80B9C7C71DF02D65000A3B7A /* Session.swift in Sources */,
 				801004C41DD31B850070C326 /* AppDelegate.swift in Sources */,

@@ -44,6 +44,10 @@ class FQRegistrationViewController: UIViewController {
             self.present(modalViewController, animated: false, completion: nil)
         }
     }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork() && self.emailPasswordValidity()
+    }
 
     // MARK: - Navigation
 
@@ -52,26 +56,24 @@ class FQRegistrationViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "toEmailVerification" {
-            if self.emailPasswordValidity() {
-                SwiftSpinner.show("Sending verification code..")
-                Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
-                    if response.result.isFailure {
-                        debugPrint(response.result.error!)
-                        let errorMessage = (response.result.error?.localizedDescription)! as String
-                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                            self.navigationController!.popViewController(animated: true)
-                            SwiftSpinner.hide()
-                        })
-                        return
-                    }
-                    let responseData = JSON(data: response.data!)
-                    debugPrint(responseData)
-                    let destView = segue.destination as! FQVerificationCodeViewController
-                    destView.email = self.email.text!
-                    destView.password = self.password.text!
-                    destView.confirmationCode = responseData["code"].stringValue
-                    SwiftSpinner.hide()
+            SwiftSpinner.show("Sending verification code..")
+            Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        self.navigationController!.popViewController(animated: true)
+                        SwiftSpinner.hide()
+                    })
+                    return
                 }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                let destView = segue.destination as! FQVerificationCodeViewController
+                destView.email = self.email.text!
+                destView.password = self.password.text!
+                destView.confirmationCode = responseData["code"].stringValue
+                SwiftSpinner.hide()
             }
         }
     }

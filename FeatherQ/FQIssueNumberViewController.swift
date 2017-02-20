@@ -161,65 +161,67 @@ class FQIssueNumberViewController: UIViewController {
     }
     
     @IBAction func issueNumber(_ sender: Any) {
-        SwiftSpinner.show("Issuing number..")
-        debugPrint(self.numToIssue.text!)
-        Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            if responseData["number"] != nil {
-                let dataObj = responseData["number"].dictionaryObject!
-                let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQReceiptViewController") as! FQReceiptViewController
-                modalViewController.issuedNum = self.numToIssue.text!
-                modalViewController.timeEstimate = self.timeForecast.text!
-                modalViewController.confirmCode = dataObj["confirmation_code"] as? String
-                modalViewController.modalPresentationStyle = .overCurrentContext
-                self.availableNumbers.remove(at: self.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
-                if !self.availableNumbers.isEmpty {
-                    self.numToIssue.text = "\(self.availableNumbers[0])"
-                    self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
-                    self.issueSpecific.isEnabled = true
-                    self.notes.isEnabled = true
-                    self.noAvailableNum.isHidden = true
-                    self.issueBtn.isEnabled = true
-                    self.issueBtn.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
-                    self.getEstimatedTime()
+        if Reachability.instance.checkNetwork() {
+            SwiftSpinner.show("Issuing number..")
+            debugPrint(self.numToIssue.text!)
+            Alamofire.request(Router.postIssueNumber(service_id: Session.instance.serviceId!, priority_number: self.numToIssue.text!, note: self.notes.text!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                if responseData["number"] != nil {
+                    let dataObj = responseData["number"].dictionaryObject!
+                    let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQReceiptViewController") as! FQReceiptViewController
+                    modalViewController.issuedNum = self.numToIssue.text!
+                    modalViewController.timeEstimate = self.timeForecast.text!
+                    modalViewController.confirmCode = dataObj["confirmation_code"] as? String
+                    modalViewController.modalPresentationStyle = .overCurrentContext
+                    self.availableNumbers.remove(at: self.availableNumbers.index(of: Int(self.numToIssue.text!)!)!)
+                    if !self.availableNumbers.isEmpty {
+                        self.numToIssue.text = "\(self.availableNumbers[0])"
+                        self.issueSpecific.maximumValue = Double(self.availableNumbers.count-1)
+                        self.issueSpecific.isEnabled = true
+                        self.notes.isEnabled = true
+                        self.noAvailableNum.isHidden = true
+                        self.issueBtn.isEnabled = true
+                        self.issueBtn.backgroundColor = UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+                        self.getEstimatedTime()
+                    }
+                    else {
+                        self.numToIssue.text = ""
+                        self.issueSpecific.maximumValue = 1
+                        self.issueSpecific.isEnabled = false
+                        self.notes.isEnabled = false
+                        self.noAvailableNum.isHidden = false
+                        self.issueBtn.isEnabled = false
+                        self.issueBtn.backgroundColor = UIColor.gray
+                        self.timeForecast.text = "-"
+                    }
+                    self.issueSpecific.value = 0.0
+                    self.notes.text = ""
+                    if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
+                        Session.instance.step4 = true
+                        self.step5.isHidden = false
+                        self.step2.isHidden = true
+                        self.step3.isHidden = true
+                        self.numberLayer.isHidden = false
+                        self.buttonLayer.isHidden = false
+                    }
+                    self.present(modalViewController, animated: true, completion: nil)
                 }
                 else {
-                    self.numToIssue.text = ""
-                    self.issueSpecific.maximumValue = 1
-                    self.issueSpecific.isEnabled = false
-                    self.notes.isEnabled = false
-                    self.noAvailableNum.isHidden = false
-                    self.issueBtn.isEnabled = false
-                    self.issueBtn.backgroundColor = UIColor.gray
-                    self.timeForecast.text = "-"
+                    let alertBox = UIAlertController(title: "Number Taken", message: "Please issue an available number.", preferredStyle: .alert)
+                    alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertBox, animated: true, completion: nil)
                 }
-                self.issueSpecific.value = 0.0
-                self.notes.text = ""
-                if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
-                    Session.instance.step4 = true
-                    self.step5.isHidden = false
-                    self.step2.isHidden = true
-                    self.step3.isHidden = true
-                    self.numberLayer.isHidden = false
-                    self.buttonLayer.isHidden = false
-                }
-                self.present(modalViewController, animated: true, completion: nil)
+                SwiftSpinner.hide()
             }
-            else {
-                let alertBox = UIAlertController(title: "Number Taken", message: "Please issue an available number.", preferredStyle: .alert)
-                alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alertBox, animated: true, completion: nil)
-            }
-            SwiftSpinner.hide()
         }
     }
     
