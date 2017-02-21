@@ -11,6 +11,7 @@ import UIKit
 class FQOnboardingContainerViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     @IBOutlet weak var pageCtrl: UIPageControl!
+    @IBOutlet weak var startQueuingBtn: UIButton!
     
     var pageViewController: UIPageViewController!
     var pageTitles: NSArray!
@@ -23,6 +24,8 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         // Do any additional setup after loading the view.
 //        self.pageTitles = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
 //        self.pageImages = NSArray(objects: "Onboarding1", "Onboarding2", "Onboarding3", "Onboarding4", "Onboarding5")
+        self.startQueuingBtn.layer.cornerRadius = 10.0
+        self.startQueuingBtn.clipsToBounds = true
         self.pageTitles = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")
         self.pageImages = NSArray(objects: "EndUserOnboarding1", "EndUserOnboarding2", "EndUserOnboarding3")
         self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "FQOnboardingPageViewController") as! UIPageViewController
@@ -38,6 +41,7 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
         self.navigationItem.title = "Welcome"
         self.pageCtrl.numberOfPages = self.pageImages.count
         self.view.bringSubview(toFront: self.pageCtrl)
+        self.view.bringSubview(toFront: self.startQueuingBtn)
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,4 +109,8 @@ class FQOnboardingContainerViewController: UIViewController, UIPageViewControlle
     }
     */    
 
+    @IBAction func startServing(_ sender: UIButton) {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
+    }
 }

@@ -16,7 +16,7 @@ class FQOnboardingGetStartedViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getStartedBtn.layer.cornerRadius = 5.0
+        self.getStartedBtn.layer.cornerRadius = 10.0
         self.getStartedBtn.clipsToBounds = true
     }
 

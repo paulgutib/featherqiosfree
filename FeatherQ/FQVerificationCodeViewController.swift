@@ -27,11 +27,11 @@ class FQVerificationCodeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.verifyBtn.layer.cornerRadius = 5.0
+        self.verifyBtn.layer.cornerRadius = 10.0
         self.verifyBtn.clipsToBounds = true
-        self.codeHelp.layer.cornerRadius = 5.0
+        self.codeHelp.layer.cornerRadius = 10.0
         self.codeHelp.clipsToBounds = true
-        self.resendBtn.layer.cornerRadius = 5.0
+        self.resendBtn.layer.cornerRadius = 10.0
         self.resendBtn.clipsToBounds = true
         self.verificationCode.inputAccessoryView = UIView.init()
     }
@@ -41,7 +41,9 @@ class FQVerificationCodeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork()
+    }
     
     // MARK: - Navigation
 

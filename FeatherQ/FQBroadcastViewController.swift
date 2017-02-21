@@ -20,6 +20,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     @IBOutlet weak var broadcastNumbers: UILabel!
     @IBOutlet weak var peopleInLine: UILabel!
     @IBOutlet weak var waitingTime: UILabel!
+    @IBOutlet weak var lineStatus: UILabel!
     
     @IBOutlet weak var codeLayer: UIView!
     @IBOutlet weak var numberLayer: UIView!
@@ -34,6 +35,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     
     var priorityNumbers = [String]()
+    var punchType = "Play"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,18 +43,20 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         // Do any additional setup after loading the view.
 //        self.calledNumbers.type = .coverFlow2
         
-        self.codeHelp.layer.cornerRadius = 5.0
+        self.codeHelp.layer.cornerRadius = 10.0
         self.codeHelp.clipsToBounds = true
         self.codeHelp.layer.borderWidth = 2.0
         self.codeHelp.layer.borderColor = UIColor.black.cgColor
-        self.trafficHelp.layer.cornerRadius = 5.0
+        self.trafficHelp.layer.cornerRadius = 10.0
         self.trafficHelp.clipsToBounds = true
         self.trafficHelp.layer.borderWidth = 2.0
         self.trafficHelp.layer.borderColor = UIColor.black.cgColor
-        self.numberHelp.layer.cornerRadius = 5.0
+        self.numberHelp.layer.cornerRadius = 10.0
         self.numberHelp.clipsToBounds = true
         self.numberHelp.layer.borderWidth = 2.0
         self.numberHelp.layer.borderColor = UIColor.black.cgColor
+        self.businessCode.layer.cornerRadius = 10.0
+        self.businessCode.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +64,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     
@@ -82,7 +86,6 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         self.peopleInLine.text = ""
         self.waitingTime.text = ""
         self.businessCode.text = Session.instance.key!.uppercased()
-        Session.instance.viewedBusinessId = Session.instance.businessId
         self.readyDingSound()
         Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
@@ -106,9 +109,12 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
                     self.priorityNumbers.append(pNum)
                 }
                 Session.instance.broadcastNumbers = self.priorityNumbers
+                self.punchType = responseData["broadcast_data"]["punch_type"].stringValue
+                Session.instance.punchType = self.punchType
                 self.audioPlayer.play()
 //                self.calledNumbers.reloadData()
                 self.generateBroadcastNumbers()
+                self.generateLineStatusDisplay()
                 if self.priorityNumbers.isEmpty {
                     self.broadcastNumbers.text = responseData["broadcast_data"]["last_called"].stringValue
                 }
@@ -215,9 +221,7 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     
     func timerCallbacks() {
         if Session.instance.broadcastNumbers != self.priorityNumbers {
-            if Session.instance.playSound {
-                self.audioPlayer.play()
-            }
+            self.audioPlayer.play()
             self.priorityNumbers = Session.instance.broadcastNumbers
 //            self.calledNumbers.reloadData()
             self.generateBroadcastNumbers()
@@ -226,6 +230,11 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
             if Session.instance.broadcastNumbers.isEmpty {
                 self.broadcastNumbers.text = Session.instance.lastCalled!
             }
+        }
+        if Session.instance.punchType != self.punchType {
+            self.audioPlayer.play()
+            self.punchType = Session.instance.punchType
+            self.generateLineStatusDisplay()
         }
     }
     
@@ -238,13 +247,45 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         }
     }
     
+    func generateLineStatusDisplay() {
+        self.lineStatus.text = self.setLineStatusText(punchType: self.punchType)
+        self.lineStatus.backgroundColor = self.setLineStatusColor(punchType: self.punchType)
+        self.lineStatus.textColor = self.setLineStatusTextColor(punchType: self.punchType)
+    }
     
     func generateBroadcastNumbers() {
         self.calledNumbers = ""
         for pNum in self.priorityNumbers {
-            self.calledNumbers += pNum + "      "
+            self.calledNumbers += pNum + "  "
         }
         self.broadcastNumbers.text = self.calledNumbers
+    }
+    
+    func setLineStatusText(punchType: String) -> String {
+        if punchType == "Play" {
+            return "OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          "
+        }
+        else if punchType == "Pause" {
+            return "ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          "
+        }
+        return "CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          "
+    }
+    
+    func setLineStatusColor(punchType: String) -> UIColor {
+        if punchType == "Play" {
+            return UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+        }
+        else if punchType == "Pause" {
+            return UIColor.yellow
+        }
+        return UIColor(red: 0.9725, green: 0.298, blue: 0.0157, alpha: 1.0) /* #f84c04 */
+    }
+    
+    func setLineStatusTextColor(punchType: String) -> UIColor {
+        if punchType == "Pause" {
+            return UIColor.black
+        }
+        return UIColor.white
     }
     
     func convertServingTime(timeArg: Int) -> String {

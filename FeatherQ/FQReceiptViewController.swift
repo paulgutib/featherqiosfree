@@ -26,16 +26,16 @@ class FQReceiptViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.okBtn.layer.cornerRadius = 5.0
+        self.okBtn.layer.cornerRadius = 10.0
         self.okBtn.clipsToBounds = true
-        self.modalContainer.layer.cornerRadius = 5.0
+        self.modalContainer.layer.cornerRadius = 10.0
         self.modalContainer.clipsToBounds = true
         
         self.priorityNumber.text = self.issuedNum!
         self.confirmationCode.text = self.confirmCode!
         self.estimatedCallTime.text = self.timeEstimate!
         
-        self.step4.layer.cornerRadius = 5.0
+        self.step4.layer.cornerRadius = 10.0
         self.step4.clipsToBounds = true
         self.step4.layer.borderWidth = 2.0
         self.step4.layer.borderColor = UIColor.black.cgColor

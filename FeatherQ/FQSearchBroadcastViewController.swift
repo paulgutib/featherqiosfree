@@ -21,6 +21,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     @IBOutlet weak var linePeople: UILabel!
     @IBOutlet weak var waitingTimeTotal: UILabel!
     @IBOutlet weak var broadcastNumbers: UILabel!
+    @IBOutlet weak var lineStatus: UILabel!
     
     var calledNumbers = ""
     var timerCounter: Timer?
@@ -28,7 +29,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     let dingSound = URL(fileURLWithPath: Bundle.main.path(forResource: "doorbell_x", ofType: "wav")!)
     var selectedBusiness: FQBusiness?
     var lastCalledNumber: String?
-    
+    var punchType = "Play"
     var priorityNumbers = [String]()
     
     override func viewDidLoad() {
@@ -43,7 +44,7 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     
@@ -144,11 +145,16 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
                 self.linePeople.text = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
                 self.waitingTimeTotal.text = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
                 let oldNums = self.priorityNumbers
+                let oldPunchType = self.punchType
                 self.priorityNumbers.removeAll()
                 for callNums in responseData["broadcast_data"]["called_numbers"] {
                     let dataObj = callNums.1.dictionaryObject!
                     let pNum = dataObj["priority_number"] as! String
                     self.priorityNumbers.append(pNum)
+                }
+                self.punchType = responseData["broadcast_data"]["punch_type"].stringValue
+                if oldPunchType != self.punchType {
+                    self.generateLineStatusDisplay()
                 }
                 if oldNums != self.priorityNumbers {
                     self.audioPlayer.play()
@@ -176,9 +182,42 @@ class FQSearchBroadcastViewController: UIViewController/*, iCarouselDataSource, 
     func generateBroadcastNumbers() {
         self.calledNumbers = ""
         for pNum in self.priorityNumbers {
-            self.calledNumbers += pNum + "      "
+            self.calledNumbers += pNum + "  "
         }
         self.broadcastNumbers.text = self.calledNumbers
+    }
+    
+    func generateLineStatusDisplay() {
+        self.lineStatus.text = self.setLineStatusText(punchType: self.punchType)
+        self.lineStatus.backgroundColor = self.setLineStatusColor(punchType: self.punchType)
+        self.lineStatus.textColor = self.setLineStatusTextColor(punchType: self.punchType)
+    }
+    
+    func setLineStatusText(punchType: String) -> String {
+        if punchType == "Play" {
+            return "OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          OPEN          "
+        }
+        else if punchType == "Pause" {
+            return "ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          ON BREAK          "
+        }
+        return "CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          CLOSED          "
+    }
+    
+    func setLineStatusColor(punchType: String) -> UIColor {
+        if punchType == "Play" {
+            return UIColor(red: 0.2275, green: 0.549, blue: 0.0902, alpha: 1.0) /* #3a8c17 */
+        }
+        else if punchType == "Pause" {
+            return UIColor.yellow
+        }
+        return UIColor(red: 0.9725, green: 0.298, blue: 0.0157, alpha: 1.0) /* #f84c04 */
+    }
+    
+    func setLineStatusTextColor(punchType: String) -> UIColor {
+        if punchType == "Pause" {
+            return UIColor.black
+        }
+        return UIColor.white
     }
 
     func convertServingTime(timeArg: Int) -> String {

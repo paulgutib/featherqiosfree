@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
         
+        self.loadDeviceToken()
         self.loadLastChosenCategories()
         self.selectMyBusinessAsDefault()
         
@@ -67,66 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let userInfoDict = userInfo as NSDictionary as! [String: AnyObject]
             let msgType = userInfoDict["aps"]!["msg_type"]!! as! String
             if msgType == "issue" {
-                Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
-                    if response.result.isFailure {
-                        debugPrint(response.result.error!)
-//                        let errorMessage = (response.result.error?.localizedDescription)! as String
-//                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-//                            SwiftSpinner.hide()
-//                        })
-//                        return
-                    }
-                    let responseData = JSON(data: response.data!)
-                    debugPrint(responseData)
-                    if responseData["numbers"] != nil {
-                        Session.instance.transactionNums.removeAll()
-                        Session.instance.processQueue.removeAll()
-                        for numberList in responseData["numbers"]["unprocessed_numbers"] {
-                            let dataObj = numberList.1.dictionaryObject!
-                            Session.instance.transactionNums.append("\(dataObj["transaction_number"]!)")
-                            Session.instance.processQueue.append([
-                                "transaction_number": "\(dataObj["transaction_number"]!)",
-                                "priority_number": "\(dataObj["priority_number"]!)",
-                                "confirmation_code": dataObj["confirmation_code"] as! String,
-                                "time_queued": "\(dataObj["time_queued"]!)",
-                                "notes": dataObj["note"] as! String,
-                                "time_called": "\(dataObj["time_called"]!)",
-                            ])
-                        }
-                    }
-                }
+                self.getAllNumbers()
             }
-            else {
-                if msgType == "call" {
-                    Session.instance.playSound = true
-                    Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.viewedBusinessId)).responseJSON { response in
-                        if response.result.isFailure {
-                            debugPrint(response.result.error!)
-                            let errorMessage = (response.result.error?.localizedDescription)! as String
-                            SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                                SwiftSpinner.hide()
-                            })
-                            return
-                        }
-                        let responseData = JSON(data: response.data!)
-                        debugPrint(responseData)
-                        if responseData != nil {
-                            Session.instance.broadcastNumbers.removeAll()
-                            for callNums in responseData["broadcast_data"]["called_numbers"] {
-                                let dataObj = callNums.1.dictionaryObject!
-                                let pNum = dataObj["priority_number"] as! String
-                                Session.instance.broadcastNumbers.append(pNum)
-                                Session.instance.peopleInLine = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
-                                Session.instance.servingTime = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
-                                Session.instance.lastCalled = responseData["broadcast_data"]["last_called"].stringValue
-                            }
-                        }
-                    }
-                }
-//                else {
-//                    Session.instance.playSound = false
-//                }
-                
+            else if msgType == "call" {
+                self.getBusinessBroadcast()
+            }
+            else if msgType == "punch" {
+                self.getAllNumbers()
+                self.getBusinessBroadcast()
             }
             debugPrint(msgType + " received")
         }
@@ -142,18 +91,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print("Device Token (string):", deviceTokenString)
         print("Device Token (raw):", deviceToken)
+        let preferences = UserDefaults.standard
+        preferences.set(deviceTokenString, forKey: "fqiosappfreedevicetoken")
+        preferences.synchronize()
         Session.instance.deviceToken = deviceTokenString
-
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        Session.instance.deviceToken = "F5AF8369B371F5CA8AF1AFAA6062FE3C60223C26EE2FA22066CB4BAAD6B5E1EA"
-        debugPrint(Session.instance.deviceToken)
         print("Failed to register:", error)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return UCClient.default().handle(url)
+    }
+    
+    func loadDeviceToken() {
+        let deviceTokenString = UserDefaults.standard.string(forKey: "fqiosappfreedevicetoken")
+        if deviceTokenString != nil {
+            Session.instance.deviceToken = deviceTokenString!
+        }
     }
     
     func selectMyBusinessAsDefault() {
@@ -172,11 +128,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadLastChosenCategories() {
-        if UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories") != nil {
-            Session.instance.selectedCategories = UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories")!
+        let selectedCategories = UserDefaults.standard.stringArray(forKey: "fqiosappfreecategories")
+        let selectedCatIndexes = UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes")
+        if selectedCategories != nil {
+            Session.instance.selectedCategories = selectedCategories!
         }
-        if UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") != nil {
-            Session.instance.selectedCategoriesIndexes = UserDefaults.standard.array(forKey: "fqiosappfreecategoriesindexes") as! [Int]
+        if selectedCatIndexes != nil {
+            Session.instance.selectedCategoriesIndexes = selectedCatIndexes as! [Int]
         }
     }
     
@@ -201,5 +159,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return "\(arg0)"
     }
+    
+    func getAllNumbers() {
+        Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                //                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                //                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                //                            SwiftSpinner.hide()
+                //                        })
+                //                        return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData != nil {
+                Session.instance.punchType = responseData["punch_type"].stringValue
+            }
+            if responseData["numbers"] != nil {
+                Session.instance.transactionNums.removeAll()
+                Session.instance.processQueue.removeAll()
+                for numberList in responseData["numbers"]["unprocessed_numbers"] {
+                    let dataObj = numberList.1.dictionaryObject!
+                    Session.instance.transactionNums.append("\(dataObj["transaction_number"]!)")
+                    Session.instance.processQueue.append([
+                        "transaction_number": "\(dataObj["transaction_number"]!)",
+                        "priority_number": "\(dataObj["priority_number"]!)",
+                        "confirmation_code": dataObj["confirmation_code"] as! String,
+                        "time_queued": "\(dataObj["time_queued"]!)",
+                        "notes": dataObj["note"] as! String,
+                        "time_called": "\(dataObj["time_called"]!)",
+                    ])
+                }
+            }
+        }
+    }
+    
+    func getBusinessBroadcast() {
+        Alamofire.request(Router.getBusinessBroadcast(business_id: Session.instance.businessId)).responseJSON { response in
+            if response.result.isFailure {
+                debugPrint(response.result.error!)
+                let errorMessage = (response.result.error?.localizedDescription)! as String
+                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                    SwiftSpinner.hide()
+                })
+                return
+            }
+            let responseData = JSON(data: response.data!)
+            debugPrint(responseData)
+            if responseData != nil {
+                Session.instance.punchType = responseData["broadcast_data"]["punch_type"].stringValue
+                Session.instance.broadcastNumbers.removeAll()
+                for callNums in responseData["broadcast_data"]["called_numbers"] {
+                    let dataObj = callNums.1.dictionaryObject!
+                    let pNum = dataObj["priority_number"] as! String
+                    Session.instance.broadcastNumbers.append(pNum)
+                    Session.instance.peopleInLine = self.peopleInLineChecker(arg0: responseData["broadcast_data"]["people_in_line"].intValue)
+                    Session.instance.servingTime = self.convertServingTime(timeArg: responseData["broadcast_data"]["serving_time"].intValue)
+                    Session.instance.lastCalled = responseData["broadcast_data"]["last_called"].stringValue
+                }
+            }
+        }
+    }
+    
 }
 

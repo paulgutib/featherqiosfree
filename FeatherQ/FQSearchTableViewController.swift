@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 import SwiftSpinner
 import CoreLocation
@@ -40,6 +41,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         self.filterSearch.searchBar.sizeToFit()
         self.filterSearch.searchBar.placeholder = "Name, address, category, business code.."
         self.refreshControl?.addTarget(self, action: #selector(FQSearchTableViewController.refresherOrb(_:)), for: .valueChanged)
+        self.tableView.separatorStyle = .none
         self.tableView.tableHeaderView = self.filterSearch.searchBar
         self.tableView.reloadData()
     }
@@ -88,24 +90,26 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         cell.peopleInLine.text = listData["people_in_line"]
         cell.waitingTIme.text = listData["serving_time"]
         cell.keyLabel.text = listData["key"]
-//        if !listData["logo"]!.isEmpty {
-//            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
+        if !listData["logo"]!.isEmpty {
+            let url = URL(string: "https://ucarecdn.com/" + listData["logo"]! + "/image")
 //            DispatchQueue.global().async {
 //                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
 //                DispatchQueue.main.async {
 //                    cell.businessLogo.image = UIImage(data: data!)
 //                }
 //            }
-//        }
-//        else {
+            cell.businessLogo.af_setImage(withURL: url!, placeholderImage: UIImage(named: "PlaceholderLogo"))
+//            cell.businessLogo.image = cell.businessLogo.image!.af_imageRounded(withCornerRadius: 10.0)
+        }
+        else {
             cell.businessLogo.image = UIImage(named: "PlaceholderLogo")
-//        }
+        }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 144.0
+        return 245.0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -178,9 +182,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         case .authorizedWhenInUse:
             self.locationApprovalCallback()
             debugPrint("granted when in use")
-        case .authorizedAlways:
-            self.locationApprovalCallback()
-            debugPrint("granted always")
         case .denied:
             let preferences = UserDefaults.standard
             preferences.set("denied", forKey: "fqiosappfreelocation")
@@ -224,6 +225,18 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
                     destView.selectedBusiness = self.businessList[indexPath.row]
                 }
             }
+        }
+    }
+    
+    @IBAction func allowLocating(_ sender: UIBarButtonItem) {
+        if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
+            UIApplication.shared.openURL(URL(string:UIApplicationOpenSettingsURLString)!)
+        }
+        else {
+            self.cllManager.delegate = self
+            self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.cllManager.requestWhenInUseAuthorization()
+            self.cllManager.startUpdatingLocation()
         }
     }
     
@@ -386,6 +399,7 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         let preferences = UserDefaults.standard
         preferences.set("granted", forKey: "fqiosappfreelocation")
         preferences.synchronize()
+        self.navigationItem.rightBarButtonItem = nil
         self.cllManager.delegate = self
         self.cllManager.desiredAccuracy = kCLLocationAccuracyBest
         self.cllManager.requestWhenInUseAuthorization()

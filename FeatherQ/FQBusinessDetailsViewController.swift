@@ -52,15 +52,15 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.next2Btn.layer.cornerRadius = 5.0
+        self.next2Btn.layer.cornerRadius = 10.0
         self.next2Btn.clipsToBounds = true
-        self.nameHelp.layer.cornerRadius = 5.0
+        self.nameHelp.layer.cornerRadius = 10.0
         self.nameHelp.clipsToBounds = true
-        self.categoryHelp.layer.cornerRadius = 5.0
+        self.categoryHelp.layer.cornerRadius = 10.0
         self.categoryHelp.clipsToBounds = true
-        self.chooseLogoBtn.layer.cornerRadius = 5.0
+        self.chooseLogoBtn.layer.cornerRadius = 10.0
         self.chooseLogoBtn.clipsToBounds = true
-        self.removeLogoBtn.layer.cornerRadius = 5.0
+        self.removeLogoBtn.layer.cornerRadius = 10.0
         self.removeLogoBtn.clipsToBounds = true
         imagePicker.delegate = self
         self.businessName.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -112,6 +112,10 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedCategory = self.categoryEntry[row]["name"]!
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork()
     }
 
     // MARK: - Navigation

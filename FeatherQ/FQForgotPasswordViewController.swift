@@ -20,7 +20,7 @@ class FQForgotPasswordViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.sendBtn.layer.cornerRadius = 5.0
+        self.sendBtn.layer.cornerRadius = 10.0
         self.sendBtn.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init()
     }
@@ -46,7 +46,7 @@ class FQForgotPasswordViewController: UIViewController {
     }
 
     @IBAction func sendRequest(_ sender: UIButton) {
-        if self.emailValidity() {
+        if self.emailValidity() && Reachability.instance.checkNetwork() {
             SwiftSpinner.show("Requesting..")
             Alamofire.request(Router.postResetPassword(email: self.email.text!)).responseJSON { response in
                 if response.result.isFailure {

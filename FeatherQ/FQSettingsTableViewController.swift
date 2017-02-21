@@ -54,6 +54,7 @@ class FQSettingsTableViewController: UITableViewController {
                 self.navigationController!.popToRootViewController(animated: true)
                 Session.instance.isLoggedIn = false
                 UserDefaults.standard.removeObject(forKey: "defaultView")
+                UserDefaults.standard.removeObject(forKey: "fqiosappfreeloggedin")
                 let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "getStartedIntro")
                 var rootViewControllers = self.tabBarController?.viewControllers
                 rootViewControllers?[2] = vc

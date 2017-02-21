@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'FeatherQ' do
   pod 'Alamofire'
+  pod 'AlamofireImage'
   pod 'SwiftyJSON'
   pod 'Locksmith'
   pod 'SwiftSpinner'

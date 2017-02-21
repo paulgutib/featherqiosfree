@@ -237,7 +237,7 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.updateBtn.layer.cornerRadius = 5.0
+        self.updateBtn.layer.cornerRadius = 10.0
         self.updateBtn.clipsToBounds = true
         self.buildingOffice.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.streetBlock.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

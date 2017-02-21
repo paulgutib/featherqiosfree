@@ -23,7 +23,7 @@ class FQLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.loginBtn.layer.cornerRadius = 5.0
+        self.loginBtn.layer.cornerRadius = 10.0
         self.loginBtn.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -32,6 +32,14 @@ class FQLoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: false, completion: nil)
+        }
     }
     
 
@@ -58,7 +66,7 @@ class FQLoginViewController: UIViewController {
 //    }
     
     @IBAction func loginAccount(_ sender: UIButton) {
-        if self.emailPasswordValidity() {
+        if self.emailPasswordValidity() && Reachability.instance.checkNetwork() {
             SwiftSpinner.show("Logging in..")
             Alamofire.request(Router.postLogin(email: self.email.text!, password: self.password.text!, deviceToken: Session.instance.deviceToken)).responseJSON { response in
                 if response.result.isFailure {

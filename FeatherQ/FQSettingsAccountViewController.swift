@@ -23,7 +23,7 @@ class FQSettingsAccountViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.updateBtn.layer.cornerRadius = 5.0
+        self.updateBtn.layer.cornerRadius = 10.0
         self.updateBtn.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar

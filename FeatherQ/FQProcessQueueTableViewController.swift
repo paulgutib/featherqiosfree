@@ -15,9 +15,14 @@ import SwiftSpinner
 
 class FQProcessQueueTableViewController: UITableViewController {
     
+    @IBOutlet weak var pauseResumeBtn: UIBarButtonItem!
+    @IBOutlet weak var stopIssueBtn: UIBarButtonItem!
+
     var processQueue = [[String:String]]()
     var timerCounter: Timer?
     var transactionNums = [String]()
+    var isPaused = false
+    var punchType = "Play"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +35,16 @@ class FQProcessQueueTableViewController: UITableViewController {
         
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.tableView.tableHeaderView = self.howToCallServed()
-            let queueLayer = UIView(frame: CGRect(x: 0.0, y: 278.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-278.0))
+            let queueLayer = UIView(frame: CGRect(x: 0.0, y: 360.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-360.0))
             queueLayer.tag = 3333
             queueLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-72.0, y: 64.0, width: 72.0, height: 214.0))
+            let dropLayer = UIView(frame: CGRect(x: UIScreen.main.bounds.width-120.0, y: 184.0, width: 120.0, height: 176.0))
             dropLayer.tag = 4444
             dropLayer.backgroundColor = UIColor.black.withAlphaComponent(0.7)
             UIApplication.shared.keyWindow?.addSubview(queueLayer)
             UIApplication.shared.keyWindow?.addSubview(dropLayer)
         }
+        self.tableView.separatorStyle = .none
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,9 +55,6 @@ class FQProcessQueueTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         UIApplication.shared.keyWindow?.viewWithTag(3333)?.removeFromSuperview()
         UIApplication.shared.keyWindow?.viewWithTag(4444)?.removeFromSuperview()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     
@@ -69,6 +72,9 @@ class FQProcessQueueTableViewController: UITableViewController {
             }
             let responseData = JSON(data: response.data!)
             debugPrint(responseData)
+            if responseData != nil {
+                Session.instance.punchType = responseData["punch_type"].stringValue
+            }
             if responseData["numbers"] != nil {
                 self.processQueue.removeAll()
                 for numberList in responseData["numbers"]["unprocessed_numbers"] {
@@ -84,6 +90,7 @@ class FQProcessQueueTableViewController: UITableViewController {
                     ])
                 }
                 Session.instance.transactionNums = self.transactionNums
+                debugPrint(self.processQueue)
                 Session.instance.processQueue = self.processQueue
                 self.tableView.reloadData()
             }
@@ -105,7 +112,7 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 94.0
+        return 176.0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -204,28 +211,30 @@ class FQProcessQueueTableViewController: UITableViewController {
     */
     
     @IBAction func callNumNow(_ sender: UIButton) {
-        Session.instance.step7 = true
-        let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
-        let indexPath = self.tableView.indexPath(for: cell)
-        self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
-        Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
+        if Reachability.instance.checkNetwork() {
+            Session.instance.step7 = true
+            let cell = sender.superview?.superview?.superview as! FQProcessQueueTableViewCell // buttonContainer -> cellContentView -> cell
+            let indexPath = self.tableView.indexPath(for: cell)
+            self.processQueue[indexPath!.row]["time_called"] = "\(Date().timeIntervalSince1970)"
+            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath!.row]["transaction_number"]!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
             }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
+            self.tableView.reloadData()
         }
-        self.tableView.reloadData()
     }
     
 //    func renderServeButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
 //        let serveNum = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
-//        serveNum.layer.cornerRadius = 5.0
+//        serveNum.layer.cornerRadius = 10.0
 //        serveNum.clipsToBounds = true
 //        serveNum.setTitle("Serve", for: .normal)
 //        serveNum.setTitleColor(UIColor.white, for: .normal)
@@ -238,7 +247,7 @@ class FQProcessQueueTableViewController: UITableViewController {
 //    
 //    func renderDropButton(indexPath: IndexPath, cell: FQProcessQueueTableViewCell) -> UIButton {
 //        let dropNum = UIButton(frame: CGRect(x: (cell.buttonContainer.frame.width / 2.0) + 5.0, y: 0.0, width: (cell.buttonContainer.frame.width / 2.0) - 5.0, height: cell.buttonContainer.frame.height))
-//        dropNum.layer.cornerRadius = 5.0
+//        dropNum.layer.cornerRadius = 10.0
 //        dropNum.clipsToBounds = true
 //        dropNum.setTitle("Drop", for: .normal)
 //        dropNum.setTitleColor(UIColor.white, for: .normal)
@@ -249,12 +258,118 @@ class FQProcessQueueTableViewController: UITableViewController {
 //        return dropNum
 //    }
     
+    @IBAction func pauseResumeQueue(_ sender: UIBarButtonItem) {
+        if Reachability.instance.checkNetwork() {
+            var breakResumeMessage: String?
+            if self.isPaused {
+                breakResumeMessage = "Do you want to start processing numbers?"
+            }
+            else {
+                breakResumeMessage = "Do you want to take a break?"
+            }
+            let alertBox = UIAlertController(title: breakResumeMessage, message: "The line status will be updated on the broadcast screen.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                var punchType: String?
+                self.stopIssueBtn.isEnabled = true
+                self.isPaused = !self.isPaused
+                if self.isPaused {
+                    SwiftSpinner.show("Taking a break..")
+                    self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+                    punchType = "Pause"
+                }
+                else {
+                    SwiftSpinner.show("Getting ready to resume..")
+                    self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+                    punchType = "Play"
+                }
+                Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: punchType!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    SwiftSpinner.hide();
+                }
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+            self.present(alertBox, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func stopIssuingNumbers(_ sender: UIBarButtonItem) {
+        if Reachability.instance.checkNetwork() {
+            let alertBox = UIAlertController(title: "Do you want to stop issuing more numbers?", message: "Once done, the issuing of numbers will be disabled but you must still process the numbers in the line.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                SwiftSpinner.show("Closing the line..")
+                self.isPaused = true
+                self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+                self.stopIssueBtn.isEnabled = false
+                Alamofire.request(Router.postPunchQueuestatus(service_id: Session.instance.serviceId!, punch_type: "Stop")).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                    SwiftSpinner.hide();
+                }
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+            self.present(alertBox, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func dropNumNow(_ sender: UIButton) {
-        let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)
-        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            debugPrint("dropped tagged \(sender.tag)")
+        if Reachability.instance.checkNetwork() {
+            let alertBox = UIAlertController(title: "Are you sure you want to drop this number?", message: "Dropping this number will mean that the customer will no longer show up to the line.", preferredStyle: .actionSheet)
+            alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+                debugPrint("dropped tagged \(sender.tag)")
+                let indexPath = IndexPath(row: sender.tag, section: 0)
+                Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                }
+                self.removeRowsAndReload(indexPath)
+            }))
+            alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+            if let popoverController = alertBox.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+            self.present(alertBox, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func serveNumNow(_ sender: UIButton) {
+        if Reachability.instance.checkNetwork() {
+            debugPrint("served tagged \(sender.tag)")
             let indexPath = IndexPath(row: sender.tag, section: 0)
-            Alamofire.request(Router.getDropNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+            Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -267,47 +382,13 @@ class FQProcessQueueTableViewController: UITableViewController {
                 debugPrint(responseData)
             }
             self.removeRowsAndReload(indexPath)
-        }))
-        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
-        if let popoverController = alertBox.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
         }
-        self.present(alertBox, animated: true, completion: nil)
-    }
-    
-    @IBAction func serveNumNow(_ sender: UIButton) {
-        debugPrint("served tagged \(sender.tag)")
-        let indexPath = IndexPath(row: sender.tag, section: 0)
-        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-        }
-        self.removeRowsAndReload(indexPath)
     }
     
     func serveCallNext(_ indexPath: IndexPath) {
-        self.processQueue[indexPath.row+1]["time_called"] = "\(Date().timeIntervalSince1970)"
-        Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
-            if response.result.isFailure {
-                debugPrint(response.result.error!)
-                let errorMessage = (response.result.error?.localizedDescription)! as String
-                SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                    SwiftSpinner.hide()
-                })
-                return
-            }
-            let responseData = JSON(data: response.data!)
-            debugPrint(responseData)
-            Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+        if Reachability.instance.checkNetwork() {
+            self.processQueue[indexPath.row+1]["time_called"] = "\(Date().timeIntervalSince1970)"
+            Alamofire.request(Router.getServeNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
                 if response.result.isFailure {
                     debugPrint(response.result.error!)
                     let errorMessage = (response.result.error?.localizedDescription)! as String
@@ -318,9 +399,21 @@ class FQProcessQueueTableViewController: UITableViewController {
                 }
                 let responseData = JSON(data: response.data!)
                 debugPrint(responseData)
+                Alamofire.request(Router.getCallNumber(transaction_number: self.processQueue[indexPath.row]["transaction_number"]!)).responseJSON { response in
+                    if response.result.isFailure {
+                        debugPrint(response.result.error!)
+                        let errorMessage = (response.result.error?.localizedDescription)! as String
+                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        })
+                        return
+                    }
+                    let responseData = JSON(data: response.data!)
+                    debugPrint(responseData)
+                }
             }
+            self.removeRowsAndReload(indexPath)
         }
-        self.removeRowsAndReload(indexPath)
     }
     
     func removeRowsAndReload(_ indexPath: IndexPath) {
@@ -334,6 +427,10 @@ class FQProcessQueueTableViewController: UITableViewController {
             self.transactionNums = Session.instance.transactionNums
             self.processQueue = Session.instance.processQueue
             self.tableView.reloadData()
+        }
+        if Session.instance.punchType != self.punchType {
+            self.punchType = Session.instance.punchType
+            self.setLineStatusButtonStates(punchType: self.punchType)
         }
     }
     
@@ -353,6 +450,24 @@ class FQProcessQueueTableViewController: UITableViewController {
         wrapper.addSubview(howToTitle)
         wrapper.addSubview(howToContent)
         return wrapper
+    }
+    
+    func setLineStatusButtonStates(punchType: String) {
+        if punchType == "Play" {
+            self.stopIssueBtn.isEnabled = true
+            self.isPaused = false
+            self.pauseResumeBtn.image = UIImage(named: "PauseButton")
+        }
+        else if punchType == "Pause" {
+            self.stopIssueBtn.isEnabled = true
+            self.isPaused = true
+            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+        }
+        else {
+            self.isPaused = true
+            self.stopIssueBtn.isEnabled = false
+            self.pauseResumeBtn.image = UIImage(named: "PlayButton")
+        }
     }
     
 }

@@ -13,7 +13,6 @@ class FQOnboardingContentViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var headerTitle: UILabel!
-    @IBOutlet weak var startQueue: UIButton!
     
     var imageFile: String!
     var pageIndex: Int!
@@ -24,16 +23,6 @@ class FQOnboardingContentViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.imageView.image = UIImage(named: self.imageFile)
         self.displaySubtitles()
-        self.startQueue.layer.cornerRadius = 5.0
-        self.startQueue.clipsToBounds = true
-        self.view.bringSubview(toFront: self.startQueue)
-        if self.pageIndex == 2 {
-//        if self.pageIndex == 4 {
-            self.startQueue.isHidden = false
-        }
-        else {
-            self.startQueue.isHidden = true
-        }
 //        self.indexMarker.text = "(\(self.pageIndex+1)/5)"
     }
 
@@ -82,11 +71,6 @@ class FQOnboardingContentViewController: UIViewController {
 //        else if self.pageIndex == 5 {
 //            self.subtitle.text = "You can review this guide in the \"Help (?)\" section of the app.\n\n\n"
 //        }
-    }
-    
-    @IBAction func startServing(_ sender: UIButton) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window?.rootViewController = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "startMainApp")
     }
 
 }

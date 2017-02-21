@@ -31,7 +31,7 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
 //        ["name": "Entertainment", "image": "CatEntertainment"],
         ["name": "Ticketing", "image": "CatTicketing"],
         ["name": "Others", "image": "CatOthers"],
-        ["name": "All", "image": "PlaceholderLogo"]
+        ["name": "All", "image": "CatAll"]
     ]
 
     override func viewDidLoad() {
@@ -102,6 +102,8 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
     
         // Configure the cell
 //        cell.categoryTitle.text = self.categoryList[indexPath.row]["name"]
+        cell.layer.cornerRadius = 10.0
+        cell.clipsToBounds = true
         cell.layer.borderColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0).cgColor /* #d97217 */
         cell.layer.borderWidth = self.markSelectedCategoryBorder(rowCount: indexPath.row)
         cell.categoryChecked.isHidden = self.markSelectedCategoryCheck(rowCount: indexPath.row)

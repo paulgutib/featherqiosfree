@@ -17,9 +17,9 @@ class FQOnboardingUserTypeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.customerBtn.layer.cornerRadius = 5.0
+        self.customerBtn.layer.cornerRadius = 10.0
         self.customerBtn.clipsToBounds = true
-        self.ownerBtn.layer.cornerRadius = 5.0
+        self.ownerBtn.layer.cornerRadius = 10.0
         self.ownerBtn.clipsToBounds = true
     }
 

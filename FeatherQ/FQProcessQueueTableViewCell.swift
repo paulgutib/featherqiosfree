@@ -19,17 +19,20 @@ class FQProcessQueueTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var buttonContainer: UIView!
     @IBOutlet weak var serveNum: UIButton!
     @IBOutlet weak var dropNum: UIButton!
+    @IBOutlet weak var backgroundWrapper: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        self.callNum.layer.cornerRadius = 5.0
+        self.callNum.layer.cornerRadius = 10.0
         self.callNum.clipsToBounds = true
-        self.serveNum.layer.cornerRadius = 5.0
+        self.serveNum.layer.cornerRadius = 10.0
         self.serveNum.clipsToBounds = true
-        self.dropNum.layer.cornerRadius = 5.0
+        self.dropNum.layer.cornerRadius = 10.0
         self.dropNum.clipsToBounds = true
+        self.backgroundWrapper.layer.cornerRadius = 10.0
+        self.backgroundWrapper.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

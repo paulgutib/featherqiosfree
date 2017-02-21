@@ -23,9 +23,9 @@ class FQRegistrationViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.next1Btn.layer.cornerRadius = 5.0
+        self.next1Btn.layer.cornerRadius = 10.0
         self.next1Btn.clipsToBounds = true
-        self.emailHelp.layer.cornerRadius = 5.0
+        self.emailHelp.layer.cornerRadius = 10.0
         self.emailHelp.clipsToBounds = true
         self.email.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
         self.password.inputAccessoryView = UIView.init() // removes IQKeyboardManagerSwift toolbar
@@ -36,6 +36,18 @@ class FQRegistrationViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            self.present(modalViewController, animated: false, completion: nil)
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return Reachability.instance.checkNetwork() && self.emailPasswordValidity()
+    }
 
     // MARK: - Navigation
 
@@ -44,20 +56,26 @@ class FQRegistrationViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "toEmailVerification" {
-            if self.emailPasswordValidity() {
-                SwiftSpinner.show("Sending verification code..")
-                Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
-                    if response.result.isFailure {
-                        debugPrint(response.result.error!)
-                        let errorMessage = (response.result.error?.localizedDescription)! as String
-                        SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
-                            self.navigationController!.popViewController(animated: true)
-                            SwiftSpinner.hide()
-                        })
-                        return
-                    }
-                    let responseData = JSON(data: response.data!)
-                    debugPrint(responseData)
+            SwiftSpinner.show("Sending verification code..")
+            Alamofire.request(Router.postEmailVerification(email: self.email.text!)).responseJSON { response in
+                if response.result.isFailure {
+                    debugPrint(response.result.error!)
+                    let errorMessage = (response.result.error?.localizedDescription)! as String
+                    SwiftSpinner.show(errorMessage, animated: false).addTapHandler({
+                        self.navigationController!.popViewController(animated: true)
+                        SwiftSpinner.hide()
+                    })
+                    return
+                }
+                let responseData = JSON(data: response.data!)
+                debugPrint(responseData)
+                if responseData["success"].intValue == 0 {
+                    SwiftSpinner.show("Email is already taken.", animated: false).addTapHandler({
+                        self.navigationController!.popViewController(animated: true)
+                        SwiftSpinner.hide()
+                    }, subtitle: "The email address you entered is already registered and is no longer available. Please choose another one or login using that account.")
+                }
+                else {
                     let destView = segue.destination as! FQVerificationCodeViewController
                     destView.email = self.email.text!
                     destView.password = self.password.text!

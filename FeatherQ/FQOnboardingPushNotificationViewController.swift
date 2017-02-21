@@ -20,9 +20,9 @@ class FQOnboardingPushNotificationViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.grantPermission.layer.cornerRadius = 5.0
+        self.grantPermission.layer.cornerRadius = 10.0
         self.grantPermission.clipsToBounds = true
-        self.locationNotify.layer.cornerRadius = 5.0
+        self.locationNotify.layer.cornerRadius = 10.0
         self.locationNotify.clipsToBounds = true
         self.navigationItem.title = ""
     }
@@ -39,7 +39,7 @@ class FQOnboardingPushNotificationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.timerCounter?.invalidate()
     }
     

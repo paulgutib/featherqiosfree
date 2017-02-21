@@ -161,19 +161,19 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
             debugPrint(responseData)
             if responseData != nil {
                 self.meanToday.text = self.secsToMinsConversion(seconds: responseData["mean_today"].floatValue)
-                self.weightToday.text = "\(responseData["weight_today"].intValue)"
+                self.weightToday = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightToday, meanVal: responseData["mean_today"].floatValue, weightVal: responseData["weight_today"].intValue)
                 self.meanYesterday.text = self.secsToMinsConversion(seconds: responseData["mean_yesterday"].floatValue)
-                self.weightYesterday.text = "\(responseData["weight_yesterday"].intValue)"
+                self.weightYesterday = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightYesterday, meanVal: responseData["mean_yesterday"].floatValue, weightVal: responseData["weight_yesterday"].intValue)
                 self.meanThreeDays.text = self.secsToMinsConversion(seconds: responseData["mean_three_days"].floatValue)
-                self.weightThreeDays.text = "\(responseData["weight_three_days"].intValue)"
+                self.weightThreeDays = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightThreeDays, meanVal: responseData["mean_three_days"].floatValue, weightVal: responseData["weight_three_days"].intValue)
                 self.meanThisWeek.text = self.secsToMinsConversion(seconds: responseData["mean_this_week"].floatValue)
-                self.weightThisWeek.text = "\(responseData["weight_this_week"].intValue)"
+                self.weightThisWeek = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightThisWeek, meanVal: responseData["mean_this_week"].floatValue, weightVal: responseData["weight_this_week"].intValue)
                 self.meanLastWeek.text = self.secsToMinsConversion(seconds: responseData["mean_last_week"].floatValue)
-                self.weightLastWeek.text = "\(responseData["weight_last_week"].intValue)"
+                self.weightLastWeek = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightLastWeek, meanVal: responseData["mean_last_week"].floatValue, weightVal: responseData["weight_last_week"].intValue)
                 self.meanThisMonth.text = self.secsToMinsConversion(seconds: responseData["mean_this_month"].floatValue)
-                self.weightThisMonth.text = "\(responseData["weight_this_month"].intValue)"
+                self.weightThisMonth = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightThisMonth, meanVal: responseData["mean_this_month"].floatValue, weightVal: responseData["weight_this_month"].intValue)
                 self.meanLastMonth.text = self.secsToMinsConversion(seconds: responseData["mean_last_month"].floatValue)
-                self.weightLastMonth.text = "\(responseData["weight_last_month"].intValue)"
+                self.weightLastMonth = self.excludeZeroWaitingTimeWeights(weightLbl: self.weightLastMonth, meanVal: responseData["mean_last_month"].floatValue, weightVal: responseData["weight_last_month"].intValue)
                 self.meanMostLikely.text = self.secsToMinsConversion(seconds: responseData["mean_most_likely"].floatValue)
                 self.weightMostLikely.text = "\(responseData["weight_most_likely"].intValue)"
                 self.meanMostOptimistic.text = self.secsToMinsConversion(seconds: responseData["mean_most_optimistic"].floatValue)
@@ -194,6 +194,19 @@ class FQSettingsTimeEstimatesTableViewController: UITableViewController {
     func minsToSecsConversion(minutes: String) -> String {
         let secs = Float(minutes)! * 60.0
         return "\(secs)"
+    }
+    
+    func excludeZeroWaitingTimeWeights(weightLbl: UITextField, meanVal: Float, weightVal: Int) -> UITextField {
+        let uiLabel = weightLbl
+        if meanVal > 0 {
+            uiLabel.text = "\(weightVal)"
+            uiLabel.isEnabled = true
+        }
+        else {
+            uiLabel.text = "0"
+            uiLabel.isEnabled = false
+        }
+        return uiLabel
     }
 
 }

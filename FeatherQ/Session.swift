@@ -29,13 +29,15 @@ class Session {
     var peopleInLine: String?
     var businessName: String?
     var broadcastNumbers = [String]()
-    var playSound = true
     var transactionNums = [String]()
     var processQueue = [[String:String]]()
     var estimatedSecs: Int?
     var lastCalled: String?
     var selectedCategories = [String]()
     var selectedCategoriesIndexes = [Int]()
+    var punchType = "Play"
+    var latitudeLoc = "0.0000000"
+    var longitudeLoc = "0.0000000"
     
     var step1 = false
     var step2 = false
