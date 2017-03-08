@@ -17,16 +17,11 @@ class FQAboutViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.showHideSettingsButton()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.showHideSettingsButton()
     }
 
     /*
@@ -42,15 +37,6 @@ class FQAboutViewController: UIViewController {
     @IBAction func viewGuide(_ sender: UIBarButtonItem) {
         let vc = UIStoryboard(name: "Main",bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingContainerViewController")
         self.present(vc, animated: true, completion: nil)
-    }
-    
-    func showHideSettingsButton() {
-        if Session.instance.isLoggedIn {
-            self.navigationItem.rightBarButtonItem = self.settingsBtn
-        }
-        else {
-            self.navigationItem.rightBarButtonItem = nil
-        }
     }
     
 }

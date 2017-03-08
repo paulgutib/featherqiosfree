@@ -28,6 +28,7 @@
 		801D4C061DDD90DD00BE555F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D4C051DDD90DD00BE555F /* API.swift */; };
 		802102461DFCE9EF00FBDC2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802102451DFCE9EF00FBDC2E /* CoreLocation.framework */; };
 		802B4EB71DF559DB0038891A /* FQReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */; };
+		8036929A1E700255009262F8 /* FQSettingsThemesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */; };
 		8040BD651E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */; };
 		804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */; };
 		806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */; };
@@ -87,6 +88,7 @@
 		801D4C051DDD90DD00BE555F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		802102451DFCE9EF00FBDC2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQReceiptViewController.swift; sourceTree = "<group>"; };
+		803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsThemesTableViewController.swift; sourceTree = "<group>"; };
 		8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPushNotificationViewController.swift; sourceTree = "<group>"; };
 		804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				806692A71DF08AC800EA3963 /* FQSettingsAddressViewController.swift */,
 				806692A91DF08AD900EA3963 /* FQSettingsOperationsViewController.swift */,
 				8099E82C1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift */,
+				803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				80DD61641DFA8A86009AB134 /* FQChangePasswordViewController.swift in Sources */,
 				80C296341DFAA51700444E5A /* FQOnboardingPageViewController.swift in Sources */,
 				80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */,
+				8036929A1E700255009262F8 /* FQSettingsThemesTableViewController.swift in Sources */,
 				806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */,
 				806692A41DF08A9900EA3963 /* FQSettingsAccountViewController.swift in Sources */,
 				801D4C061DDD90DD00BE555F /* API.swift in Sources */,

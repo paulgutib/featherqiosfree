@@ -30,15 +30,18 @@ class FQSettingsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        if !Session.instance.isLoggedIn {
+            return 1
+        }
         return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if section == 1 {
+        if section == 1 || !Session.instance.isLoggedIn {
             return 1
         }
-        return 5
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
