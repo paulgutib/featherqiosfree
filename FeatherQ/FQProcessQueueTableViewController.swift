@@ -59,6 +59,10 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.tableView.backgroundColor = Session.instance.currentTheme
+        for tableCell in self.tableView.visibleCells {
+            tableCell.backgroundColor = Session.instance.currentTheme
+        }
         SwiftSpinner.show("Preparing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {

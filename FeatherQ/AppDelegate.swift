@@ -23,18 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        UINavigationBar.appearance().barTintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-        UITabBar.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-        UIButton.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-        UITableView.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-        UINavigationBar.appearance().tintColor = UIColor.white // set a universal tint color for all views depending on app motiff
-        UISegmentedControl.appearance().tintColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0)
-        
         IQKeyboardManager.sharedManager().enable = true
         UCClient.default().setPublicKey("844c2b9e554c2ee5cc0a")
-        
+        self.setDefaultColorTheme()
         self.loadDeviceToken()
         self.loadLastChosenCategories()
         self.selectMyBusinessAsDefault()
@@ -219,6 +210,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Session.instance.lastCalled = responseData["broadcast_data"]["last_called"].stringValue
                 }
             }
+        }
+    }
+    
+    func setDefaultColorTheme() {
+        let colorTheme = UserDefaults.standard.array(forKey: "fqiosappfreetheme")
+        let textTheme = UserDefaults.standard.string(forKey: "fqiosappfreethemetext")
+        if colorTheme != nil {
+            let fontTextColor = [
+                "black": UIColor.black,
+                "white": UIColor.white
+            ]
+            let cgFloats = colorTheme as! [CGFloat]
+            let fqColor = UIColor(red: cgFloats[0], green: cgFloats[1], blue: cgFloats[2], alpha: 1.0)
+            UINavigationBar.appearance().barTintColor = fqColor
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : fontTextColor[textTheme!]!]
+            UITabBar.appearance().tintColor = fqColor
+            UIButton.appearance().tintColor = fqColor
+            UITableView.appearance().tintColor = fqColor
+            UINavigationBar.appearance().tintColor = fontTextColor[textTheme!]!
+            UISegmentedControl.appearance().tintColor = fqColor
+        }
+        else {
+            let fqColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
+            UINavigationBar.appearance().barTintColor = fqColor
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+            UITabBar.appearance().tintColor = fqColor
+            UIButton.appearance().tintColor = fqColor
+            UITableView.appearance().tintColor = fqColor
+            UINavigationBar.appearance().tintColor = UIColor.white
+            UISegmentedControl.appearance().tintColor = fqColor
         }
     }
     

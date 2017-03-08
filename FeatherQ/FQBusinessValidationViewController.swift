@@ -259,6 +259,8 @@ class FQBusinessValidationViewController: UIViewController, UIPickerViewDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.next3Btn.backgroundColor = Session.instance.currentTheme!
+        self.next3Btn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "denied" {
             self.locationBtn.titleLabel?.text = "Tap Here to Enable Location in Settings"
             self.locationBtn.backgroundColor = UIColor.red

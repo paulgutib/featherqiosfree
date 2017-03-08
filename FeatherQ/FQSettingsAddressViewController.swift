@@ -254,6 +254,8 @@ class FQSettingsAddressViewController: UIViewController, UIPickerViewDelegate, U
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateBtn.backgroundColor = Session.instance.currentTheme!
+        self.updateBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         let addressData = Session.instance.address!.components(separatedBy: ", ")
         self.buildingOffice.text = addressData[0]
         self.streetBlock.text = addressData[1]

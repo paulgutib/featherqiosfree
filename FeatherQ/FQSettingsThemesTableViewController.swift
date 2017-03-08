@@ -18,18 +18,20 @@ class FQSettingsThemesTableViewController: UITableViewController {
         [0.0, 0.0, 1.0], // blue
         [1.0, 0.0, 1.0], // magenta
         [0.498, 0.0, 0.498], // purple
-        [1.0, 1.0, 0.0] // yellow
+        [1.0, 1.0, 0.0], // yellow
+        [0.851, 0.4471, 0.0902] // default
     ] as [[CGFloat]]
     
     let fontTextColor = [
-        UIColor.black, // green
-        UIColor.white, // red
-        UIColor.black, // cyan
-        UIColor.white, // brown
-        UIColor.white, // blue
-        UIColor.white, // magenta
-        UIColor.white, // purple
-        UIColor.black, // yellow
+        ["black", UIColor.black], // green
+        ["white", UIColor.white], // red
+        ["black", UIColor.black], // cyan
+        ["white", UIColor.white], // brown
+        ["white", UIColor.white], // blue
+        ["white", UIColor.white], // magenta
+        ["white", UIColor.white], // purple
+        ["black", UIColor.black], // yellow
+        ["white", UIColor.white] // default
     ]
 
     override func viewDidLoad() {
@@ -108,12 +110,14 @@ class FQSettingsThemesTableViewController: UITableViewController {
         debugPrint(self.themeList[indexPath.row])
         let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to apply this theme?", preferredStyle: .actionSheet)
         alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
-            Session.instance.currentTheme = UIColor(red: self.themeList[indexPath.row][0], green: self.themeList[indexPath.row][1], blue: self.themeList[indexPath.row][2], alpha: 1.0)
             self.setGlobalTheme(rowCount: indexPath.row)
             self.setCurrentTheme(rowCount: indexPath.row)
             let preferences = UserDefaults.standard
             preferences.set(self.themeList[indexPath.row], forKey: "fqiosappfreetheme")
+            preferences.set(self.fontTextColor[indexPath.row][0], forKey: "fqiosappfreethemetext")
             preferences.synchronize()
+            Session.instance.currentTheme = UIColor(red: self.themeList[indexPath.row][0], green: self.themeList[indexPath.row][1], blue: self.themeList[indexPath.row][2], alpha: 1.0)
+            Session.instance.currentThemeText = self.fontTextColor[indexPath.row][1] as? UIColor
             let alertBox = UIAlertController(title: "SUCCESS", message: "The selected theme has been applied.", preferredStyle: .alert)
             alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertBox, animated: true, completion: nil)
@@ -136,10 +140,33 @@ class FQSettingsThemesTableViewController: UITableViewController {
     }
     */
     
+    @IBAction func resetTheme(_ sender: UIBarButtonItem) {
+        let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to switch back to the default theme?", preferredStyle: .actionSheet)
+        alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
+            self.setGlobalTheme(rowCount: 8)
+            self.setCurrentTheme(rowCount: 8)
+            let preferences = UserDefaults.standard
+            preferences.set(self.themeList[8], forKey: "fqiosappfreetheme")
+            preferences.set(self.fontTextColor[8][0], forKey: "fqiosappfreethemetext")
+            preferences.synchronize()
+            Session.instance.currentTheme = UIColor(red: self.themeList[8][0], green: self.themeList[8][1], blue: self.themeList[8][2], alpha: 1.0)
+            Session.instance.currentThemeText = self.fontTextColor[8][1] as? UIColor
+            let alertBox = UIAlertController(title: "SUCCESS", message: "The selected theme has been applied.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+        }))
+        alertBox.addAction(UIAlertAction(title: "NO", style: .default, handler: nil))
+        if let popoverController = alertBox.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
+        }
+        self.present(alertBox, animated: true, completion: nil)
+    }
+    
     func setGlobalTheme(rowCount: Int) {
         UINavigationBar.appearance().barTintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : self.fontTextColor[rowCount]]
-        UINavigationBar.appearance().tintColor = self.fontTextColor[rowCount]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : self.fontTextColor[rowCount][1] as! UIColor]
+        UINavigationBar.appearance().tintColor = self.fontTextColor[rowCount][1] as! UIColor
         UITabBar.appearance().tintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
         UIButton.appearance().tintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
         UITableView.appearance().tintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
@@ -148,8 +175,8 @@ class FQSettingsThemesTableViewController: UITableViewController {
     
     func setCurrentTheme(rowCount: Int) {
         self.navigationController!.navigationBar.barTintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : self.fontTextColor[rowCount]]
-        self.navigationController!.navigationBar.tintColor = self.fontTextColor[rowCount]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : self.fontTextColor[rowCount][1] as! UIColor]
+        self.navigationController!.navigationBar.tintColor = self.fontTextColor[rowCount][1] as! UIColor
         self.navigationController!.tabBarController!.tabBar.tintColor = UIColor(red: self.themeList[rowCount][0], green: self.themeList[rowCount][1], blue: self.themeList[rowCount][2], alpha: 1.0)
     }
 

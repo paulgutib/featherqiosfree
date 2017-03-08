@@ -74,6 +74,8 @@ class FQSettingsDetailsViewController: UIViewController, UIImagePickerController
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateBtn.backgroundColor = Session.instance.currentTheme!
+        self.updateBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         self.logoPath = Session.instance.logo!
         self.businessName.text = Session.instance.businessName!
         self.categoryList.selectRow(self.categoryFlat.index(of: Session.instance.category!)!, inComponent: 0, animated: true)

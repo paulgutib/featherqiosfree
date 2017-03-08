@@ -36,6 +36,8 @@ class FQSettingsAccountViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.updateBtn.backgroundColor = Session.instance.currentTheme!
+        self.updateBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         let dictionary = Locksmith.loadDataForUserAccount(userAccount: "fqiosappfree")
         self.email.text = dictionary!["email"] as? String
     }

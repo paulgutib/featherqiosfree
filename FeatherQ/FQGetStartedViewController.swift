@@ -25,6 +25,11 @@ class FQGetStartedViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.startUsing.backgroundColor = Session.instance.currentTheme!
+        self.startUsing.setTitleColor(Session.instance.currentThemeText!, for: .normal)
+    }
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return Reachability.instance.checkNetwork()
     }

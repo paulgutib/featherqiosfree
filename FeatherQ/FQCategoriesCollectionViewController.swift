@@ -104,7 +104,7 @@ class FQCategoriesCollectionViewController: UICollectionViewController {
 //        cell.categoryTitle.text = self.categoryList[indexPath.row]["name"]
         cell.layer.cornerRadius = 10.0
         cell.clipsToBounds = true
-        cell.layer.borderColor = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0).cgColor /* #d97217 */
+        cell.layer.borderColor = Session.instance.currentTheme!.cgColor
         cell.layer.borderWidth = self.markSelectedCategoryBorder(rowCount: indexPath.row)
         cell.categoryChecked.isHidden = self.markSelectedCategoryCheck(rowCount: indexPath.row)
         cell.selectionLayer.isHidden = self.markSelectedCategoryCheck(rowCount: indexPath.row)

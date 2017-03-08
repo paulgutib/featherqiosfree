@@ -69,6 +69,8 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.businessCode.textColor = Session.instance.currentThemeText!
+        self.businessCode.backgroundColor = Session.instance.currentTheme!
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.codeHelp.isHidden = false
             self.codeLayer.isHidden = true

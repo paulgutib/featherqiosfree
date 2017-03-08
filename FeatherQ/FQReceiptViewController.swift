@@ -47,6 +47,8 @@ class FQReceiptViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.okBtn.backgroundColor = Session.instance.currentTheme!
+        self.okBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.step4.isHidden = false
         }
