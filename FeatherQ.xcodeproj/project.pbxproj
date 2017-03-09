@@ -29,6 +29,7 @@
 		802102461DFCE9EF00FBDC2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802102451DFCE9EF00FBDC2E /* CoreLocation.framework */; };
 		802B4EB71DF559DB0038891A /* FQReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */; };
 		8036929A1E700255009262F8 /* FQSettingsThemesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */; };
+		8036929C1E7122D2009262F8 /* FQChooseTerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036929B1E7122D2009262F8 /* FQChooseTerminalViewController.swift */; };
 		8040BD651E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */; };
 		804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */; };
 		806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */; };
@@ -89,6 +90,7 @@
 		802102451DFCE9EF00FBDC2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQReceiptViewController.swift; sourceTree = "<group>"; };
 		803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsThemesTableViewController.swift; sourceTree = "<group>"; };
+		8036929B1E7122D2009262F8 /* FQChooseTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQChooseTerminalViewController.swift; sourceTree = "<group>"; };
 		8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPushNotificationViewController.swift; sourceTree = "<group>"; };
 		804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				80DD61631DFA8A86009AB134 /* FQChangePasswordViewController.swift */,
 				80E220751E406A6100C6FC16 /* FQCategoryZoomViewController.swift */,
 				80C17A5E1E4834420058E1D4 /* FQIssueNumberClosedViewController.swift */,
+				8036929B1E7122D2009262F8 /* FQChooseTerminalViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 			files = (
 				801A105D1DE56FA800373A22 /* FQBusiness.swift in Sources */,
 				801004E71DD465FF0070C326 /* FQIssueNumberViewController.swift in Sources */,
+				8036929C1E7122D2009262F8 /* FQChooseTerminalViewController.swift in Sources */,
 				801A105F1DE578F300373A22 /* Utility.swift in Sources */,
 				806692A61DF08AB000EA3963 /* FQSettingsDetailsViewController.swift in Sources */,
 				8099E82D1E2E6BF200F39C82 /* FQSettingsTimeEstimatesTableViewController.swift in Sources */,

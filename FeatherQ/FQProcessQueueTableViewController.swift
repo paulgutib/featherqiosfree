@@ -33,6 +33,7 @@ class FQProcessQueueTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        self.navigationController!.navigationBar.tintColor = Session.instance.currentThemeText!
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.tableView.tableHeaderView = self.howToCallServed()
             let queueLayer = UIView(frame: CGRect(x: 0.0, y: 360.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-360.0))
@@ -387,6 +388,10 @@ class FQProcessQueueTableViewController: UITableViewController {
             }
             self.removeRowsAndReload(indexPath)
         }
+    }
+    
+    @IBAction func backToDashboard(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func serveCallNext(_ indexPath: IndexPath) {
