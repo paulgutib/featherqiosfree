@@ -106,7 +106,7 @@ class FQSettingsThemesTableViewController: UITableViewController {
     }
     */
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         debugPrint(self.themeList[indexPath.row])
         let alertBox = UIAlertController(title: "Confirm", message: "Are you sure you want to apply this theme?", preferredStyle: .actionSheet)
         alertBox.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action: UIAlertAction!) in
@@ -128,6 +128,7 @@ class FQSettingsThemesTableViewController: UITableViewController {
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX - 150.0, y: self.view.bounds.midY, width: 0, height: 0)
         }
         self.present(alertBox, animated: true, completion: nil)
+        return nil
     }
 
     /*

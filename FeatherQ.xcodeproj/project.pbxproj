@@ -30,6 +30,7 @@
 		802B4EB71DF559DB0038891A /* FQReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */; };
 		8036929A1E700255009262F8 /* FQSettingsThemesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */; };
 		8036929C1E7122D2009262F8 /* FQChooseTerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036929B1E7122D2009262F8 /* FQChooseTerminalViewController.swift */; };
+		8036929E1E717402009262F8 /* FQChooseTerminalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036929D1E717402009262F8 /* FQChooseTerminalTableViewCell.swift */; };
 		8040BD651E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */; };
 		804D88BD1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */; };
 		806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */; };
@@ -91,6 +92,7 @@
 		802B4EB61DF559DB0038891A /* FQReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQReceiptViewController.swift; sourceTree = "<group>"; };
 		803692991E700255009262F8 /* FQSettingsThemesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsThemesTableViewController.swift; sourceTree = "<group>"; };
 		8036929B1E7122D2009262F8 /* FQChooseTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQChooseTerminalViewController.swift; sourceTree = "<group>"; };
+		8036929D1E717402009262F8 /* FQChooseTerminalTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQChooseTerminalTableViewCell.swift; sourceTree = "<group>"; };
 		8040BD641E3F36F100575CA9 /* FQOnboardingPushNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQOnboardingPushNotificationViewController.swift; sourceTree = "<group>"; };
 		804D88BC1DE7C3DA00129CC9 /* FQVerificationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQVerificationCodeViewController.swift; sourceTree = "<group>"; };
 		806692A01DF073C400EA3963 /* FQSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FQSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				801004D61DD39BB80070C326 /* FQCategoriesCollectionViewCell.swift */,
 				80CE42701DDC5BE90054E7C5 /* FQProcessQueueTableViewCell.swift */,
 				801A105A1DE5532500373A22 /* FQSearchTableViewCell.swift */,
+				8036929D1E717402009262F8 /* FQChooseTerminalTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				80DD61641DFA8A86009AB134 /* FQChangePasswordViewController.swift in Sources */,
 				80C296341DFAA51700444E5A /* FQOnboardingPageViewController.swift in Sources */,
 				80C296321DFAA4CB00444E5A /* FQOnboardingContainerViewController.swift in Sources */,
+				8036929E1E717402009262F8 /* FQChooseTerminalTableViewCell.swift in Sources */,
 				8036929A1E700255009262F8 /* FQSettingsThemesTableViewController.swift in Sources */,
 				806692A11DF073C400EA3963 /* FQSettingsTableViewController.swift in Sources */,
 				806692A41DF08A9900EA3963 /* FQSettingsAccountViewController.swift in Sources */,

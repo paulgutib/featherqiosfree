@@ -11,7 +11,6 @@ import UIKit
 class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var closeBtn: UIButton!
     
     let terminalsList = [
         "Counter A", "Counter B", "Counter C", "Counter D",
@@ -21,8 +20,6 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.closeBtn.layer.cornerRadius = 10.0
-        self.closeBtn.clipsToBounds = true
         self.tableView.layer.cornerRadius = 10.0
         self.tableView.clipsToBounds = true
     }
@@ -43,7 +40,7 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = Session.instance.currentTheme!
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 21.0)
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 19.0)
         header.textLabel?.textAlignment = .center
         header.textLabel?.textColor = Session.instance.currentThemeText!
     }
@@ -61,13 +58,39 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CELL", for: indexPath)
-        cell.textLabel?.text = self.terminalsList[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FQChooseTerminalTableViewCell", for: indexPath) as! FQChooseTerminalTableViewCell
+        cell.terminalName.text = self.terminalsList[indexPath.row]
+        if indexPath.row == 2 {
+            cell.redStatus.isHidden = false
+            cell.status.isHidden = true
+        }
+        else {
+            cell.redStatus.isHidden = true
+            cell.status.isHidden = false
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.row == 2 {
+            let alertBox = UIAlertController(title: "NOT AVAILABLE", message: "The terminal you selected has already been taken.", preferredStyle: .alert)
+            alertBox.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertBox, animated: true, completion: nil)
+            return nil
+        }
+        return indexPath
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        let indexPath = self.tableView.indexPath(for: sender as! FQChooseTerminalTableViewCell)
+        if indexPath?.row == 2 {
+            return false
+        }
+        return true
     }
 
     /*
@@ -79,8 +102,8 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
         // Pass the selected object to the new view controller.
     }
     */
-
-    @IBAction func closeWindow(_ sender: UIButton) {
+    
+    @IBAction func closeView(_ sender: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
     }
     
