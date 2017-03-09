@@ -13,6 +13,7 @@ class FQChooseTerminalTableViewCell: UITableViewCell {
     @IBOutlet weak var terminalName: UILabel!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var redStatus: UILabel!
+    @IBOutlet weak var viewStatus: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +23,8 @@ class FQChooseTerminalTableViewCell: UITableViewCell {
         self.status.clipsToBounds = true
         self.redStatus.layer.cornerRadius = 10.0
         self.redStatus.clipsToBounds = true
+        self.viewStatus.layer.cornerRadius = 10.0
+        self.viewStatus.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

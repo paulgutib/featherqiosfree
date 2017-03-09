@@ -15,6 +15,7 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
     let terminalsList = [
         "Counter A", "Counter B", "Counter C", "Counter D",
     ]
+    var fromBroadcast = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,13 +61,22 @@ class FQChooseTerminalViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQChooseTerminalTableViewCell", for: indexPath) as! FQChooseTerminalTableViewCell
         cell.terminalName.text = self.terminalsList[indexPath.row]
-        if indexPath.row == 2 {
+        if self.fromBroadcast {
+            cell.redStatus.isHidden = true
+            cell.status.isHidden = true
+            cell.viewStatus.isHidden = false
+            cell.viewStatus.textColor = Session.instance.currentThemeText!
+            cell.viewStatus.backgroundColor = Session.instance.currentTheme!
+        }
+        else if indexPath.row == 2 {
             cell.redStatus.isHidden = false
             cell.status.isHidden = true
+            cell.viewStatus.isHidden = true
         }
         else {
             cell.redStatus.isHidden = true
             cell.status.isHidden = false
+            cell.viewStatus.isHidden = true
         }
         return cell
     }

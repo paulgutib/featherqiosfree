@@ -220,6 +220,12 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         self.present(alertBox, animated: true, completion: nil)
     }
     
+    @IBAction func chooseTerminal(_ sender: Any) {
+        let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQChooseTerminalViewController") as! FQChooseTerminalViewController
+        modalViewController.fromBroadcast = true
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        self.present(modalViewController, animated: true, completion: nil)
+    }
     
     func timerCallbacks() {
         if Session.instance.broadcastNumbers != self.priorityNumbers {
