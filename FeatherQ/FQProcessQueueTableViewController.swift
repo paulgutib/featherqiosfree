@@ -33,7 +33,6 @@ class FQProcessQueueTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        self.navigationController!.navigationBar.tintColor = Session.instance.currentThemeText!
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.tableView.tableHeaderView = self.howToCallServed()
             let queueLayer = UIView(frame: CGRect(x: 0.0, y: 360.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-360.0))
@@ -60,10 +59,6 @@ class FQProcessQueueTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.backgroundColor = Session.instance.currentTheme
-        for tableCell in self.tableView.visibleCells {
-            tableCell.backgroundColor = Session.instance.currentTheme
-        }
         SwiftSpinner.show("Preparing..")
         Alamofire.request(Router.getAllNumbers(business_id: Session.instance.businessId)).responseJSON { response in
             if response.result.isFailure {
@@ -388,10 +383,6 @@ class FQProcessQueueTableViewController: UITableViewController {
             }
             self.removeRowsAndReload(indexPath)
         }
-    }
-    
-    @IBAction func backToDashboard(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     func serveCallNext(_ indexPath: IndexPath) {

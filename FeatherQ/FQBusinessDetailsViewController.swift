@@ -73,8 +73,6 @@ class FQBusinessDetailsViewController: UIViewController, UIImagePickerController
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.next2Btn.backgroundColor = Session.instance.currentTheme!
-        self.next2Btn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         if self.logoPath != nil && !self.logoPath!.isEmpty {
             let url = URL(string: "https://ucarecdn.com/" + self.logoPath! + "/image")
             DispatchQueue.global().async {

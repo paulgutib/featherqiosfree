@@ -58,11 +58,6 @@ class FQSettingsOperationsViewController: UIViewController, CLLocationManagerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.submitBtn.backgroundColor = Session.instance.currentTheme!
-        self.submitBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
-    }
 
     /*
     // MARK: - Navigation

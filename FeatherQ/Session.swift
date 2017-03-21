@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 class Session {
     
@@ -39,8 +38,6 @@ class Session {
     var punchType = "Play"
     var latitudeLoc = "0.0000000"
     var longitudeLoc = "0.0000000"
-    var currentTheme: UIColor?
-    var currentThemeText: UIColor?
     
     var step1 = false
     var step2 = false
@@ -50,23 +47,5 @@ class Session {
     var step6 = false
     var step7 = false
     var step8 = false
-    
-    init() {
-        let fontTextColor = [
-            "black": UIColor.black,
-            "white": UIColor.white
-        ]
-        let colorTheme = UserDefaults.standard.array(forKey: "fqiosappfreetheme")
-        let textTheme = UserDefaults.standard.string(forKey: "fqiosappfreethemetext")
-        if colorTheme != nil {
-            let cgFloats = colorTheme as! [CGFloat]
-            self.currentTheme = UIColor(red: cgFloats[0], green: cgFloats[1], blue: cgFloats[2], alpha: 1.0)
-            self.currentThemeText = fontTextColor[textTheme!]!
-        }
-        else {
-            self.currentTheme = UIColor(red: 0.851, green: 0.4471, blue: 0.0902, alpha: 1.0) /* #d97217 */
-            self.currentThemeText = UIColor.white
-        }
-    }
     
 }

@@ -41,11 +41,6 @@ class FQVerificationCodeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.verifyBtn.backgroundColor = Session.instance.currentTheme!
-        self.verifyBtn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
-    }
-    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return Reachability.instance.checkNetwork()
     }

@@ -28,8 +28,6 @@ class FQOnboardingPushNotificationViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.grantPermission.backgroundColor = Session.instance.currentTheme!
-        self.grantPermission.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         self.locationNotify.isHidden = true
         self.settingsBtn.isHidden = true
         self.grantPermission.isHidden = true

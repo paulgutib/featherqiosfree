@@ -52,10 +52,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.backgroundColor = Session.instance.currentTheme
-        for tableCell in self.tableView.visibleCells {
-            tableCell.backgroundColor = Session.instance.currentTheme
-        }
         if UserDefaults.standard.string(forKey: "fqiosappfreelocation") == "granted" {
             self.navigationItem.rightBarButtonItem = nil
             self.cllManager.delegate = self
@@ -87,7 +83,6 @@ class FQSearchTableViewController: UITableViewController, UISearchResultsUpdatin
         let cell = tableView.dequeueReusableCell(withIdentifier: "FQSearchTableViewCell", for: indexPath) as! FQSearchTableViewCell
 
         // Configure the cell...
-        cell.backgroundColor = Session.instance.currentTheme
         let listData = self.businessListingDetails(indexPath.row)
         cell.businessName.text = listData["name"]
         cell.categoryName.text = listData["category"]

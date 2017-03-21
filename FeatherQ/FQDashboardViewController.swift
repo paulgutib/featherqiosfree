@@ -174,11 +174,6 @@ class FQDashboardViewController: UIViewController {
         self.setDefaultBusinessView(broadcastBool, viewType: "autoBroadcast")
     }
     
-    @IBAction func chooseTerminalProcess(_ sender: UIButton) {
-        let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQChooseTerminalViewController") as! FQChooseTerminalViewController
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        self.present(modalViewController, animated: true, completion: nil)
-    }
     
     func setDefaultBusinessView(_ boolVal: Bool, viewType: String) {
         let preferences = UserDefaults.standard

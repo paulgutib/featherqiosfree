@@ -69,8 +69,6 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.businessCode.textColor = Session.instance.currentThemeText!
-        self.businessCode.backgroundColor = Session.instance.currentTheme!
         if !UserDefaults.standard.bool(forKey: "fqiosappfreeonboardbusiness") {
             self.codeHelp.isHidden = false
             self.codeLayer.isHidden = true
@@ -220,12 +218,6 @@ class FQBroadcastViewController: UIViewController/*, iCarouselDataSource, iCarou
         self.present(alertBox, animated: true, completion: nil)
     }
     
-    @IBAction func chooseTerminal(_ sender: Any) {
-        let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQChooseTerminalViewController") as! FQChooseTerminalViewController
-        modalViewController.fromBroadcast = true
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        self.present(modalViewController, animated: true, completion: nil)
-    }
     
     func timerCallbacks() {
         if Session.instance.broadcastNumbers != self.priorityNumbers {

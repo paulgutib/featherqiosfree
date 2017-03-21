@@ -38,8 +38,6 @@ class FQRegistrationViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.next1Btn.backgroundColor = Session.instance.currentTheme!
-        self.next1Btn.setTitleColor(Session.instance.currentThemeText!, for: .normal)
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
             let modalViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FQOnboardingPushNotificationViewController") as! FQOnboardingPushNotificationViewController
             modalViewController.modalPresentationStyle = .overCurrentContext
